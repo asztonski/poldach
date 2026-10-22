@@ -1,5 +1,9 @@
-dist
+.next
+out
 build
 coverage
 node_modules
+next-env.d.ts
+package-lock.json
 *.lock
+AGENTS.md

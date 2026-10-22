@@ -1,7 +1,10 @@
 {
   "$schema": "https://json.schemastore.org/prettierrc",
   "plugins": ["prettier-plugin-tailwindcss"],
+  "tailwindStylesheet": "./src/styles/globals.css",
+  "tailwindFunctions": ["cn", "clsx"],
   "printWidth": 100,
   "singleQuote": true,
-  "trailingComma": "all"
+  "trailingComma": "all",
+  "endOfLine": "lf"
 }

@@ -1,39 +1,47 @@
 {
-  "name": "react-three-fiber-1",
+  "name": "poldach",
+  "description": "Strona internetowa firmy dekarskiej Poldach (poldach.eu)",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
-    "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
+    "dev": "next dev",
+    "build": "next build",
+    "preview": "serve out",
+    "typecheck": "next typegen && tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "preview": "vite preview"
+    "format:check": "prettier --check .",
+    "check": "npm run typecheck && npm run lint && npm run format:check"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.12",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "react-router": "^7.8.2",
-    "tailwindcss": "^4.1.12"
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.61.0",
+    "next": "^16.4.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "tailwind-merge": "^3.7.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.33.0",
-    "@types/react": "^19.1.10",
-    "@types/react-dom": "^19.1.7",
-    "@typescript-eslint/eslint-plugin": "^8.42.0",
-    "@typescript-eslint/parser": "^8.42.0",
-    "@vitejs/plugin-react": "^5.0.0",
-    "eslint": "^9.34.0",
+    "@eslint/js": "^9.39.5",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^22.20.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.2",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.20",
-    "globals": "^16.3.0",
-    "prettier": "^3.6.2",
+    "prettier": "^3.9.10",
     "prettier-plugin-tailwindcss": "^0.6.14",
-    "typescript": "~5.8.3",
-    "typescript-eslint": "^8.39.1",
-    "vite": "^7.1.2"
+    "serve": "^14.2.6",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~5.8.3"
+  },
+  "overrides": {
+    "compression": "^1.8.2"
   }
 }

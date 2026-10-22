@@ -1,69 +1,30 @@
-# React + TypeScript + Vite
+# poldach.eu
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Strona internetowa P.H.U. „POLDACH” S.C. – rodzinnej firmy dekarskiej z Kokoszkowych. Next.js ze
+statycznym eksportem.
 
-Currently, two official plugins are available:
+## Start
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Wymagany Node.js 22.13+ (patrz `.nvmrc`).
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev        # serwer deweloperski: http://localhost:3000
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Skrypty
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Skrypt              | Opis                                                  |
+| ------------------- | ----------------------------------------------------- |
+| `npm run dev`       | serwer deweloperski z HMR                             |
+| `npm run build`     | build produkcyjny – statyczne pliki w `out/`          |
+| `npm run preview`   | podgląd zbudowanej strony z `out/` (po `build`)       |
+| `npm run typecheck` | sprawdzenie typów TypeScript                          |
+| `npm run lint`      | ESLint z regułami Next.js (`lint:fix` – autopoprawki) |
+| `npm run format`    | Prettier (`format:check` – tylko sprawdzenie)         |
+| `npm run check`     | typecheck + lint + format:check (np. przed PR)        |
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Dokumentacja
+
+Firma, komunikacja, design system, mapa strony, standardy, architektura, decyzje i plan prac –
+[docs/README.md](docs/README.md).
