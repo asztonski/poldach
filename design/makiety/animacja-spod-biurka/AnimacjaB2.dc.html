@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>POLDACH – animacja spod biurka</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.b-arc{font-family:'Roboto Condensed',sans-serif;font-weight:700;font-size:72px;letter-spacing:6px;text-anchor:middle;fill:#448CE3}
+.b-plate{font-family:'Roboto Condensed',sans-serif;font-weight:700;font-size:34px;letter-spacing:1.5px;text-anchor:middle;fill:#FFFFFF}
+.a2-stage{animation:a2Stage 9s linear infinite}
+.a2-man{transform-origin:105px 159px;animation:a2Man 9s ease-in-out infinite}
+.a2-umb{animation:a2Umb 9s ease-out infinite}
+.a2-canopy{transform-box:view-box;transform-origin:280px 120px;animation:a2Canopy 9s cubic-bezier(.2,.8,.3,1) infinite}
+.a2-l{animation:a2Letter 9s linear infinite both}
+.a2-l2{animation-delay:0.08s}
+.a2-l3{animation-delay:0.16s}
+.a2-l4{animation-delay:0.24s}
+.a2-l5{animation-delay:0.32s}
+.a2-l6{animation-delay:0.40s}
+.a2-l7{animation-delay:0.48s}
+.a2-slogan{animation:a2Slogan 9s ease-out infinite}
+@keyframes a2Stage{0%{opacity:0}3%,90%{opacity:1}96%,100%{opacity:0}}
+@keyframes a2Man{0%,5%{transform:translateY(190px) rotate(14deg)}11%{transform:translateY(100px) rotate(12deg)}14%{transform:translateY(100px) rotate(8deg)}17%{transform:translateY(100px) rotate(13deg)}20%{transform:translateY(118px) rotate(14deg);animation-timing-function:cubic-bezier(.2,.9,.3,1)}28%{transform:translateY(-8px) rotate(-3deg)}32%,41%{transform:translateY(0px) rotate(0deg)}42.5%{transform:translateY(4px) rotate(1deg)}45%,100%{transform:translateY(0px) rotate(0deg)}}
+@keyframes a2Umb{0%,33%{transform:translateY(330px)}40%{transform:translateY(-6px)}42%,100%{transform:translateY(0px)}}
+@keyframes a2Canopy{0%,44%{transform:scale(0.09,1.1)}51%{transform:scale(1.06,0.96)}55%,100%{transform:scale(1,1)}}
+@keyframes a2Letter{0%,56%{fill-opacity:0}59%,91%{fill-opacity:1}93%,100%{fill-opacity:0}}
+@keyframes a2Slogan{0%,64%{opacity:0;transform:translateY(14px)}72%,100%{opacity:1;transform:translateY(0px)}}
+@media (prefers-reduced-motion: reduce){.a2-stage,.a2-stage *{animation:none !important}}
+</style>
+</helmet>
+<div style="width: 800px; height: 640px; box-sizing: border-box; background: #EEDF3E; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: 'Roboto Condensed', sans-serif; color: #173A6B">
+<div class="a2-stage" role="img" aria-label="Animacja logo POLDACH: szef wyłania się spod biurka, wstaje, stawia parasol, parasol się otwiera, potem pojawia się napis POLDACH i hasło Dach – to nasz fach" style="position: relative; width: 580px; height: 559px">
+<svg viewBox="0 0 560 540" width="580" height="559" aria-hidden="true" style="position: absolute; left: 0px; top: 0px">
+<defs>
+<path id="pd-arc-a2" d="M20 330A260 260 0 0 1 540 330"></path>
+</defs>
+<text class="b-arc"><textPath href="#pd-arc-a2" startOffset="50%"><tspan class="a2-l">P</tspan><tspan class="a2-l a2-l2">O</tspan><tspan class="a2-l a2-l3">L</tspan><tspan class="a2-l a2-l4">D</tspan><tspan class="a2-l a2-l5">A</tspan><tspan class="a2-l a2-l6">C</tspan><tspan class="a2-l a2-l7">H</tspan></textPath></text>
+</svg>
+<div style="position: absolute; left: 0px; top: 0px; width: 580px; height: 541px; overflow: hidden; clip-path: polygon(0px 0px, 580px 0px, 580px 402px, 426px 402px, 426px 541px, 154px 541px, 154px 402px, 0px 402px)">
+<svg class="a2-umb" viewBox="0 0 560 540" width="580" height="559" aria-hidden="true" style="position: absolute; left: 0px; top: 0px">
+<path d="M280 210V392" fill="none" stroke="#1F1919" stroke-width="4.6"></path>
+<g class="a2-canopy">
+<path d="M280 120A200 105 0 0 0 80 225Q120 205 160 225Q200 205 240 225Q280 205 320 225Q360 205 400 225Q440 205 480 225A200 105 0 0 0 280 120Z" fill="#D23B3B"></path>
+<path d="M280 120A120 105 0 0 0 160 225Q200 205 240 225A40 105 0 0 1 280 120Z" fill="#FFFFFF"></path>
+<path d="M280 120A40 105 0 0 1 320 225Q360 205 400 225A120 105 0 0 0 280 120Z" fill="#FFFFFF"></path>
+</g>
+<rect x="277" y="104" width="6" height="20" rx="3" fill="#1F1919"></rect>
+</svg>
+<img class="a2-man" src="./assets/9e5fa3993d6db766a1c58c5131c4e9c2.svg" alt="" style="position: absolute; left: 128.3px; top: 242.9px; width: 204.7px; height: 246.9px">
+</div>
+<svg viewBox="0 0 560 540" width="580" height="559" aria-hidden="true" style="position: absolute; left: 0px; top: 0px">
+<rect x="132" y="388" width="296" height="14" fill="#A93030" stroke="#1F1919" stroke-width="2.5"></rect>
+<rect x="148" y="402" width="264" height="120" fill="#D23B3B" stroke="#1F1919" stroke-width="2.5"></rect>
+<path d="M311 366L304 346M321 366L315 338M327.5 366L330.4 332M331.4 366L341 340" fill="none" stroke="#1F1919" stroke-width="8" stroke-linecap="round"></path>
+<path d="M311 366L304 346" fill="none" stroke="#D6247C" stroke-width="4.6" stroke-linecap="round"></path>
+<path d="M321 366L315 338" fill="none" stroke="#F4E04D" stroke-width="4.6" stroke-linecap="round"></path>
+<path d="M327.5 366L330.4 332" fill="none" stroke="#2F6FD1" stroke-width="4.6" stroke-linecap="round"></path>
+<path d="M331.4 366L341 340" fill="none" stroke="#1F6F6B" stroke-width="4.6" stroke-linecap="round"></path>
+<path d="M305 362H335L333 387H307Z" fill="#EEDF3E" stroke="#1F1919" stroke-width="2.5" stroke-linejoin="round"></path>
+<g class="a2-slogan">
+<text class="b-plate" x="280" y="452">DACH – TO</text>
+<text class="b-plate" x="280" y="494">NASZ FACH</text>
+</g>
+</svg>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":800,"height":640}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

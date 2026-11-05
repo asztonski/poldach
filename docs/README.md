@@ -32,4 +32,5 @@ dokumentu to należy.
 Dokumentacja powstała 22.10.2026 na podstawie materiałów projektu „Poldach” (research firmy,
 analizy konkurencji i odbiorców B2B, identyfikacja wizualna i reklama wideo, inwentaryzacja starej
 strony, design system, koncepcja strony 2027, prompt fundamentów technicznych). Materiały źródłowe
-nie są częścią repozytorium – w razie rozbieżności obowiązuje `docs/`.
+nie są częścią repozytorium – wyjątek to pliki logo i makiety w [`design/`](../design/README.md)
+(D-13). W razie rozbieżności obowiązuje `docs/`.

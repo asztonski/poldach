@@ -8,7 +8,7 @@ Jak budujemy stronę. Co ma powstać – [mapa-strony.md](mapa-strony.md), jakie
 **Zainstalowane** (wersje – `package.json`): Next.js (App Router, statyczny eksport), React,
 TypeScript (strict), Tailwind CSS 4, lucide-react, clsx + tailwind-merge, ESLint (konfiguracja Next) +
 Prettier z sortowaniem klas Tailwind. Font Roboto Condensed (zmienny) przez `next/font/google` w
-`src/app/layout.tsx`.
+`src/app/layout.tsx`; Kalam 700 (notatki pisakiem) w `src/sections/home/HeroSection.tsx`.
 
 **Planowane** (faza fundamentów – [roadmapa.md](roadmapa.md)):
 
@@ -44,15 +44,15 @@ src/
 │   ├── layout.tsx        #   wspólny layout, font, domyślne metadane
 │   ├── page.tsx          #   strona główna
 │   ├── <podstrona>/page.tsx
-│   └── not-found.tsx, sitemap.ts, robots.ts, icon.svg
-├── assets/images/        # zdjęcia importowane w kodzie
-├── brand/                # elementy marki wspólne z reklamą: Logo.tsx; (planowane) tokens.ts, icons.tsx
+│   └── not-found.tsx, sitemap.ts, robots.ts, icon.svg, icon.png, apple-icon.png
+├── assets/images/        # zdjęcia importowane w kodzie; logotypy/ – znaki innych (PSD)
+├── brand/                # elementy marki: Logo.tsx, LogoWithFigure.tsx; (planowane) tokens.ts, icons.tsx
 ├── components/
 │   ├── common/           # komponenty współdzielone (LogoLink)
 │   ├── layout/           # Header, DesktopNav, MobileMenu, MobileCallBar; (planowane) Footer
 │   ├── ui/               # klocki design systemu (Section, Eyebrow, PhoneButton, ButtonLink, …)
 │   ├── illustrations/    # rysunki SVG jako czyste komponenty TSX (HouseIllustration)
-│   └── motion/           # DrawOnLoad; (planowane) DrawOnScroll, Reveal, PinnedSequence, CountUp, SectionWipe
+│   └── motion/           # DrawOnLoad, LogoEntrance; (planowane) DrawOnScroll, Reveal, PinnedSequence, CountUp, SectionWipe
 ├── config/               # site.ts (dane firmy), routes.ts (ścieżki), navigation.ts (menu)
 ├── data/                 # treści jako typowane dane (usługi, realizacje, …)
 ├── hooks/                # własne hooki React
@@ -63,6 +63,9 @@ src/
 ```
 
 Import z `src` przez alias `@/`, np. `import { Section } from '@/components/ui'`.
+
+Poza `src/`: `design/` – pliki logo i makiety od projektanta, bez zmian i poza buildem
+([design/README.md](../design/README.md), [decyzje.md](decyzje.md) D-13).
 
 ## Zasady kodu
 

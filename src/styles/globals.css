@@ -23,6 +23,18 @@
   --color-pd-white: #ffffff;
   --color-pd-red-500: #d23b3b;
 
+  /* Logo with the figure – colours from the designer's file, only for LogoWithFigure (D-16) */
+  --color-pd-logo-ink: #1f1919;
+  --color-pd-logo-red-dark: #a93030;
+  --color-pd-logo-orange: #d47b1b;
+  --color-pd-logo-violet: #2c096c;
+  --color-pd-logo-slate: #3b3f52;
+  --color-pd-logo-steel: #626c96;
+  --color-pd-logo-magenta: #d6247c;
+  --color-pd-logo-lemon: #f4e04d;
+  --color-pd-logo-cobalt: #2f6fd1;
+  --color-pd-logo-teal: #1f6f6b;
+
   /* Type scale, phone (375 px) -> desktop (1200 px): docs/design-system.md#typografia */
   --text-display: clamp(3.5rem, 1.909rem + 6.788vw, 7rem);
   --text-display--line-height: 1;
@@ -111,6 +123,15 @@
 /* Grid without the vignette – header after scrolling, menu panels */
 @utility blueprint-flat {
   --vignette: none;
+}
+
+/*
+ * A section with `under-header` (home hero, docs/decyzje.md D-15) starts under the header. Until
+ * the page scrolls the header has no background of its own, so the grid and the vignette run
+ * through both without a seam. Unlayered on purpose – it has to beat the blueprint utility.
+ */
+html:has(.under-header) header:not([data-scrolled]) {
+  background: none;
 }
 
 @layer base {

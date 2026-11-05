@@ -35,26 +35,28 @@ wezwaniem do działania jest telefon.
 
 ## Strona główna
 
-| #   | Sekcja                                                                                                                                         | Motyw     | Moment WOW                                | Cel                                    |
-| --- | ---------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ----------------------------------------- | -------------------------------------- |
-| 0   | Nagłówek: logo, menu, przycisk-telefon                                                                                                         | żółty     | zmniejsza się przy przewijaniu            | kontakt zawsze pod ręką                |
-| 1   | Hero: nadtytuł „RODZINNA FIRMA DEKARSKA · OD 1992”, hasło (⚠ P-07), telefon, „Bezpłatna wycena”, pasek zaufania (od 1992 · PSD · ocena Google) | niebieski | rysujący się dom                          | pierwsze wrażenie, zaufanie            |
-| 2   | Wybór ścieżki: „Dom” / „Firma, zarządca, deweloper”                                                                                            | żółty     | –                                         | segmentacja odbiorców                  |
-| 3   | Usługi dekarskie                                                                                                                               | niebieski | dach składa się przy przewijaniu          | pełna oferta dekarska                  |
-| 4   | Od dachu po podłogę: drzwi, podłogi, parapety                                                                                                  | żółty     | interaktywny przekrój domu                | wyróżnik „wszystko z jednej ręki”      |
-| 5   | Usługi specjalistyczne: diagnostyka dachów płaskich i usuwanie eternitu – dwie karty z linkami                                                 | niebieski | celownik                                  | dowód fachowości, wejście na podstrony |
-| 6   | Jak pracujemy: doradztwo → bezpłatny kosztorys → materiał własny lub powierzony → montaż → odbiór i gwarancja                                  | żółty     | linia procesu rysuje się przy przewijaniu | usuwa niepewność                       |
-| 7   | Rodzinna firma od 1992: oś czasu i liczby                                                                                                      | niebieski | historia jako linia wymiarowa             | doświadczenie                          |
-| 8   | Realizacje: 3–6 najlepszych                                                                                                                    | żółty     | rysunek → zdjęcie                         | dowód                                  |
-| 9   | Opinie, PSD, certyfikaty producentów                                                                                                           | niebieski | –                                         | zaufanie                               |
-| 10  | Kontakt: telefon, krótki formularz, mapa                                                                                                       | żółty     | –                                         | konwersja                              |
-| 11  | Stopka – tabliczka rysunkowa                                                                                                                   | granat    | –                                         | wiarygodność                           |
+| #   | Sekcja                                                                                                                                                  | Motyw                                  | Moment WOW                                | Cel                                    |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- | ----------------------------------------- | -------------------------------------- |
+| 0   | Nagłówek: logo, menu, przycisk-telefon                                                                                                                  | żółty                                  | zmniejsza się przy przewijaniu            | kontakt zawsze pod ręką                |
+| 1   | Hero: nadtytuł „RODZINNA FIRMA DEKARSKA · OD 1992”, tytuł (⚠ P-07), telefon, „Bezpłatna wycena”, notatki pisakiem (od 1992 · PSD ⚠ P-19 · ocena Google) | żółty, wspólne tło z nagłówkiem (D-15) | logo z postacią i parasolem               | pierwsze wrażenie, zaufanie            |
+| 2   | Wybór ścieżki: „Dom” / „Firma, zarządca, deweloper”                                                                                                     | żółty                                  | –                                         | segmentacja odbiorców                  |
+| 3   | Usługi dekarskie                                                                                                                                        | niebieski                              | dach składa się przy przewijaniu          | pełna oferta dekarska                  |
+| 4   | Od dachu po podłogę: drzwi, podłogi, parapety                                                                                                           | żółty                                  | interaktywny przekrój domu                | wyróżnik „wszystko z jednej ręki”      |
+| 5   | Usługi specjalistyczne: diagnostyka dachów płaskich i usuwanie eternitu – dwie karty z linkami                                                          | niebieski                              | celownik                                  | dowód fachowości, wejście na podstrony |
+| 6   | Jak pracujemy: doradztwo → bezpłatny kosztorys → materiał własny lub powierzony → montaż → odbiór i gwarancja                                           | żółty                                  | linia procesu rysuje się przy przewijaniu | usuwa niepewność                       |
+| 7   | Rodzinna firma od 1992: oś czasu i liczby                                                                                                               | niebieski                              | historia jako linia wymiarowa             | doświadczenie                          |
+| 8   | Realizacje: 3–6 najlepszych                                                                                                                             | żółty                                  | rysunek → zdjęcie                         | dowód                                  |
+| 9   | Opinie, PSD, certyfikaty producentów                                                                                                                    | niebieski                              | –                                         | zaufanie                               |
+| 10  | Kontakt: telefon, krótki formularz, mapa                                                                                                                | żółty                                  | –                                         | konwersja                              |
+| 11  | Stopka – tabliczka rysunkowa                                                                                                                            | granat                                 | –                                         | wiarygodność                           |
 
 ### Momenty WOW
 
-- **Rysujący się dom (hero):** biała kreska rysuje dom z dachem skośnym w ciągu 1,2 s od wejścia, bez
-  ekranu ładowania; dach jako ostatni wypełnia się kolorem. Na telefonie uproszczony kontur, tytuł
-  widoczny od razu.
+- **Logo z postacią (hero, D-15, D-16):** obok tytułu, bez ekranu ładowania. Raz przy każdym
+  wejściu: postać wygląda zza biurka, chowa się i wyskakuje, parasol wysuwa się i otwiera, litery
+  POLDACH pojawiają się po kolei, na końcu hasło na biurku – około 5,2 s. Parametry –
+  [design-system.md](design-system.md#ruch).
+  Rysujący się dom (`HouseIllustration` + `DrawOnLoad`) zszedł z hero i czeka na nowe miejsce.
 - **Dach składa się przy przewijaniu (główny efekt, ⚠ P-08):** przekrój buduje się warstwami: więźba
   → ocieplenie → membrana → kontrłaty i łaty → pokrycie → obróbki i okno dachowe → rynny. Każdy etap
   ma nadtytuł „ETAP 03 / 07”, jedno zdanie i link do usługi. Na końcu podsumowanie: „Tak robimy dachy

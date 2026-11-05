@@ -5,7 +5,8 @@ import prettier from 'eslint-config-prettier';
 import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
-  globalIgnores(['.next/**', 'out/**', 'node_modules/**', 'next-env.d.ts']),
+  // design/ – design-tool exports kept as delivered (design/README.md)
+  globalIgnores(['.next/**', 'out/**', 'node_modules/**', 'next-env.d.ts', 'design/**']),
   js.configs.recommended,
   ...nextVitals,
   ...nextTs,

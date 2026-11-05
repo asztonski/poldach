@@ -30,6 +30,9 @@ Tylko te barwy. Żadnego trzeciego koloru akcentu. Wartości HEX:
 | `pd-white`      | tekst na niebieskim i granacie                                                                 |
 | `pd-red-500`    | wyłącznie znacznik problemu ✗                                                                  |
 
+Wyjątek: tokeny `pd-logo-*` to barwy z pliku projektanta (postać, kredki, ciemna czerwień biurka) –
+wyłącznie w [logo z postacią](#logo-z-postacią), nigdzie poza nim ([decyzje.md](decyzje.md) D-16).
+
 ⚠ P-16: zgoda klienta na odcienie `blue-600` i `blue-700` w tłach z tekstem. ⚠ P-17: potwierdzenie
 odcienia `blue-500`.
 
@@ -121,6 +124,10 @@ Podzbiory `latin` i `latin-ext` (polskie znaki), `font-display: swap`, hostowany
 wdrożona jako tokeny `--text-*` w [`src/styles/globals.css`](../src/styles/globals.css) (klasy
 `text-display`, `text-h1`, …, płynnie między 375 a 1200 px).
 
+**Kalam 700** (OFL) – wyłącznie notatki pisakiem (dowody w hero, [decyzje.md](decyzje.md) D-15).
+Podzbiory `latin` i `latin-ext`, ładowany w
+[`HeroSection`](../src/sections/home/HeroSection.tsx), więc pobiera go tylko strona główna.
+
 | Token     | Telefon → komputer              | Odmiana | Interlinia | Zastosowanie                    |
 | --------- | ------------------------------- | ------- | ---------- | ------------------------------- |
 | `display` | 56 → 112 px                     | 700     | 1,0        | logo i hasło w hero oraz stopce |
@@ -168,26 +175,36 @@ napisu. Link do strony głównej z logo: `LogoLink` w `src/components/common/`.
 
 - Rozmiar ustawiamy wysokością (np. `h-8 w-auto`), szerokość wynika z proporcji.
 - Hasło „Dach – to nasz fach” jako podpis pod logo.
-- Stare logo z parasolem i postacią jest wycofane ([decyzje.md](decyzje.md), D-01).
+- Stare logo z parasolem i postacią (sprzed D-01) jest wycofane ([decyzje.md](decyzje.md), D-01).
+  Logo z postacią niżej to jego nowa wersja.
+
+### Logo z postacią
+
+Napis POLDACH w łuku, parasol i postać za biurkiem z hasłem –
+[`src/brand/LogoWithFigure.tsx`](../src/brand/LogoWithFigure.tsx), geometria 1:1 z
+`design/logo/poldach-logo.svg` (D-15, D-16). Barwy z tokenów, w tym `pd-logo-*`. Animację wejścia
+dodaje `LogoEntrance` ([Ruch](#ruch)). Tylko na tle żółtym lub białym – niebieski napis w łuku znika
+na niebieskim. Teraz w hero; rola poza hero – ⚠ P-20.
 
 ## Komponenty
 
-| Komponent        | Specyfikacja                                                                                                                                                                                                                                           |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Nadtytuł         | logo w kolorze `--title` + pionowa kreska 2 px (krycie 40%) + etykieta `eyebrow` w kolorze `--label`. W każdej sekcji treści – to on spina stronę z reklamą                                                                                            |
-| Tytuł sekcji     | `h2` w kolorze `--title`; zasady treści – [komunikacja.md](komunikacja.md#zasady-pisania)                                                                                                                                                              |
-| Lista z ikonami  | pełne kółko około 1,1 em. ✓ korzyść: `--icon-ok-bg` / `--icon-ok-fg`. ✗ problem: zawsze `red-500` z białym znakiem                                                                                                                                     |
-| Pigułka statusu  | `blue-500`, biała ikona ✓ i tekst 14–15 px bold, np. „Pokrycie nienaruszone”, „Od 1992”                                                                                                                                                                |
-| Przycisk-telefon | główne CTA. Pigułka `--btn-bg`, numer 700 co najmniej 20 px, po lewej kółko ze słuchawką, wysokość co najmniej 48 px, zawsze link `tel:`. Na telefonie przyklejony pasek u dołu ekranu, na komputerze w nagłówku. Numer – [firma.md](firma.md#kontakt) |
-| Przycisk główny  | ta sama pigułka bez ikony, np. „Bezpłatna wycena”                                                                                                                                                                                                      |
-| Panel ilustracji | ostre rogi, bez obrysu i cienia – patrz [Ilustracje](#ilustracje)                                                                                                                                                                                      |
-| Celownik         | okrąg + 4 kreski na zewnątrz; granatowy na żółtym, żółty na niebieskim; opcjonalna etykieta w granatowej pigułce („± 1 cm”). Znak precyzji: favicon, punkty na interaktywnych rysunkach, „tu jest przeciek”                                            |
-| Licznik          | granatowy prostokąt (zaokrąglenie około 6 px), duża biała liczba 700 + mała jednostka („m²/dzień”)                                                                                                                                                     |
-| Linia wymiarowa  | linia ze strzałkami na końcach i liczbą pośrodku, np. „1992 ↔ dziś”                                                                                                                                                                                    |
-| Separator        | kreska około 80 × 2 px, `blue-500` z kryciem około 50%, wyśrodkowana                                                                                                                                                                                   |
-| Blok kontaktowy  | wyśrodkowany, tło żółte z siatką: nadtytuł → duże logo → hasło → separator → przycisk-telefon → e-mail i www (granat, bold) → lokalizacja (granat, mniejsza)                                                                                           |
-| Nagłówek         | żółty pasek z siatką: logo `blue-500` po lewej, nawigacja granatowa 500, przycisk-telefon po prawej. Po przewinięciu jednolity (bez winiety), z cienką granatową linią u dołu                                                                          |
-| Stopka           | „tabliczka rysunkowa” jak w rogu rysunku technicznego: Wykonawca · Adres · Telefon · Od 1992 · członek PSD · „Arkusz 01 / 01 · Skala 1:1 · Rew. 2027”. Dane – [firma.md](firma.md)                                                                     |
+| Komponent        | Specyfikacja                                                                                                                                                                                                                                                                                         |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Nadtytuł         | logo w kolorze `--title` + pionowa kreska 2 px (krycie 40%) + etykieta `eyebrow` w kolorze `--label`. W każdej sekcji treści – to on spina stronę z reklamą. Wyjątek: hero – sama etykieta, bo obok jest logo z postacią                                                                             |
+| Tytuł sekcji     | `h2` w kolorze `--title`; zasady treści – [komunikacja.md](komunikacja.md#zasady-pisania)                                                                                                                                                                                                            |
+| Lista z ikonami  | pełne kółko około 1,1 em. ✓ korzyść: `--icon-ok-bg` / `--icon-ok-fg`. ✗ problem: zawsze `red-500` z białym znakiem                                                                                                                                                                                   |
+| Pigułka statusu  | `blue-500`, biała ikona ✓ i tekst 14–15 px bold, np. „Pokrycie nienaruszone”, „Od 1992”                                                                                                                                                                                                              |
+| Notatka pisakiem | Kalam 700 w rozmiarze `list`, granat; po lewej pole 36 px z odręcznym ptaszkiem `blue-500` albo ze znakiem (np. PSD); obrót −1…−2°; notatki jedna pod drugą. Dowody w hero zamiast pigułek statusu                                                                                                   |
+| Przycisk-telefon | główne CTA. Pigułka `--btn-bg`, numer 700 co najmniej 20 px, po lewej kółko ze słuchawką, wysokość co najmniej 48 px, zawsze link `tel:`. Na telefonie przyklejony pasek u dołu ekranu, na komputerze w nagłówku. Numer – [firma.md](firma.md#kontakt)                                               |
+| Przycisk główny  | ta sama pigułka bez ikony, np. „Bezpłatna wycena”                                                                                                                                                                                                                                                    |
+| Panel ilustracji | ostre rogi, bez obrysu i cienia – patrz [Ilustracje](#ilustracje)                                                                                                                                                                                                                                    |
+| Celownik         | okrąg + 4 kreski na zewnątrz; granatowy na żółtym, żółty na niebieskim; opcjonalna etykieta w granatowej pigułce („± 1 cm”). Znak precyzji: punkty na interaktywnych rysunkach, „tu jest przeciek”                                                                                                   |
+| Licznik          | granatowy prostokąt (zaokrąglenie około 6 px), duża biała liczba 700 + mała jednostka („m²/dzień”)                                                                                                                                                                                                   |
+| Linia wymiarowa  | linia ze strzałkami na końcach i liczbą pośrodku, np. „1992 ↔ dziś”                                                                                                                                                                                                                                  |
+| Separator        | kreska około 80 × 2 px, `blue-500` z kryciem około 50%, wyśrodkowana                                                                                                                                                                                                                                 |
+| Blok kontaktowy  | wyśrodkowany, tło żółte z siatką: nadtytuł → duże logo → hasło → separator → przycisk-telefon → e-mail i www (granat, bold) → lokalizacja (granat, mniejsza)                                                                                                                                         |
+| Nagłówek         | żółty pasek z siatką: logo `blue-500` po lewej, nawigacja granatowa 500, przycisk-telefon po prawej. Po przewinięciu jednolity (bez winiety), z cienką granatową linią u dołu. Nad hero strony głównej do pierwszego przewinięcia bez własnego tła (`under-header`), więc siatka przechodzi bez szwu |
+| Stopka           | „tabliczka rysunkowa” jak w rogu rysunku technicznego: Wykonawca · Adres · Telefon · Od 1992 · członek PSD · „Arkusz 01 / 01 · Skala 1:1 · Rew. 2027”. Dane – [firma.md](firma.md)                                                                                                                   |
 
 ## Ilustracje
 
@@ -227,15 +244,16 @@ Każda animacja coś tłumaczy, a nie tylko się rusza. Momenty popisowe opisuje
 [mapa-strony.md](mapa-strony.md), wymagania (reduced motion, działanie bez JS) –
 [standardy.md](standardy.md#dostępność).
 
-| Efekt                         | Parametry                                                                                                                      |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| Tytuł sekcji                  | wjeżdża od dołu spod maski, raz przy wejściu w widok, 400–500 ms, `ease-out`                                                   |
-| Punkty listy                  | pojawiają się kolejno co około 120 ms                                                                                          |
-| Ikony ✓, celownik             | sprężyste pojawienie: skala 0,6 → 1 z lekkim przestrzeleniem, 300 ms                                                           |
-| Licznik                       | odlicza od zera raz, przy pierwszym pokazaniu                                                                                  |
-| Rysunek                       | kontur rysuje się linią, potem wypełnienie kolorem                                                                             |
-| Zmiana koloru sekcji („wipe”) | ostra pionowa lub ukośna krawędź albo komórki siatki 54 px odsłaniające nowy kolor; 2–3 razy na stronę, nie przy każdej sekcji |
-| Mgła, iskra, kapanie          | małe zapętlone animacje SVG, tylko w ilustracjach metod diagnostyki                                                            |
+| Efekt                         | Parametry                                                                                                                                                                                                                                                                                                                                            |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tytuł sekcji                  | wjeżdża od dołu spod maski, raz przy wejściu w widok, 400–500 ms, `ease-out`                                                                                                                                                                                                                                                                         |
+| Punkty listy                  | pojawiają się kolejno co około 120 ms                                                                                                                                                                                                                                                                                                                |
+| Ikony ✓, celownik             | sprężyste pojawienie: skala 0,6 → 1 z lekkim przestrzeleniem, 300 ms                                                                                                                                                                                                                                                                                 |
+| Licznik                       | odlicza od zera raz, przy pierwszym pokazaniu                                                                                                                                                                                                                                                                                                        |
+| Rysunek                       | kontur rysuje się linią, potem wypełnienie kolorem                                                                                                                                                                                                                                                                                                   |
+| Logo z postacią (hero)        | raz przy każdym wejściu na stronę, około 5,2 s: postać wygląda zza biurka, chowa się i wyskakuje → parasol wysuwa się i otwiera → litery POLDACH co 64 ms → hasło wjeżdża od dołu. Sam CSS – [`LogoEntrance`](../src/components/motion/LogoEntrance.module.css) (czasy z makiety `design/makiety/animacja-spod-biurka/` × 0,8, czyli 1,25× szybciej) |
+| Zmiana koloru sekcji („wipe”) | ostra pionowa lub ukośna krawędź albo komórki siatki 54 px odsłaniające nowy kolor; 2–3 razy na stronę, nie przy każdej sekcji                                                                                                                                                                                                                       |
+| Mgła, iskra, kapanie          | małe zapętlone animacje SVG, tylko w ilustracjach metod diagnostyki                                                                                                                                                                                                                                                                                  |
 
 Animacja tylko przy pierwszym pojawieniu się; nic nie miga w pętli obok tekstu.
 
@@ -253,4 +271,9 @@ Animacja tylko przy pierwszym pojawieniu się; nic nie miga w pętli obok tekstu
 ## Meta przeglądarki
 
 - `theme-color`: `pd-yellow-500`.
-- Favicon: celownik `blue-500` na żółtym (SVG i PNG).
+- Favicon: parasol stołowy na biurku – [`src/app/icon.svg`](../src/app/icon.svg), wariant 1 z
+  makiety `design/makiety/favicon-parasol-stolowy/` ([decyzje.md](decyzje.md) D-14). Źródłem jest
+  SVG; PNG renderujemy z niego (po każdej zmianie SVG – ponownie):
+  - [`src/app/icon.png`](../src/app/icon.png) – 32×32, dla przeglądarek bez favicon SVG,
+  - [`src/app/apple-icon.png`](../src/app/apple-icon.png) – 180×180, kwadratowe tło bez
+    przezroczystości (iOS sam zaokrągla rogi).
