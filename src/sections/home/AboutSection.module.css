@@ -71,6 +71,7 @@
     }
 
     .milestones > li {
+      animation-name: rise;
       animation-range: entry 10% entry 90%;
     }
 
@@ -81,6 +82,13 @@
         flex-direction: column;
         /* Centred, but a stage too tall for the screen still starts at its top */
         justify-content: safe center;
+      }
+
+      /* A low screen: less air above the timeline, so the whole scene keeps its space below */
+      @media (height < 50rem) {
+        .timeline {
+          margin-top: 1rem;
+        }
       }
 
       .right,
@@ -171,5 +179,12 @@
 @keyframes word-in {
   from {
     opacity: 0;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
   }
 }

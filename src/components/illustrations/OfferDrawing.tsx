@@ -5,8 +5,6 @@ import { ROUTES, type RoutePath } from '@/config/routes';
  * Small technical drawings of the services, one per page of the "Usługi" menu
  * (src/config/navigation.ts), drawn in code instead of stock photos (docs/decyzje.md D-06, D-29).
  * Made for blue paper: white lines, flat fills in shades of blue and navy, one yellow accent.
- * The layers carry the attributes DrawOnScroll reads (`data-draw="outline"` is traced, `data-step`
- * fades in), so the same markup is also the finished drawing.
  */
 
 const WIDTH = 320;
@@ -36,7 +34,7 @@ const TONE: Record<Tone, string> = {
 };
 
 type Drawing = {
-  /** Flat fills under the lines; the accent appears a moment after the others */
+  /** Flat fills under the lines */
   fills?: [Tone, string][];
   /** Edges, 1.75 px */
   lines: string[];
@@ -405,38 +403,31 @@ export function OfferDrawing({ route, ...props }: OfferDrawingProps) {
       {...props}
     >
       <g transform={rotate ? `rotate(${rotate} ${WIDTH / 2} ${HEIGHT / 2})` : undefined}>
-        <g data-step="1">
-          {fills.map(([tone, d], i) =>
-            tone === 'accent' ? null : <path key={i} d={d} fill={TONE[tone]} />,
-          )}
-        </g>
-        <g data-step="2">
-          {fills.map(([tone, d], i) =>
-            tone === 'accent' ? <path key={i} d={d} fill={TONE.accent} /> : null,
-          )}
-        </g>
-        <g data-step="3" stroke={mark} strokeWidth={1.25} strokeDasharray="5 4">
+        {fills.map(([tone, d], i) => (
+          <path key={i} d={d} fill={TONE[tone]} />
+        ))}
+        <g stroke={mark} strokeWidth={1.25} strokeDasharray="5 4">
           {hidden.map((d) => (
             <path key={d} d={d} />
           ))}
         </g>
-        <g data-draw="outline" stroke={line} strokeWidth={1.75}>
+        <g stroke={line} strokeWidth={1.75}>
           {lines.map((d) => (
-            <path key={d} d={d} pathLength={1} />
+            <path key={d} d={d} />
           ))}
         </g>
-        <g data-draw="outline" stroke={line} strokeWidth={1}>
+        <g stroke={line} strokeWidth={1}>
           {details.map((d) => (
-            <path key={d} d={d} pathLength={1} />
+            <path key={d} d={d} />
           ))}
         </g>
-        <g data-draw="outline" stroke={mark} strokeWidth={2}>
+        <g stroke={mark} strokeWidth={2}>
           {marks.map((d) => (
-            <path key={d} d={d} pathLength={1} />
+            <path key={d} d={d} />
           ))}
         </g>
         {pill ? (
-          <g data-step="3">
+          <g>
             <rect x={pill.x - 26} y={pill.y - 10} width={52} height={20} rx={10} fill={TONE.navy} />
             <text
               x={pill.x}

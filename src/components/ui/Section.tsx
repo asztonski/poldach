@@ -25,8 +25,10 @@ const slantClasses: Record<SectionSlant, string> = {
 };
 
 /**
- * Page section: its own colour and vignette on the screen grid (`paper`, globals.css); padding
- * sits on the 54 px grid. A transform on it would pin its grid to it (docs/decyzje.md D-27).
+ * Page section: its own colour and vignette on the screen grid (`paper`, globals.css). The same
+ * space above and below the content (--section-space, docs/decyzje.md D-42): the next section
+ * slides over the bottom by --slant-rise, so the bottom gets that much more, as the top gets it from
+ * its slanted edge. A transform on it would pin its grid to it (D-27).
  */
 export function Section({
   theme = 'yellow',
@@ -41,7 +43,7 @@ export function Section({
     <section
       className={cn(
         themeClass(theme),
-        'paper py-13.5 lg:py-27',
+        'paper pt-(--section-space) pb-[calc(var(--section-space)+var(--slant-rise))]',
         slant && slantClasses[slant],
         className,
       )}

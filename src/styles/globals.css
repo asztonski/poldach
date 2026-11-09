@@ -251,12 +251,15 @@ html:has(.under-header) header:not([data-scrolled]) {
     --grid-step: 40px;
     /* Drop of a slanted section edge: about 2°, exactly one grid step (54 px) at 1440 px */
     --slant-rise: 3.75vw;
+    /* Space above and below the content of every section: two grid steps, one on phones */
+    --section-space: 3.375rem;
     /* Height of the mobile call bar (MobileCallBar) – page content ends above it */
     --call-bar-h: 4.5625rem;
     /* Header: its height and how far it slides up after scrolling (Header.tsx) */
     --header-h: 4rem;
     --header-shift: 0.75rem;
-    /* What is left of the header after scrolling – pinned scenes stand right below it */
+    /* What is left of the header after scrolling – pinned scenes keep this place free for it, also
+       while it is hidden, so it never covers them when it comes back */
     --header-pinned: calc(var(--header-h) - var(--header-shift));
     color-scheme: light;
     scroll-padding-top: var(--header-h);
@@ -270,6 +273,7 @@ html:has(.under-header) header:not([data-scrolled]) {
 
   @media (width >= 64rem) {
     :root {
+      --section-space: 6.75rem;
       --header-h: 5rem;
     }
   }

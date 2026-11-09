@@ -1,0 +1,185 @@
+/*
+ * Every visual sits in the same centre box; its other states are transforms of that box
+ * (percentages of the box itself). The visuals move as a chain along five slots, all at once:
+ *
+ *   gone ←  prev  ← centre ←  next  ←  gone
+ *
+ * Neighbouring slots are 10 % of the box apart (edge to edge) and edges move linearly between slots,
+ * so the gap stays the same through a change and nothing overlaps. "Gone" is a point (scale 0) just
+ * past that gap: visuals appear and disappear by size only.
+ *
+ * The heading stands above the items on the same screen, so the box also has to fit what is left of
+ * the screen's height: its width is the smaller of a share of the list's width and a share of its
+ * height (cqh). A scene may change the box and the slots for another shape of visual:
+ * --visual-centre, --visual-width, --visual-max-width, --list-ratio, --next-x, --next-y, --gone-x,
+ * --gone-y.
+ *
+ * Time is counted in units: a change takes 24, a stop between changes 10, the first stop 22 and the
+ * last 20, so n items take 34n − 2 units of the pin. An item reaches the centre at 34i + 12, and its
+ * whole life is 126 units long: from 58 before that to 68 after. One set of keyframes serves all
+ * items because each plays it in its own range; the first two and the last two only replace the
+ * slots they would reach outside the pin, so they stand still there.
+ */
+@supports (animation-timeline: view()) {
+  /* The condition of PinnedScene */
+  @media (prefers-reduced-motion: no-preference) and (width >= 64rem) and (height >= 46rem) {
+    /* The heading on top, the items take the rest of the screen */
+    .stage {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .stage > :first-child {
+      flex: none;
+    }
+
+    .divider {
+      display: none;
+    }
+
+    .list {
+      --unit: calc(100% / (var(--n) * 34 - 2));
+      --next: translate(var(--next-x, 74%), var(--next-y, 36%)) scale(0.28);
+      --prev: translate(calc(var(--next-x, 74%) * -1), calc(var(--next-y, 36%) * -1)) scale(0.28);
+      --centre: translate(0, 0) scale(1);
+
+      position: relative;
+      display: block;
+      /*
+       * As tall as the slots need at full size, less on a low screen: heading and list stay
+       * together, centred, so the space above equals the space below
+       */
+      aspect-ratio: var(--list-ratio, 1.98);
+      flex: 0 1 auto;
+      min-height: 0;
+      margin-top: 1.25rem;
+      /* Sizes the box by the height that is left (cqh) */
+      container-type: size;
+    }
+
+    /* Static items: their visual and text are placed against the list */
+    .item {
+      --slot-1: translate(var(--gone-x, 98%), var(--gone-y, 50%)) scale(0);
+      --slot-2: var(--next);
+      --slot-3: var(--centre);
+      --slot-4: var(--prev);
+      --slot-5: translate(calc(var(--gone-x, 98%) * -1), calc(var(--gone-y, 50%) * -1)) scale(0);
+      --text-before: 0;
+      --text-after: 0;
+
+      position: static;
+    }
+
+    .item:nth-child(1) {
+      --slot-1: var(--centre);
+      --slot-2: var(--centre);
+      --text-before: 1;
+    }
+
+    .item:nth-child(2) {
+      --slot-1: var(--next);
+    }
+
+    .item:nth-last-child(2) {
+      --slot-5: var(--prev);
+    }
+
+    .item:nth-last-child(1) {
+      --slot-4: var(--centre);
+      --slot-5: var(--centre);
+      --text-after: 1;
+    }
+
+    .visual,
+    .text {
+      position: absolute;
+      top: 50%;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: --pinned;
+      animation-range: contain calc(var(--unit) * (var(--i) * 34 - 46)) contain
+        calc(var(--unit) * (var(--i) * 34 + 80));
+    }
+
+    /* Defaults for a portrait visual (a scan), whose slots stay within the height of the box */
+    .visual {
+      left: var(--visual-centre, 42%);
+      width: min(var(--visual-width, 36%), var(--visual-max-width, 71cqh));
+      translate: -50% -50%;
+      animation-name: pass;
+    }
+
+    .text {
+      left: 64%;
+      width: 34%;
+      margin-top: 0;
+      translate: 0 -50%;
+      animation-name: pass-text;
+    }
+
+    /*
+     * Keyboard focus: only that item is shown, in the centre, wherever the scroll is (beats the
+     * animation). Not after a mouse click – it would stay there after coming back to the tab.
+     */
+    .item:has(:focus-visible) .visual {
+      transform: none !important;
+    }
+
+    .item:has(:focus-visible) .text {
+      opacity: 1 !important;
+    }
+
+    .list:has(:focus-visible) .item:not(:has(:focus-visible)) :is(.visual, .text) {
+      opacity: 0 !important;
+    }
+  }
+}
+
+/* Stops of the life in 126 units: 24, 34, 58, 68, 92, 102 */
+@keyframes pass {
+  0% {
+    transform: var(--slot-1);
+  }
+
+  19.048%,
+  26.984% {
+    transform: var(--slot-2);
+  }
+
+  46.032%,
+  53.968% {
+    transform: var(--slot-3);
+  }
+
+  73.016%,
+  80.952% {
+    transform: var(--slot-4);
+  }
+
+  100% {
+    transform: var(--slot-5);
+  }
+}
+
+/*
+ * A text fades with the scroll, only while no moving visual crosses its column: in at the end of
+ * its visual's arrival, when that has passed the column (52–58), out at the very start of leaving,
+ * before the next one rises into the column (67–70)
+ */
+@keyframes pass-text {
+  0%,
+  41.27% {
+    opacity: var(--text-before);
+  }
+
+  46.032%,
+  53.175% {
+    opacity: 1;
+  }
+
+  55.556%,
+  100% {
+    opacity: var(--text-after);
+  }
+}

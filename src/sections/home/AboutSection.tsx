@@ -2,7 +2,6 @@ import type { CSSProperties } from 'react';
 import Image from 'next/image';
 import headquarters from '@/assets/images/firma/siedziba-kokoszkowy.webp';
 import { PinnedScene } from '@/components/motion/PinnedScene';
-import reveal from '@/components/motion/Reveal.module.css';
 import { Section, SectionHeading } from '@/components/ui';
 import { SITE } from '@/config/site';
 import { cn } from '@/lib/cn';
@@ -97,7 +96,7 @@ export function AboutSection() {
         </div>
 
         {/* 1992 ↔ today as a dimension line; the number of years is its dimension */}
-        <div className="mt-(--grid-step)">
+        <div className={cn(styles.timeline, 'mt-(--grid-step)')}>
           <p className="flex items-baseline justify-center gap-3 text-(--title)">
             <span
               className={cn(styles.years, 'text-display tabular-nums')}
@@ -110,10 +109,7 @@ export function AboutSection() {
           <DimensionLine />
           <ol className={cn(styles.milestones, 'mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-5')}>
             {MILESTONES.map((milestone) => (
-              <li
-                key={milestone.year}
-                className={cn(reveal.rise, 'border-l-2 border-pd-navy-900 pl-4')}
-              >
+              <li key={milestone.year} className="border-l-2 border-pd-navy-900 pl-4">
                 <p className="text-eyebrow uppercase">{milestone.year}</p>
                 <p className="mt-1">{milestone.text}</p>
               </li>

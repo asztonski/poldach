@@ -10,11 +10,12 @@ type SectionHeadingProps = {
   title: ReactNode;
   /** The sentence under the title */
   lead?: ReactNode;
-  /** Centred – only where docs/design-system.md#typografia allows it */
+  /**
+   * The big centred heading above a CenterStage (docs/decyzje.md D-26, D-37) – an exception to
+   * left-aligned content sections (docs/design-system.md#typografia).
+   */
   centered?: boolean;
   className?: string;
-  titleClassName?: string;
-  leadClassName?: string;
   /** More description under the lead – it appears together with the heading */
   children?: ReactNode;
 };
@@ -30,20 +31,16 @@ export function SectionHeading({
   lead,
   centered = false,
   className,
-  titleClassName,
-  leadClassName,
   children,
 }: SectionHeadingProps) {
   return (
     <FadeInOnce className={cn(centered && 'text-center', className)}>
       <Eyebrow className={centered ? 'justify-center' : undefined}>{eyebrow}</Eyebrow>
-      <h2 id={id} className={cn('mt-2 text-h2 text-(--title)', titleClassName)}>
+      <h2 id={id} className={cn('mt-2 text-(--title)', centered ? 'text-h1' : 'text-h2')}>
         {title}
       </h2>
       {lead ? (
-        <p className={cn('mt-6 max-w-xl text-lead', centered && 'mx-auto', leadClassName)}>
-          {lead}
-        </p>
+        <p className={cn('mt-6 text-lead', centered ? 'mx-auto max-w-3xl' : 'max-w-xl')}>{lead}</p>
       ) : null}
       {children}
     </FadeInOnce>

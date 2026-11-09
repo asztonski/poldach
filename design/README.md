@@ -20,18 +20,18 @@ Na stronie: hero – komponent `src/brand/LogoWithFigure.tsx` z animacją wejśc
 Stan na 07.11.2026 – punkt wyjścia dla treści i narracji nowej strony. Co gdzie trafia –
 [docs/mapa-strony.md](../docs/mapa-strony.md#treści-starej-strony).
 
-| Plik                     | Zawartość                                                                                   |
-| ------------------------ | ------------------------------------------------------------------------------------------- |
-| `stara-strona/tresci.md` | menu i treści wszystkich 11 stron w kolejności sekcji, z opisem układu – dosłownie          |
-| `stara-strona/zrzuty/`   | zrzuty całych stron (720 px szerokości, połowa skali), nazwy jak adresy (`dachy.jpg`, …)    |
+| Plik                     | Zawartość                                                                                |
+| ------------------------ | ---------------------------------------------------------------------------------------- |
+| `stara-strona/tresci.md` | menu i treści wszystkich 11 stron w kolejności sekcji, z opisem układu – dosłownie       |
+| `stara-strona/zrzuty/`   | zrzuty całych stron (720 px szerokości, połowa skali), nazwy jak adresy (`dachy.jpg`, …) |
 
 Zdjęcia realizacji (47 plików) nie są w repo – przegląd i wybór: [docs/roadmapa.md](../docs/roadmapa.md).
 
 ## Inspiracje
 
-| Katalog                     | Zawartość                                                                                  |
-| --------------------------- | ------------------------------------------------------------------------------------------ |
-| `inspiracje/metriccivil/`   | metriccivil.ca – wzorzec strony (07.11.2026): `wnioski.md` (sekcje, efekty, co bierzemy) i `zrzuty/` |
+| Katalog                   | Zawartość                                                                                            |
+| ------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `inspiracje/metriccivil/` | metriccivil.ca – wzorzec strony (07.11.2026): `wnioski.md` (sekcje, efekty, co bierzemy) i `zrzuty/` |
 
 ## Makiety
 

@@ -121,15 +121,16 @@ Bogata oferta firmy Stegu zachwyca różnorodnością i stylem oraz sprawia, że
 W naszej ofercie posiadamy wysokiej jakości parapety wewnętrzne i zewnętrzne które będą nie tylko uzupełnieniem dla okien, ale i również całego wnętrza.
 
 Parapety możemy podzielić na :
-  - Parapety Granitowe
-  - Parapety Marmurowe
-  - Parapety z Duromarmuru
-  - Parapety z Konglomeratu
-  - Parapety MDF Laminowane i Lakierowane
-  - Parapety Stalowe
-  - Parapety Drewniane
-  - Parapety Postforming
-  - Blaty drewniane i kamienne
+
+- Parapety Granitowe
+- Parapety Marmurowe
+- Parapety z Duromarmuru
+- Parapety z Konglomeratu
+- Parapety MDF Laminowane i Lakierowane
+- Parapety Stalowe
+- Parapety Drewniane
+- Parapety Postforming
+- Blaty drewniane i kamienne
 
 ## Tarasy / balkony / eleawacje – `/tarasy-balkony-eleawacje/`
 
@@ -142,18 +143,19 @@ Tytuł: „Tarasy / balkony / eleawacje | POLDACH – pokrycia dachowe”. Opis 
 Kompozyt Drewna EcoTeak to produkt złożony z kilku komponentów, stworzony w najnowszej technologii przyjaznej dla środowiska. Wyprodukowany z drewna, mączki drzewnej i bambusowej oraz polimerów (HDPE i PP) połączonych ze sobą na gorąco za pomocą żywicy z dodatkiem barwników – barwiony strukturalnie.
 
 Zalety Kompozytu Drewna EcoTeak:
-  - w pełni ekologiczne, podlegające w 100% utylizacji;
-  - odporne na działanie warunków atmosferycznych;
-  - wysoce trwałe na zewnętrzne siły mechaniczne;
-  - ognioodporne, antykorozyjne;
-  - odporne na działanie insektów;
-  - całkowity brak absorpcji wody;
-  - nie pęcznieje;
-  - nie butwieje;
-  - brak drzazg i spękań;
-  - z antypoślizgową powierzchnią;
-  - nie wymaga zabezpieczania olejami czy lakierami.
-  - łatwe w montażu, pielęgnacji i obróbce.
+
+- w pełni ekologiczne, podlegające w 100% utylizacji;
+- odporne na działanie warunków atmosferycznych;
+- wysoce trwałe na zewnętrzne siły mechaniczne;
+- ognioodporne, antykorozyjne;
+- odporne na działanie insektów;
+- całkowity brak absorpcji wody;
+- nie pęcznieje;
+- nie butwieje;
+- brak drzazg i spękań;
+- z antypoślizgową powierzchnią;
+- nie wymaga zabezpieczania olejami czy lakierami.
+- łatwe w montażu, pielęgnacji i obróbce.
 
 ## Drzwi – `/drzwi/`
 
@@ -206,7 +208,8 @@ Panele laminowane są tańszym odpowiednikiem podłóg drewnianych a jednocześn
 Ich niewątpliwą zaletą jest fakt, iż układane mogą być na dowolnej powierzchni (sprzyja temu spodnia warstwa odprężająca) i użytkowane natychmiast po ułożeniu. Laminowana powierzchnia zapewnia dużą odporność na przenikanie wilgoci, przy czym należy pamiętać, że zazwyczaj takie panele mają laminowana zarówno spodnią jak i wierzchnia warstwę. Część nośna paneli zbudowana jest z płyty HDF (sprasowane włókna drzewne z dodatkiem związków organicznych) lub twardej płyty pilśniowej MDF i na nią naniesiony jest wzór imitujący drewno. Warstwa dekoracyjna pokryta jest termoutwardzalną żywicą, która czyni panel odporny na uderzenia, zarysowania, obciążenia oraz wysokie temperatury.
 
 Prócz odporności na wilgoć panele laminowane dobrze znoszą kontakt z chemikaliami używanymi na co dzień w gospodarstwie domowym, nie płowieją pod wpływem światła i można je stosować w pomieszczeniach o dużym ruchu. Co ważniejsze
-  - to podłogi idealne dla alergików gdyż są higieniczne i bardzo łatwe do utrzymania w czystości.
+
+- to podłogi idealne dla alergików gdyż są higieniczne i bardzo łatwe do utrzymania w czystości.
 
 W naszej ofercie posiadamy podłogi laminowane wiodących producentów takich jak:
 
@@ -221,19 +224,21 @@ Tytuł: „Dachy | POLDACH – pokrycia dachowe”. Opis meta: „Just another W
 Dachówki ceramiczne znane i stosowane od kilku wieków, cieszą się nadal największym powodzeniem. Należą do pokryć ciężkich, wymagających solidnej konstrukcji dachowej i odpowiedniego rusztu montażowego.
 
 Dachówki ceramiczne mają różne kształty i wyżłobienia pozwalające na szczelne połączenia dachówek. Są niepalne, odporne na deszcz i duże wahania temperatury. Ich zaletą jest także trwałość
-  - do około stu lat. Mają niewielkie wymiary, można więc kłaść je nawet na dachy o skomplikowanych kształtach. Kolejną ich zaletą jest zdolność dużej akumulacji ciepła. Cechuje je mała nasiąkliwość i duża odporność na promieniowanie słoneczne oraz dobra dźwiękoszczelność. Pokrycia z dachówek ceramicznych nie wymagają konserwacji podczas całego okresu eksploatacji.
+
+- do około stu lat. Mają niewielkie wymiary, można więc kłaść je nawet na dachy o skomplikowanych kształtach. Kolejną ich zaletą jest zdolność dużej akumulacji ciepła. Cechuje je mała nasiąkliwość i duża odporność na promieniowanie słoneczne oraz dobra dźwiękoszczelność. Pokrycia z dachówek ceramicznych nie wymagają konserwacji podczas całego okresu eksploatacji.
 
 ##### Dachówki betonowe
 
 Dachówki te pełnią podobne funkcje jak inne ciężkie pokrycia dachowe. Oprócz podstawowych funkcji użytkowych takich jak zapewnienie ochrony i bezpieczeństwa mieszkańców domów oraz odprowadzanie wody i śniegu z powierzchni dachu, muszą one pełnić funkcje estetyczne.
 
 Celem ich jest zapewnienie użytkownikowi komfortu, ciepła, bezpieczeństwa. Ich konstrukcja obejmuje innowacyjne rozwiązania związane z kształtem górnej i dolnej części dachówki:
-  - wypukły rąbek wzdłużny i zapory wodne, które zapobiegają dostawaniu się opadów atmosferycznych oraz umożliwiają szybki odpływ wody z powierzchni dachówki,
-  - ożebrowane spodnie
-  - dzięki jego zastosowaniu znacznie poprawiona jest trwałość dachówki, a na stronie zawietrznej dachówki powstaje efekt poduszki powietrznej i zmniejsza się wnikanie śniegu i deszczu,
-  - podwójne wzmacniające żebra w części spodniej, które podwyższają stabilność i obciążenie dopuszczalne dachówki,
-  - cztery wypustki wspierające
-  - umożliwiają właściwe rozłożenie ciężaru własnego dachówek oraz obciążenia wywołanego przez wiatr i śnieg, zapobiegając równocześnie zawilgoceniu drewnianych łat i ich gniciu.
+
+- wypukły rąbek wzdłużny i zapory wodne, które zapobiegają dostawaniu się opadów atmosferycznych oraz umożliwiają szybki odpływ wody z powierzchni dachówki,
+- ożebrowane spodnie
+- dzięki jego zastosowaniu znacznie poprawiona jest trwałość dachówki, a na stronie zawietrznej dachówki powstaje efekt poduszki powietrznej i zmniejsza się wnikanie śniegu i deszczu,
+- podwójne wzmacniające żebra w części spodniej, które podwyższają stabilność i obciążenie dopuszczalne dachówki,
+- cztery wypustki wspierające
+- umożliwiają właściwe rozłożenie ciężaru własnego dachówek oraz obciążenia wywołanego przez wiatr i śnieg, zapobiegając równocześnie zawilgoceniu drewnianych łat i ich gniciu.
 
 W naszej ofercie posiadamy dachówki wiodących producentów:
 
@@ -286,15 +291,16 @@ Tytuł: „Usługi | POLDACH – pokrycia dachowe”. Opis meta: „Just another
 Wieloletnie doświadczenie i systematyczne doszkalanie załogi pozwala nam świadczyć wysokiej jakości usługi doradcze i wykonawcze.
 
 Firma prowadzi usługi z zakresu:
-  - Montażu pokryć dachowych takich jak: dachówki, papy, membrany dachowe i wiele innych
-  - Wszelkie remonty pokryć dachowych
-  - Kosztorysowanie i doradztwo
-  - Wykonanie i montaż różnego typu obróbek blacharskich
-  - Montażu okien dachowych i elewacyjnych
-  - Montaż drzwi wewnętrznych i zewnętrznych
-  - Montaż bram garażowych
-  - Montaż podłóg laminowanych i drewnianych
-  - Montaż Parapetów wewnętrznych i zewnętrznych.
+
+- Montażu pokryć dachowych takich jak: dachówki, papy, membrany dachowe i wiele innych
+- Wszelkie remonty pokryć dachowych
+- Kosztorysowanie i doradztwo
+- Wykonanie i montaż różnego typu obróbek blacharskich
+- Montażu okien dachowych i elewacyjnych
+- Montaż drzwi wewnętrznych i zewnętrznych
+- Montaż bram garażowych
+- Montaż podłóg laminowanych i drewnianych
+- Montaż Parapetów wewnętrznych i zewnętrznych.
 
 ## Certyfikaty i referencje – `/certyfikaty-i-referencje/`
 

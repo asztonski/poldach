@@ -41,9 +41,9 @@ export function HeroSection() {
     <Section
       theme="yellow"
       aria-labelledby="hero-title"
-      // Pulled up by the header height; content starts 3 grid steps from the top
+      // Pulled up under the header; the usual space above the content starts below it
       className={cn(
-        'under-header -mt-(--header-h) pt-[calc(var(--grid-step)*3)] lg:pt-[calc(var(--grid-step)*3)]',
+        'under-header -mt-(--header-h) pt-[calc(var(--header-h)+var(--section-space))]',
         stayInPlace.root,
       )}
       containerClassName="grid grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16"

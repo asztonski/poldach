@@ -52,7 +52,7 @@ src/
 │   ├── layout/           # Header, DesktopNav, MobileMenu, MobileCallBar; (planowane) Footer
 │   ├── ui/               # klocki design systemu (Section, Eyebrow, PhoneButton, ButtonLink, …)
 │   ├── illustrations/    # rysunki SVG jako czyste komponenty TSX (TenementDrawing, OfferDrawing)
-│   └── motion/           # DrawOnScroll, FadeInOnce, LogoEntrance, PinnedScene, Reveal, SmoothScroll, StayInPlace, TracingReveal; (planowane) CountUp, SectionWipe
+│   └── motion/           # CenterStage, FadeInOnce, LogoEntrance, PinnedScene, SmoothScroll, StayInPlace, TracingReveal; (planowane) CountUp, SectionWipe
 ├── config/               # site.ts (dane firmy), routes.ts (ścieżki), navigation.ts (menu)
 ├── data/                 # treści jako typowane dane (usługi, realizacje, …)
 ├── hooks/                # własne hooki React

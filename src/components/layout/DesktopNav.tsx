@@ -117,7 +117,7 @@ function NavPanel({ item, path }: NavPanelProps) {
       <div
         id={panelId}
         hidden={!open}
-        className="absolute inset-x-0 top-full border-y border-pd-navy-900 blueprint theme-yellow blueprint-flat"
+        className="absolute inset-x-0 top-full border-b border-pd-navy-900 blueprint theme-yellow blueprint-flat"
       >
         <Container className="grid grid-cols-3 gap-10 py-10">
           {item.groups?.map((group) => (

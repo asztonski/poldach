@@ -4,8 +4,8 @@
  * scroll plays the scene. Inset by the header, so `contain` starts exactly when the stage pins.
  *
  * This media condition is the one definition of "a pin fits": a scene that lays itself out for the
- * pin (AboutSection, OfferSection and DocumentsSection modules) repeats it word for word, because
- * CSS has no way to share a media query.
+ * pin (the modules of AboutSection and CenterStage) repeats it word for word, because CSS has no way
+ * to share a media query.
  */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) and (width >= 64rem) and (height >= 46rem) {
@@ -21,10 +21,18 @@
       height: var(--scene-length);
     }
 
+    /*
+     * The same space above and below the scene, measured from the edges of the screen: the part of
+     * it under the header is the place kept free for the header. A low screen gets less of it, to
+     * leave the scene room.
+     */
     .stage {
+      --scene-space: min(var(--section-space), 10vh);
+
       position: sticky;
       top: var(--header-pinned);
       height: calc(100vh - var(--header-pinned));
+      padding-block: calc(var(--scene-space) - var(--header-pinned)) var(--scene-space);
     }
   }
 }
