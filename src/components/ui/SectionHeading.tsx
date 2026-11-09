@@ -6,7 +6,8 @@ import { Eyebrow } from './Eyebrow';
 type SectionHeadingProps = {
   /** Id of the h2 – pass it to the section's `aria-labelledby`. */
   id: string;
-  eyebrow: ReactNode;
+  /** The label above the title; the photo sections go without it (docs/decyzje.md D-44) */
+  eyebrow?: ReactNode;
   title: ReactNode;
   /** The sentence under the title */
   lead?: ReactNode;
@@ -35,8 +36,10 @@ export function SectionHeading({
 }: SectionHeadingProps) {
   return (
     <FadeInOnce className={cn(centered && 'text-center', className)}>
-      <Eyebrow className={centered ? 'justify-center' : undefined}>{eyebrow}</Eyebrow>
-      <h2 id={id} className={cn('mt-2 text-(--title)', centered ? 'text-h1' : 'text-h2')}>
+      {eyebrow ? (
+        <Eyebrow className={cn('mb-2', centered && 'justify-center')}>{eyebrow}</Eyebrow>
+      ) : null}
+      <h2 id={id} className={cn('text-(--title)', centered ? 'text-h1' : 'text-h2')}>
         {title}
       </h2>
       {lead ? (

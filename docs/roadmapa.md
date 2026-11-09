@@ -9,8 +9,8 @@ jakości (TS strict, ESLint, Prettier), dokumentacja, tokeny (kolory, typografia
 motywy sekcji i tło „rysunek techniczny”, Roboto Condensed, favicon (parasol na biurku, D-14) i `theme-color`, dane
 firmy w `src/config/site.ts`, nagłówek z nawigacją (panel usług, menu mobilne w `<dialog>`, pasek z
 telefonem na telefonie), hero z logo z postacią (D-15), jedna siatka dla całej strony (D-17), motyw
-biały i skośne przejścia (D-18), układ strony głównej według KISS (D-23, D-29): oferta z
-rysunkami usług, „O firmie” (linia wymiarowa, licznik lat, siedziba), autoryzacje i nagroda (D-26,
+biały i skośne przejścia (D-18), układ strony głównej według KISS (D-23, D-29): oferta ze
+zdjęciami usług (prototyp, D-44), „O firmie” (linia wymiarowa, licznik lat, siedziba), autoryzacje i nagroda (D-26,
 D-28), realizacja, której zdjęcie zamienia się w rysunek (D-19, D-20), tymczasowo karty dom /
 firma; strona 404, skany certyfikatów z opisem
 (`src/data/certificates.ts`). Tymczasowe podstrony i stopka usunięte (D-11).

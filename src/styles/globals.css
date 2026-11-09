@@ -127,6 +127,23 @@
   color: var(--text);
 }
 
+/* Calm paper for large photos: one flat colour, no vignette and no grid (docs/decyzje.md D-44) */
+@utility theme-cream {
+  --bg: var(--color-pd-yellow-50);
+  --bg-glow: var(--color-pd-yellow-50);
+  --bg-edge: var(--color-pd-yellow-50);
+  --title: var(--color-pd-blue-500);
+  --text: var(--color-pd-navy-900);
+  --label: var(--color-pd-navy-900);
+  --icon-ok-bg: var(--color-pd-blue-500);
+  --icon-ok-fg: var(--color-pd-white);
+  --grid-line: transparent;
+  --btn-bg: var(--color-pd-blue-500);
+  --btn-fg: var(--color-pd-white);
+  --focus: var(--color-pd-navy-900);
+  color: var(--text);
+}
+
 /* Lines of the technical drawing (docs/design-system.md#tło-rysunek-techniczny) */
 @utility grid-lines {
   background-image:

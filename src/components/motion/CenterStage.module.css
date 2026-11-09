@@ -8,11 +8,10 @@
  * so the gap stays the same through a change and nothing overlaps. "Gone" is a point (scale 0) just
  * past that gap: visuals appear and disappear by size only.
  *
- * The heading stands above the items on the same screen, so the box also has to fit what is left of
- * the screen's height: its width is the smaller of a share of the list's width and a share of its
- * height (cqh). A scene may change the box and the slots for another shape of visual:
- * --visual-centre, --visual-width, --visual-max-width, --list-ratio, --next-x, --next-y, --gone-x,
- * --gone-y.
+ * By default the heading stands above the items on the same screen, so the box also has to fit what
+ * is left of the screen's height: its width is the smaller of a share of the list's width and a
+ * share of its height (cqh). In .fullScreen the heading stays above the pin and the screen sizes the
+ * box. Both are set up for a portrait visual (a scan, a 5:7 photo).
  *
  * Time is counted in units: a change takes 24, a stop between changes 10, the first stop 22 and the
  * last 20, so n items take 34n − 2 units of the pin. An item reaches the centre at 34i + 12, and its
@@ -30,18 +29,19 @@
       justify-content: center;
     }
 
-    .stage > :first-child {
+    .stage > :not(.list) {
       flex: none;
     }
 
+    /* A thin line under the heading, tighter than below: the screen's height goes to the items */
     .divider {
-      display: none;
+      margin-top: 1.5rem;
     }
 
     .list {
       --unit: calc(100% / (var(--n) * 34 - 2));
-      --next: translate(var(--next-x, 74%), var(--next-y, 36%)) scale(0.28);
-      --prev: translate(calc(var(--next-x, 74%) * -1), calc(var(--next-y, 36%) * -1)) scale(0.28);
+      --next: translate(74%, 36%) scale(0.28);
+      --prev: translate(-74%, -36%) scale(0.28);
       --centre: translate(0, 0) scale(1);
 
       position: relative;
@@ -50,7 +50,7 @@
        * As tall as the slots need at full size, less on a low screen: heading and list stay
        * together, centred, so the space above equals the space below
        */
-      aspect-ratio: var(--list-ratio, 1.98);
+      aspect-ratio: 1.98;
       flex: 0 1 auto;
       min-height: 0;
       margin-top: 1.25rem;
@@ -60,11 +60,11 @@
 
     /* Static items: their visual and text are placed against the list */
     .item {
-      --slot-1: translate(var(--gone-x, 98%), var(--gone-y, 50%)) scale(0);
+      --slot-1: translate(98%, 50%) scale(0);
       --slot-2: var(--next);
       --slot-3: var(--centre);
       --slot-4: var(--prev);
-      --slot-5: translate(calc(var(--gone-x, 98%) * -1), calc(var(--gone-y, 50%) * -1)) scale(0);
+      --slot-5: translate(-98%, -50%) scale(0);
       --text-before: 0;
       --text-after: 0;
 
@@ -94,7 +94,6 @@
     .visual,
     .text {
       position: absolute;
-      top: 50%;
       animation-timing-function: linear;
       animation-fill-mode: both;
       animation-timeline: --pinned;
@@ -102,20 +101,58 @@
         calc(var(--unit) * (var(--i) * 34 + 80));
     }
 
-    /* Defaults for a portrait visual (a scan), whose slots stay within the height of the box */
+    /* The slots stay within the height of the box */
     .visual {
-      left: var(--visual-centre, 42%);
-      width: min(var(--visual-width, 36%), var(--visual-max-width, 71cqh));
+      top: 50%;
+      left: 42%;
+      width: min(36%, 71cqh);
       translate: -50% -50%;
       animation-name: pass;
     }
 
+    /* From the visual's top edge down: a long title stays clear of the small next visual below it */
     .text {
+      top: 0;
       left: 64%;
       width: 34%;
       margin-top: 0;
-      translate: 0 -50%;
       animation-name: pass-text;
+    }
+
+    /*
+     * The items have the screen to themselves: a 5:7 visual takes 80 % of the screen's height, less
+     * only where the width runs out. The small previous visual (0.88 of the width left of the
+     * centre), the visual and the text stand centred as one group, so the sides stay even.
+     */
+    .fullScreen {
+      --visual-width: min(80vh * 5 / 7, 44vw);
+      --text-width: min(30rem, 30vw);
+      --text-gap: 3rem;
+      --visual-left: calc(
+        50% - (var(--text-gap) + var(--text-width) - var(--visual-width) * 0.38) / 2
+      );
+    }
+
+    .fullScreen .list {
+      flex: 1;
+      aspect-ratio: auto;
+      margin-top: 0;
+    }
+
+    .fullScreen .visual {
+      left: var(--visual-left);
+      width: var(--visual-width);
+    }
+
+    /*
+     * The text ends just above the small next visual, whose top edge is 0.22 of the visual's height
+     * (1.4 of its width) below the centre; a longer title grows upwards and never reaches it
+     */
+    .fullScreen .text {
+      top: auto;
+      bottom: calc(50% - var(--visual-width) * 1.4 * 0.22 + 2rem);
+      left: calc(var(--visual-left) + var(--visual-width) / 2 + var(--text-gap));
+      width: var(--text-width);
     }
 
     /*
