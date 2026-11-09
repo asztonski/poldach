@@ -12,15 +12,15 @@ Prettier z sortowaniem klas Tailwind. Font Roboto Condensed (zmienny) przez `nex
 
 **Planowane** (faza fundamentów – [roadmapa.md](roadmapa.md)):
 
-| Obszar             | Wybór                                                                                                                       |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------- |
-| Animacje           | GSAP + `@gsap/react` (ScrollTrigger, DrawSVGPlugin); proste pojawienia – natywne CSS scroll-driven animations w `@supports` |
-| Płynne przewijanie | Lenis – opcjonalnie, domyślnie wyłączony flagą `NEXT_PUBLIC_SMOOTH_SCROLL`; tylko mysz, nigdy przy reduced motion           |
-| Formularz          | usługa dla stron statycznych (Web3Forms lub Formspree), walidacja `zod`                                                     |
-| Analityka          | Plausible lub Umami przez `next/script`                                                                                     |
-| Dane strukturalne  | typy z `schema-dts`                                                                                                         |
-| Obrazy             | skrypt `sharp` generujący AVIF/WebP w kilku szerokościach; `svgo` dla SVG                                                   |
-| Jakość             | `eslint-plugin-jsx-a11y`, Playwright + `@axe-core/playwright`, Lighthouse CI, `@next/bundle-analyzer`                       |
+| Obszar             | Wybór                                                                                                                                                         |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Animacje           | GSAP + `@gsap/react` (ScrollTrigger, DrawSVGPlugin); proste pojawienia – natywne CSS scroll-driven animations w `@supports`                                   |
+| Płynne przewijanie | Lenis – włączony na stałe ([decyzje.md](decyzje.md) D-35); tylko mysz i touchpad, nigdy przy reduced motion, uruchamiany po wczytaniu strony (`SmoothScroll`) |
+| Formularz          | usługa dla stron statycznych (Web3Forms lub Formspree), walidacja `zod`                                                                                       |
+| Analityka          | Plausible lub Umami przez `next/script`                                                                                                                       |
+| Dane strukturalne  | typy z `schema-dts`                                                                                                                                           |
+| Obrazy             | skrypt `sharp` generujący AVIF/WebP w kilku szerokościach; `svgo` dla SVG                                                                                     |
+| Jakość             | `eslint-plugin-jsx-a11y`, Playwright + `@axe-core/playwright`, Lighthouse CI, `@next/bundle-analyzer`                                                         |
 
 **Nie używamy:**
 
@@ -45,18 +45,18 @@ src/
 │   ├── page.tsx          #   strona główna
 │   ├── <podstrona>/page.tsx
 │   └── not-found.tsx, sitemap.ts, robots.ts, icon.svg, icon.png, apple-icon.png
-├── assets/images/        # zdjęcia importowane w kodzie; logotypy/ – znaki innych (PSD)
+├── assets/images/        # zdjęcia importowane w kodzie; logotypy/ – znaki innych (PSD); realizacje/
 ├── brand/                # elementy marki: Logo.tsx, LogoWithFigure.tsx; (planowane) tokens.ts, icons.tsx
 ├── components/
 │   ├── common/           # komponenty współdzielone (LogoLink)
 │   ├── layout/           # Header, DesktopNav, MobileMenu, MobileCallBar; (planowane) Footer
 │   ├── ui/               # klocki design systemu (Section, Eyebrow, PhoneButton, ButtonLink, …)
-│   ├── illustrations/    # rysunki SVG jako czyste komponenty TSX (HouseIllustration)
-│   └── motion/           # DrawOnLoad, LogoEntrance; (planowane) DrawOnScroll, Reveal, PinnedSequence, CountUp, SectionWipe
+│   ├── illustrations/    # rysunki SVG jako czyste komponenty TSX (TenementDrawing, OfferDrawing)
+│   └── motion/           # DrawOnScroll, FadeInOnce, LogoEntrance, PinnedScene, Reveal, SmoothScroll, StayInPlace, TracingReveal; (planowane) CountUp, SectionWipe
 ├── config/               # site.ts (dane firmy), routes.ts (ścieżki), navigation.ts (menu)
 ├── data/                 # treści jako typowane dane (usługi, realizacje, …)
 ├── hooks/                # własne hooki React
-├── lib/                  # funkcje pomocnicze (cn, pageMetadata, gsap)
+├── lib/                  # funkcje pomocnicze (cn, sheetNumber, pageMetadata, gsap)
 ├── sections/             # sekcje stron pogrupowane według podstron
 ├── styles/globals.css    # tokeny Tailwind (@theme) i style bazowe
 └── types/                # wspólne typy TS
@@ -77,12 +77,16 @@ Poza `src/`: `design/` – pliki logo i makiety od projektanta, bez zmian i poza
    - ścieżki – tylko `ROUTES` z `src/config/routes.ts`,
    - kolory, fonty, odstępy – tylko tokeny ([design-system.md](design-system.md)); żadnych HEX-ów w
      komponentach,
+   - wysokość nagłówka – tylko `--header-h`, `--header-shift` i `--header-pinned` w
+     `src/styles/globals.css`; przypięcie sceny – tylko `PinnedScene`,
    - treści powtarzalne (usługi, realizacje) – typowane dane w `src/data/`.
 4. **Stan końcowy w HTML.** Animacje startują od stanu początkowego (`gsap.from`), więc bez JS widać
    gotową treść. Hero nad linią zgięcia: klasa `js` ustawiana małym skryptem w `<head>` + CSS stanu
    początkowego + bezpiecznik, który pokazuje wszystko, jeśli animacja nie wystartuje w około 2 s.
-   Animacje wyłącznie w CSS (np. `DrawOnLoad`) tego nie potrzebują – stan początkowy istnieje tylko
+   Animacje wyłącznie w CSS (np. `LogoEntrance`) tego nie potrzebują – stan początkowy istnieje tylko
    w trakcie animacji (`animation-fill-mode: backwards`), [decyzje.md](decyzje.md) D-12.
+   Nagłówki sekcji (`FadeInOnce`): stan początkowy tylko przy `@media (scripting: enabled)` + bezpiecznik
+   CSS po 3 s, jeśli skrypt nie dotrze ([decyzje.md](decyzje.md) D-36).
 5. **Animujemy tylko** `transform`, `opacity` i właściwości SVG (`stroke-dashoffset`) – nigdy
    szerokości, wysokości, marginesów ani `top`/`left`.
 6. **GSAP:** wtyczki rejestrowane w jednym module klienckim `src/lib/gsap.ts`; każda animacja w
@@ -115,7 +119,9 @@ eksportowany w `index.ts`.
 renderują. Struktura danych ma ułatwić późniejsze podpięcie lekkiego CMS (⚠ P-14).
 
 **Zdjęcie** – `next/image`; plik wrzucamy od razu w docelowym rozmiarze i formacie (brak optymalizacji
-w locie).
+w locie). Zdjęcie w kilku szerokościach (np. kamienica w sekcji „Realizacje”: WebP 960 i 1920 px, wygenerowane
+`sharp` z zależności Next.js do czasu planowanego skryptu) – zwykły `<img>` z `srcSet` i `sizes`,
+bo `next/image` przy `images.unoptimized` nie tworzy `srcset`.
 
 ## Wdrożenie
 

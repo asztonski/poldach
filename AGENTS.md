@@ -18,7 +18,8 @@ Nowa strona poldach.eu (Next.js, statyczny eksport). Mapa dokumentacji i zasady 
 
 ## Po skończeniu
 
-- `npm run check` i `npm run build` muszą przejść.
+- `npm run check` i `npm run build` muszą przejść – uruchamiasz je raz, tuż przed commitem, a nie
+  po każdej zmianie (to prosta strona wizytówka; w trakcie pracy wystarczy podgląd w `npm run dev`).
 - Nowa decyzja → wiersz w `docs/decyzje.md`; zamknięty etap → `docs/roadmapa.md`.
 - Wdrożona wartość ze specyfikacji (np. tokeny) → w dokumencie zostaje odnośnik do kodu.
 

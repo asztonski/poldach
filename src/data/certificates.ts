@@ -236,3 +236,16 @@ export const CERTIFICATES: Certificate[] = [
     image: galecoPiotr,
   },
 ];
+
+// On the home page, in this order; `name` is the short name next to the scan (docs/decyzje.md D-26)
+// TODO(P-05): documents from 2005–2006 – the client confirms them and supplies current ones
+const FEATURED = [
+  { id: 'euronit-autoryzowany-wykonawca', name: 'Euronit' },
+  { id: 'prefa-autoryzowany-wykonawca', name: 'Prefa' },
+  { id: 'prefa-psd-nagroda', name: 'Nagroda Prefa i PSD' },
+];
+
+export const FEATURED_CERTIFICATES = FEATURED.flatMap(({ id, name }) => {
+  const certificate = CERTIFICATES.find((candidate) => candidate.id === id);
+  return certificate ? [{ ...certificate, name }] : [];
+});

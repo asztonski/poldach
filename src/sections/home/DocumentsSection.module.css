@@ -1,0 +1,179 @@
+/*
+ * Documents section (D-26, D-28), pinned like the "Full-scope" sequence of metriccivil.ca. Every scan sits in the
+ * same centre box; its other states are transforms of that box (percentages of the box itself):
+ *   next – small, lower right of the centre box, below the text
+ *   prev – small, upper left of the centre box
+ * Over the pin: scan 1 stands in the centre from the start, then moves to "prev" while scan 2
+ * grows in from "next", and so on; the texts on the right cross-fade with their scan. Below that
+ * size, without support and with reduced motion: the plain grid of three.
+ */
+@supports (animation-timeline: view()) {
+  /* The condition of PinnedScene */
+  @media (prefers-reduced-motion: no-preference) and (width >= 64rem) and (height >= 46rem) {
+    .docs {
+      position: relative;
+      display: block;
+      height: 100%;
+      margin: 0;
+    }
+
+    /* Static items: their scan and text are placed against the list */
+    .doc {
+      position: static;
+    }
+
+    .docImage,
+    .docText {
+      position: absolute;
+      top: 50%;
+      translate: 0 -50%;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: --pinned;
+      animation-range: contain 0% contain 100%;
+    }
+
+    .docImage {
+      left: 24%;
+      width: 36%;
+      transform-origin: center;
+    }
+
+    .docText {
+      left: 64%;
+      width: 34%;
+      margin-top: 0;
+      text-align: left;
+    }
+
+    .doc:nth-child(1) .docText {
+      animation-name: text-1;
+    }
+
+    .doc:nth-child(2) .docText {
+      animation-name: text-2;
+    }
+
+    .doc:nth-child(3) .docText {
+      animation-name: text-3;
+    }
+
+    .doc:nth-child(1) .docImage {
+      animation-name: doc-1;
+    }
+
+    .doc:nth-child(2) .docImage {
+      animation-name: doc-2;
+    }
+
+    .doc:nth-child(3) .docImage {
+      animation-name: doc-3;
+    }
+
+    /* Keyboard focus on a scan that is not in front: bring it to the centre (beats the animation) */
+    .doc:focus-within .docImage {
+      z-index: 1;
+      transform: none !important;
+    }
+
+    .doc:focus-within .docText {
+      z-index: 1;
+      opacity: 1 !important;
+    }
+  }
+}
+
+/*
+ * The scans move as a chain along five slots, all at once in both changes (28–40 % and 62–74 %):
+ *   gone ←  prev  ← centre ←  next  ←  gone
+ *   (-98%, -50%) 0 · (-74%, -36%) 0.28 · none 1 · (74%, 36%) 0.28 · (98%, 50%) 0
+ * Neighbouring slots are 10 % of the scan apart (edge to edge), and edges move linearly between
+ * slots, so the gap between neighbours stays the same through a change – nothing overlaps. "Gone"
+ * is a point (scale 0) just past that gap: no fading here, things appear and disappear by size.
+ */
+@keyframes doc-1 {
+  0%,
+  28% {
+    transform: none;
+  }
+  40%,
+  62% {
+    transform: translate(-74%, -36%) scale(0.28);
+  }
+  74%,
+  100% {
+    transform: translate(-98%, -50%) scale(0);
+  }
+}
+
+@keyframes doc-2 {
+  0%,
+  28% {
+    transform: translate(74%, 36%) scale(0.28);
+  }
+  40%,
+  62% {
+    transform: none;
+  }
+  74%,
+  100% {
+    transform: translate(-74%, -36%) scale(0.28);
+  }
+}
+
+@keyframes doc-3 {
+  0%,
+  28% {
+    transform: translate(98%, 50%) scale(0);
+  }
+  40%,
+  62% {
+    transform: translate(74%, 36%) scale(0.28);
+  }
+  74%,
+  100% {
+    transform: none;
+  }
+}
+
+/*
+ * A text is there only while its scan stands in the centre – the moving scans cross the text
+ * column. It fades with the scroll: out just before a change starts (25–28 %, 59–62 %), in just
+ * after its scan reaches the centre (40–45 %, 74–79 %).
+ */
+@keyframes text-1 {
+  0%,
+  25% {
+    opacity: 1;
+  }
+  28%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes text-2 {
+  0%,
+  40% {
+    opacity: 0;
+  }
+  45%,
+  59% {
+    opacity: 1;
+  }
+  62%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes text-3 {
+  0%,
+  74% {
+    opacity: 0;
+  }
+  79%,
+  100% {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,28 @@
+/*
+ * Hidden from the first paint, so it never flashes before the script takes over (a section can
+ * already be on a tall screen when the page loads). The safety nets of docs/architektura.md, rule 4:
+ * without JS or with reduced motion this block does not apply and the text simply stands; if the
+ * script does not arrive, `show-anyway` reveals the text after 3 s. The script turns that off
+ * (`waiting`) and shows the text when its moment comes (`shown`).
+ */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .root {
+    opacity: 0;
+    transition: opacity 600ms ease-out;
+    animation: show-anyway 1ms 3s forwards;
+  }
+
+  .root[data-fade] {
+    animation: none;
+  }
+
+  .root[data-fade='shown'] {
+    opacity: 1;
+  }
+}
+
+@keyframes show-anyway {
+  to {
+    opacity: 1;
+  }
+}

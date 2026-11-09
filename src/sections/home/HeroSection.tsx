@@ -3,6 +3,7 @@ import Image from 'next/image';
 import psdSign from '@/assets/images/logotypy/psd-znak.png';
 import { LogoWithFigure } from '@/brand/LogoWithFigure';
 import { LogoEntrance } from '@/components/motion/LogoEntrance';
+import stayInPlace from '@/components/motion/StayInPlace.module.css';
 import { ButtonLink, PhoneButton, Section } from '@/components/ui';
 import { ROUTES } from '@/config/routes';
 import { cn } from '@/lib/cn';
@@ -32,15 +33,19 @@ function MarkerTick() {
 /**
  * Yellow hero with the logo with the figure (docs/decyzje.md D-15, D-16). It starts under the header,
  * which has no background of its own until the page scrolls (`under-header`, globals.css), so
- * the grid and the vignette run through both without a seam.
+ * the grid and the vignette run through both without a seam. While scrolling it stays in place and
+ * section 2 slides over it (`StayInPlace`, D-21).
  */
 export function HeroSection() {
   return (
     <Section
       theme="yellow"
       aria-labelledby="hero-title"
-      // Pulled up by the header height (h-16, lg:h-20); content starts 3 grid steps from the top
-      className="under-header -mt-16 pt-[calc(var(--grid-step)*3)] lg:-mt-20 lg:pt-[calc(var(--grid-step)*3)]"
+      // Pulled up by the header height; content starts 3 grid steps from the top
+      className={cn(
+        'under-header -mt-(--header-h) pt-[calc(var(--grid-step)*3)] lg:pt-[calc(var(--grid-step)*3)]',
+        stayInPlace.root,
+      )}
       containerClassName="grid grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16"
     >
       <div>

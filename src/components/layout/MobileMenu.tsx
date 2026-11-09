@@ -46,10 +46,12 @@ export function MobileMenu({ className }: MobileMenuProps) {
       <dialog
         ref={dialogRef}
         aria-label="Menu"
+        // The menu scrolls by itself – smooth scrolling (SmoothScroll) stays out of it
+        data-lenis-prevent
         className="m-0 h-dvh max-h-none w-full max-w-none overflow-y-auto blueprint theme-yellow blueprint-flat"
       >
         <div className="flex min-h-full flex-col">
-          <Container className="flex h-16 shrink-0 items-center justify-between border-b border-pd-navy-900">
+          <Container className="flex h-(--header-h) shrink-0 items-center justify-between border-b border-pd-navy-900">
             <Logo className="h-7 w-auto" />
             <button
               ref={closeRef}

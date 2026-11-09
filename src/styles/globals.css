@@ -22,6 +22,8 @@
   --color-pd-navy-900: #173a6b;
   --color-pd-white: #ffffff;
   --color-pd-red-500: #d23b3b;
+  /* Header menu links – the red of the old poldach.eu menu (docs/decyzje.md D-22) */
+  --color-pd-red-nav: #dc2b1b;
 
   /* Logo with the figure – colours from the designer's file, only for LogoWithFigure (D-16) */
   --color-pd-logo-ink: #1f1919;
@@ -107,7 +109,117 @@
   color: var(--text);
 }
 
-/* "Technical drawing" background: grid + vignette (docs/design-system.md#tło-rysunek-techniczny) */
+/* Optional third paper – a break between the brand colours, at most 1–2 sections a page */
+@utility theme-white {
+  --bg: var(--color-pd-white);
+  --bg-glow: var(--color-pd-white);
+  /* Half-way to yellow-50: a warm hint, so the white reads as drawing paper, not as cream */
+  --bg-edge: color-mix(in srgb, var(--color-pd-yellow-50) 50%, var(--color-pd-white));
+  --title: var(--color-pd-blue-500);
+  --text: var(--color-pd-navy-900);
+  --label: var(--color-pd-navy-900);
+  --icon-ok-bg: var(--color-pd-blue-500);
+  --icon-ok-fg: var(--color-pd-white);
+  --grid-line: color-mix(in srgb, var(--color-pd-navy-900) 8%, transparent);
+  --btn-bg: var(--color-pd-blue-500);
+  --btn-fg: var(--color-pd-white);
+  --focus: var(--color-pd-navy-900);
+  color: var(--text);
+}
+
+/* Lines of the technical drawing (docs/design-system.md#tło-rysunek-techniczny) */
+@utility grid-lines {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--grid-step) var(--grid-step);
+}
+
+/*
+ * The grid as a layer fixed to the screen (docs/decyzje.md D-27, D-33), so the lines never move –
+ * the content scrolls over them, and while a scene is pinned nothing moves at all. A layer of its
+ * own costs nothing while scrolling, unlike `background-attachment: fixed`, which repaints.
+ */
+@utility screen-grid {
+  &::before {
+    @apply grid-lines;
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+}
+
+/*
+ * Paper of a section or a panel: it brings its colour and vignette, the grid belongs to the screen.
+ * The paper only redraws that grid in its own line colour, and clip-path cuts it to the paper.
+ * Every paper draws the same screen grid, so the lines meet across sections without a seam. Side
+ * effects: nothing sticks out of a paper; a transform on a paper's ancestor would pin the grid to
+ * that ancestor instead.
+ */
+@utility paper {
+  @apply screen-grid;
+  /* A rectangle, unless slant-* lowers one of the top corners */
+  clip-path: polygon(0 var(--slant-left), 100% var(--slant-right), 100% 100%, 0 100%);
+  background-color: var(--bg);
+  background-image: radial-gradient(ellipse 80% 60% at 50% 30%, var(--bg-glow), var(--bg-edge));
+  /* The vignette also covers the slant's transparent border, without repeating */
+  background-origin: border-box;
+}
+
+/*
+ * Slanted top edge of a section – the roof pitch (docs/design-system.md#przejścia-między-sekcjami).
+ * The section slides up over the previous one by --slant-rise and cuts its top corner down by the
+ * same amount, so the previous section shows in the triangle. The overlap is a transparent top
+ * border: the section's content stays where it was and its own padding is untouched. Not
+ * inherited, so a panel inside a slanted section stays rectangular.
+ */
+@property --slant-left {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --slant-right {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+/* Edge rises from left to right: / */
+@utility slant-rising {
+  --slant-left: var(--slant-rise);
+  margin-top: calc(-1 * var(--slant-rise));
+  border-top: var(--slant-rise) solid transparent;
+}
+
+/* Edge falls from left to right: \ */
+@utility slant-falling {
+  --slant-right: var(--slant-rise);
+  margin-top: calc(-1 * var(--slant-rise));
+  border-top: var(--slant-rise) solid transparent;
+}
+
+/*
+ * Section dividers alternate down the page (docs/decyzje.md D-24): the first section (hero) has
+ * none, even sections rise (/), odd ones fall (\). By position, so adding a section keeps the
+ * rhythm. In the components layer: a `slant` set on a Section (a utility) still wins.
+ */
+@layer components {
+  main > section.paper:nth-of-type(even) {
+    @apply slant-rising;
+  }
+
+  main > section.paper:nth-of-type(odd):not(:first-of-type) {
+    @apply slant-falling;
+  }
+}
+
+/*
+ * Grid + vignette drawn from the element's own top edge – for what moves against the page:
+ * header, menu panels, the mobile call bar
+ */
 @utility blueprint {
   background-color: var(--bg);
   background-image:
@@ -137,15 +249,28 @@ html:has(.under-header) header:not([data-scrolled]) {
 @layer base {
   :root {
     --grid-step: 40px;
+    /* Drop of a slanted section edge: about 2°, exactly one grid step (54 px) at 1440 px */
+    --slant-rise: 3.75vw;
     /* Height of the mobile call bar (MobileCallBar) – page content ends above it */
     --call-bar-h: 4.5625rem;
+    /* Header: its height and how far it slides up after scrolling (Header.tsx) */
+    --header-h: 4rem;
+    --header-shift: 0.75rem;
+    /* What is left of the header after scrolling – pinned scenes stand right below it */
+    --header-pinned: calc(var(--header-h) - var(--header-shift));
     color-scheme: light;
-    scroll-padding-top: 5rem;
+    scroll-padding-top: var(--header-h);
   }
 
   @media (width >= 48rem) {
     :root {
       --grid-step: 54px;
+    }
+  }
+
+  @media (width >= 64rem) {
+    :root {
+      --header-h: 5rem;
     }
   }
 
@@ -160,8 +285,14 @@ html:has(.under-header) header:not([data-scrolled]) {
     overflow: hidden;
   }
 
+  /*
+   * The page grid behind everything, the same layer as in the sections, so it also fills the space
+   * below the last section. The colour is the edge of the yellow vignette, so a yellow section
+   * passes into the body without a seam
+   */
   body {
-    @apply bg-pd-yellow-500 font-sans text-body text-pd-navy-900 antialiased;
+    @apply screen-grid font-sans text-body theme-yellow antialiased;
+    background-color: var(--bg-edge);
     padding-bottom: calc(var(--call-bar-h) + env(safe-area-inset-bottom));
   }
 

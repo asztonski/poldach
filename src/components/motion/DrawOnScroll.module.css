@@ -1,0 +1,78 @@
+/*
+ * Drawing driven by the scroll (docs/design-system.md#ruch, "Rysunek – przy przewijaniu"): the
+ * outline traces in while the drawing enters the screen, then the fills appear by `data-step` – the
+ * drawing is complete by the time it reaches the middle of the screen. Scrolling back undraws it.
+ * The final state is the illustration's own markup, so without scroll-driven animations or with
+ * reduced motion nothing is hidden.
+ *
+ * A parent can drive it instead (e.g. a pinned scene): --draw-timeline names its timeline,
+ * --draw-trace, --draw-fill, --draw-accent and --draw-late are the ranges of the outline and of
+ * data-step 1, 2 and 3. Without them --draw-shift (e.g. 6%) only delays the default ranges.
+ */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .root {
+      view-timeline: --draw block;
+    }
+
+    .root [data-draw='outline'] > *,
+    .root [data-step] {
+      animation-timeline: var(--draw-timeline, --draw);
+    }
+
+    .root [data-draw='outline'] > * {
+      /* pathLength = 1; the gap is longer than the dash, so no round cap shows before the start */
+      stroke-dasharray: 1 1.1;
+      animation-name: trace;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-range: var(
+        --draw-trace,
+        entry calc(30% + var(--draw-shift, 0%)) cover calc(42% + var(--draw-shift, 0%))
+      );
+    }
+
+    .root [data-step] {
+      animation-name: fill-in;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+    }
+
+    .root [data-step='1'] {
+      animation-range: var(
+        --draw-fill,
+        cover calc(36% + var(--draw-shift, 0%)) cover calc(44% + var(--draw-shift, 0%))
+      );
+    }
+
+    .root [data-step='2'] {
+      animation-range: var(
+        --draw-accent,
+        cover calc(42% + var(--draw-shift, 0%)) cover calc(48% + var(--draw-shift, 0%))
+      );
+    }
+
+    .root [data-step='3'] {
+      animation-range: var(
+        --draw-late,
+        cover calc(44% + var(--draw-shift, 0%)) cover calc(50% + var(--draw-shift, 0%))
+      );
+    }
+  }
+}
+
+@keyframes trace {
+  from {
+    stroke-dashoffset: 1.05;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fill-in {
+  from {
+    opacity: 0;
+  }
+}

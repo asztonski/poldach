@@ -7,6 +7,8 @@ export const SITE = {
   legalName: 'P.H.U. „POLDACH” S.C. Jacek Supiński i Piotr Supiński',
   url: 'https://poldach.eu',
   tagline: 'Dach – to nasz fach',
+  /** Jacek Supiński starts the business (docs/firma.md#historia) */
+  foundingYear: 1992,
   description:
     'Rodzinna firma dekarska z Kokoszkowych. Od 1992 roku robimy dachy kompleksowo – od doradztwa i materiału po montaż – a w domu także drzwi i podłogi.',
   contact: {

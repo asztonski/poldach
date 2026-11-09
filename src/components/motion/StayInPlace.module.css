@@ -1,0 +1,29 @@
+/*
+ * The section stays in place once its bottom reaches the bottom of the screen, and the next
+ * section slides over it (docs/decyzje.md D-21). Scroll-driven: in the "exit" range the section
+ * moves down exactly as fast as the page scrolls up. The range is one screen for a section taller
+ * than the screen and the section's own height for a shorter one – min(100%, 100vh) covers both.
+ * The next section must paint over it (later in the DOM, opaque background).
+ */
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .root {
+      animation: stay-in-place linear both;
+      /* Inset 0: the default (auto) takes scroll-padding-top and would start that much too early */
+      animation-timeline: view(block 0px);
+      animation-range: exit 0% exit 100%;
+    }
+
+    /* Keyboard focus inside: back in the normal flow, so the focused element is never covered */
+    .root:focus-within {
+      animation: none;
+    }
+  }
+}
+
+@keyframes stay-in-place {
+  to {
+    transform: translateY(min(100%, 100vh));
+  }
+}

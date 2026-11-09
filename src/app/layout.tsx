@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { Roboto_Condensed } from 'next/font/google';
 import { Header } from '@/components/layout/Header';
 import { MobileCallBar } from '@/components/layout/MobileCallBar';
+import { SmoothScroll } from '@/components/motion/SmoothScroll';
 import { SITE } from '@/config/site';
 import '@/styles/globals.css';
 
@@ -51,6 +52,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           {children}
         </main>
         <MobileCallBar />
+        <SmoothScroll />
       </body>
     </html>
   );

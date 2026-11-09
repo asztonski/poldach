@@ -1,0 +1,177 @@
+/*
+ * Photo -> drawing. Two windows share one edge: the photo's window moves up and out, the drawing's
+ * window follows it from below; their contents move the other way by the same amount, so neither
+ * the photo nor the drawing moves – only the edge travels. Transforms only (docs/architektura.md,
+ * rule 5). Nothing here paints a background: below the edge the section's paper and the page grid
+ * show through, so the drawing ends up on the page itself.
+ */
+
+.track {
+  view-timeline: --tracing block;
+}
+
+.frame {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: var(--ratio);
+}
+
+.photoWindow,
+.photo,
+.drawingWindow,
+.drawing {
+  position: absolute;
+  inset: 0;
+}
+
+.photoWindow,
+.drawingWindow {
+  overflow: hidden;
+}
+
+.photo > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Keep the roof: crop from the bottom (the drawing uses xMidYMin slice) */
+  object-position: 50% 0;
+}
+
+/* Lines in the section's text colour (navy on yellow and white, white on blue – a cyanotype) */
+.drawing {
+  --drawing-line: var(--text, var(--color-pd-navy-900));
+  --drawing-hidden: var(--title, var(--color-pd-blue-600));
+}
+
+.drawing > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Without the animation the photo stays and the drawing is not shown */
+.drawingWindow {
+  visibility: hidden;
+}
+
+/* Notes are for wide screens; narrower ones get the list next to the figure */
+@media (width < 64rem) {
+  .drawing [data-layer='notes'] {
+    display: none;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .drawingWindow {
+      visibility: visible;
+    }
+
+    .photoWindow,
+    .photo,
+    .drawingWindow,
+    .drawing,
+    .drawing [data-layer='notes'] {
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: --tracing;
+      /* Phone and tablet: no pinning – the edge travels while the photo crosses the screen */
+      animation-range: contain 0% contain 70%;
+    }
+
+    .photoWindow {
+      animation-name: window-out;
+    }
+
+    .photo {
+      animation-name: hold-out;
+    }
+
+    .drawingWindow {
+      animation-name: window-in;
+    }
+
+    .drawing {
+      animation-name: hold-in;
+    }
+
+    /*
+     * Desktop: the photo fills the screen below the header and is pinned for one screen of
+     * scrolling; the edge travels in the first 80 %, the notes appear after that. Not a
+     * PinnedScene: a photo fills a screen of any height, and its timeline also runs unpinned
+     */
+    @media (width >= 64rem) {
+      /* Room to scroll while pinned – content, not padding: sticky moves only in the content box */
+      .track::after {
+        content: '';
+        display: block;
+        height: 100vh;
+      }
+
+      .frame {
+        position: sticky;
+        top: var(--header-pinned);
+        height: calc(100vh - var(--header-pinned));
+        aspect-ratio: auto;
+      }
+
+      .photoWindow,
+      .photo,
+      .drawingWindow,
+      .drawing {
+        animation-range: contain 0% contain 80%;
+      }
+
+      .drawing [data-layer='notes'] {
+        animation-name: notes-in;
+        animation-range: contain 80% contain 95%;
+      }
+    }
+  }
+}
+
+@keyframes window-out {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes hold-out {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes window-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes hold-in {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes notes-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -12,11 +12,12 @@ export function isItemActive(item: NavItem, path: string) {
 }
 
 /**
- * Header content moves down by half of the header's 12 px slide-up, so it stays centred in the
- * shorter bar. Applied per element: a transform on a wrapper would trap the services panel.
+ * Header content moves down by half of the header's slide-up, so it stays centred in the shorter
+ * bar. Applied per element: a transform on a wrapper would trap the services panel.
  */
 export const SHIFT_WITH_HEADER =
-  'transition-transform duration-300 ease-out motion-reduce:transition-none group-data-scrolled:translate-y-1.5';
+  'transition-transform duration-300 ease-out motion-reduce:transition-none group-data-scrolled:translate-y-[calc(var(--header-shift)/2)]';
 
+// Red of the old site's menu (D-22) – 3.5:1 on yellow, below AA for this size (exception in decyzje.md)
 export const navItemClasses =
-  'inline-flex min-h-11 items-center gap-1 px-3 text-lg font-medium decoration-2 underline-offset-8 hover:underline';
+  'inline-flex min-h-11 items-center gap-1 px-3 text-lg font-medium text-pd-red-nav decoration-2 underline-offset-8 hover:underline';

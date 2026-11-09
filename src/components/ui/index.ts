@@ -1,7 +1,10 @@
-export { Button, ButtonLink, ButtonAnchor } from './Button';
+export { ButtonLink } from './ButtonLink';
 export { buttonClasses } from './button-variants';
+export { CheckList } from './CheckList';
 export { Container } from './Container';
 export { Eyebrow } from './Eyebrow';
+export { Panel } from './Panel';
 export { PhoneButton } from './PhoneButton';
-export { Section, type SectionTheme } from './Section';
-export { StatusPill } from './StatusPill';
+export { Section, type SectionSlant } from './Section';
+export { SectionHeading } from './SectionHeading';
+export { type SectionTheme, themeClass } from './theme';

@@ -1,0 +1,30 @@
+/*
+ * Pinned scene (docs/design-system.md#ruch). The timeline --pinned has two phases for the scene's
+ * animations: `entry` – the stage slides up to its place, `contain` – it stands there and the
+ * scroll plays the scene. Inset by the header, so `contain` starts exactly when the stage pins.
+ *
+ * This media condition is the one definition of "a pin fits": a scene that lays itself out for the
+ * pin (AboutSection, OfferSection and DocumentsSection modules) repeats it word for word, because
+ * CSS has no way to share a media query.
+ */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (width >= 64rem) and (height >= 46rem) {
+    .track {
+      view-timeline: --pinned block;
+      view-timeline-inset: var(--header-pinned) 0;
+    }
+
+    /* Scroll distance – content, not padding: sticky moves only in the content box */
+    .track::after {
+      content: '';
+      display: block;
+      height: var(--scene-length);
+    }
+
+    .stage {
+      position: sticky;
+      top: var(--header-pinned);
+      height: calc(100vh - var(--header-pinned));
+    }
+  }
+}

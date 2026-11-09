@@ -16,19 +16,20 @@ Jak strona wygląda i się porusza. Wymagania dostępności, które ten system r
 Tylko te barwy. Żadnego trzeciego koloru akcentu. Wartości HEX:
 [`src/styles/globals.css`](../src/styles/globals.css) (`--color-pd-*`, w Tailwind np. `bg-pd-yellow-500`).
 
-| Token           | Rola                                                                                           |
-| --------------- | ---------------------------------------------------------------------------------------------- |
-| `pd-yellow-50`  | „papier” dla długich tekstów (polityka prywatności, poradniki) – oszczędnie                    |
-| `pd-yellow-300` | jasny środek winiety w motywie żółtym                                                          |
-| `pd-yellow-500` | **kolor marki** – tło motywu żółtego, tytuły na niebieskim                                     |
-| `pd-yellow-600` | brzeg winiety w motywie żółtym                                                                 |
-| `pd-blue-400`   | tylko w ilustracjach (na stronie nie jako tło pod tekstem)                                     |
-| `pd-blue-500`   | **kolor marki** – logo, tytuły na żółtym, przycisk główny, środek winiety w motywie niebieskim |
-| `pd-blue-600`   | tło sekcji niebieskiej                                                                         |
-| `pd-blue-700`   | wypełnienia ilustracji, karty i panele na niebieskim                                           |
-| `pd-navy-900`   | „atrament”: tekst na żółtym, etykiety, urządzenia na ilustracjach, tło stopki                  |
-| `pd-white`      | tekst na niebieskim i granacie                                                                 |
-| `pd-red-500`    | wyłącznie znacznik problemu ✗                                                                  |
+| Token           | Rola                                                                                                                            |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `pd-yellow-50`  | „papier” dla długich tekstów (polityka prywatności, poradniki) – oszczędnie; w połowie z bielą – brzeg winiety w motywie białym |
+| `pd-yellow-300` | jasny środek winiety w motywie żółtym                                                                                           |
+| `pd-yellow-500` | **kolor marki** – tło motywu żółtego, tytuły na niebieskim                                                                      |
+| `pd-yellow-600` | brzeg winiety w motywie żółtym                                                                                                  |
+| `pd-blue-400`   | tylko w ilustracjach (na stronie nie jako tło pod tekstem)                                                                      |
+| `pd-blue-500`   | **kolor marki** – logo, tytuły na żółtym, przycisk główny, środek winiety w motywie niebieskim                                  |
+| `pd-blue-600`   | tło sekcji niebieskiej                                                                                                          |
+| `pd-blue-700`   | wypełnienia ilustracji, karty i panele na niebieskim                                                                            |
+| `pd-navy-900`   | „atrament”: tekst na żółtym, etykiety, urządzenia na ilustracjach, tło stopki                                                   |
+| `pd-white`      | tekst na niebieskim i granacie, tło motywu białego                                                                              |
+| `pd-red-500`    | wyłącznie znacznik problemu ✗                                                                                                   |
+| `pd-red-nav`    | wyłącznie linki menu w nagłówku – czerwień menu ze starej strony ([decyzje.md](decyzje.md) D-22)                                |
 
 Wyjątek: tokeny `pd-logo-*` to barwy z pliku projektanta (postać, kredki, ciemna czerwień biurka) –
 wyłącznie w [logo z postacią](#logo-z-postacią), nigdzie poza nim ([decyzje.md](decyzje.md) D-16).
@@ -38,84 +39,111 @@ odcienia `blue-500`.
 
 ## Motywy sekcji
 
-Sekcja ma motyw żółty (domyślny) albo niebieski. Komponenty korzystają z ról, nie z tokenów
-bezpośrednio, więc same zmieniają kolor w zależności od motywu. Wdrożone jako klasy `theme-yellow`,
-`theme-blue` i `blueprint` w [`src/styles/globals.css`](../src/styles/globals.css), sekcja –
-`Section` w `src/components/ui/`.
+Sekcja ma motyw żółty (domyślny), niebieski albo biały (opcjonalny, [decyzje.md](decyzje.md)
+D-18). Komponenty korzystają z ról, nie z tokenów bezpośrednio, więc same zmieniają kolor w
+zależności od motywu. Wdrożone jako klasy `theme-yellow`, `theme-blue`, `theme-white` i `paper` w
+[`src/styles/globals.css`](../src/styles/globals.css), sekcja – `Section` w `src/components/ui/`.
 
-| Rola           | Żółty                 | Niebieski          |
-| -------------- | --------------------- | ------------------ |
-| `--bg`         | `yellow-500`          | `blue-600`         |
-| `--bg-glow`    | `yellow-300`          | `blue-500`         |
-| `--bg-edge`    | `yellow-600`          | `blue-600`         |
-| `--title`      | `blue-500`            | `yellow-500`       |
-| `--text`       | `navy-900`            | `white`            |
-| `--label`      | `navy-900`            | `white`            |
-| `--icon-ok-bg` | `blue-500`            | `yellow-500`       |
-| `--icon-ok-fg` | `white`               | `navy-900`         |
-| `--grid-line`  | `navy-900`, krycie 8% | `white`, krycie 8% |
-| `--btn-bg`     | `blue-500`            | `yellow-500`       |
-| `--btn-fg`     | `white`               | `navy-900`         |
+| Rola           | Żółty                 | Niebieski          | Biały                         |
+| -------------- | --------------------- | ------------------ | ----------------------------- |
+| `--bg`         | `yellow-500`          | `blue-600`         | `white`                       |
+| `--bg-glow`    | `yellow-300`          | `blue-500`         | `white`                       |
+| `--bg-edge`    | `yellow-600`          | `blue-600`         | `yellow-50` w połowie z bielą |
+| `--title`      | `blue-500`            | `yellow-500`       | `blue-500`                    |
+| `--text`       | `navy-900`            | `white`            | `navy-900`                    |
+| `--label`      | `navy-900`            | `white`            | `navy-900`                    |
+| `--icon-ok-bg` | `blue-500`            | `yellow-500`       | `blue-500`                    |
+| `--icon-ok-fg` | `white`               | `navy-900`         | `white`                       |
+| `--grid-line`  | `navy-900`, krycie 8% | `white`, krycie 8% | `navy-900`, krycie 8%         |
+| `--btn-bg`     | `blue-500`            | `yellow-500`       | `blue-500`                    |
+| `--btn-fg`     | `white`               | `navy-900`         | `white`                       |
 
 - **Stopka:** tło `navy-900`, tytuły `yellow-500`, tekst `white`.
 - **Tylko tryb jasny** (`color-scheme: light`), bez osobnego trybu ciemnego.
-- **Rytm:** hero niebieskie → pierwsza sekcja po hero żółta → dalej na zmianę; sekcja kontaktu żółta.
+- **Rytm:** hero żółte (D-15) → Oferta niebieska → O firmie biała → Autoryzacje żółte →
+  Realizacje niebieskie → Kontakt żółty → stopka granatowa
+  ([mapa-strony.md](mapa-strony.md#strona-główna), D-29). Kolory marki to
+  żółty i niebieski – biały jest przerywnikiem, najwyżej 1–2 sekcje na stronę.
+- **Panel** (`Panel`) – arkusz w innym motywie wewnątrz sekcji, np. żółta i niebieska karta na
+  białej sekcji; leży na tej samej siatce co strona.
 
 ## Kontrast
 
 Tabela wiążąca dla każdego tekstu na stronie (WCAG AA). „Duży tekst” = co najmniej 24 px albo 19 px
 pogrubione.
 
-| Tekst na tle           | Kontrast | Zasada                                       |
-| ---------------------- | -------- | -------------------------------------------- |
-| navy na yellow-500     | 8,2      | ✅ każdy tekst                               |
-| navy na yellow-600     | 7,4      | ✅ każdy tekst                               |
-| navy na yellow-50      | 10,5     | ✅ każdy tekst                               |
-| white na navy          | 11,3     | ✅ każdy tekst                               |
-| yellow-500 na navy     | 8,2      | ✅ każdy tekst, mocne CTA                    |
-| white na blue-700      | 7,1      | ✅ każdy tekst                               |
-| yellow-500 na blue-700 | 5,2      | ✅ każdy tekst                               |
-| white na blue-600      | 4,8      | ✅ każdy tekst                               |
-| yellow-500 na blue-600 | 3,5      | ⚠️ tylko duży tekst                          |
-| white na blue-500      | 3,4      | ⚠️ tylko duży tekst                          |
-| navy na blue-500       | 3,3      | ⚠️ tylko duży tekst                          |
-| white na blue-400      | 3,0      | ⚠️ tylko bardzo duży tekst                   |
-| blue-500 na yellow-500 | 2,5      | ❌ tylko logo i tytuły od 40 px jako grafika |
-| yellow-500 na blue-500 | 2,5      | ❌ tylko tytuły od 40 px                     |
+| Tekst na tle           | Kontrast | Zasada                                           |
+| ---------------------- | -------- | ------------------------------------------------ |
+| navy na yellow-500     | 8,2      | ✅ każdy tekst                                   |
+| navy na yellow-600     | 7,4      | ✅ każdy tekst                                   |
+| navy na yellow-50      | 10,5     | ✅ każdy tekst                                   |
+| navy na white          | 11,3     | ✅ każdy tekst                                   |
+| white na navy          | 11,3     | ✅ każdy tekst                                   |
+| yellow-500 na navy     | 8,2      | ✅ każdy tekst, mocne CTA                        |
+| white na blue-700      | 7,1      | ✅ każdy tekst                                   |
+| yellow-500 na blue-700 | 5,2      | ✅ każdy tekst                                   |
+| white na blue-600      | 4,8      | ✅ każdy tekst                                   |
+| yellow-500 na blue-600 | 3,5      | ⚠️ tylko duży tekst                              |
+| white na blue-500      | 3,4      | ⚠️ tylko duży tekst                              |
+| blue-500 na white      | 3,4      | ⚠️ tylko duży tekst                              |
+| navy na blue-500       | 3,3      | ⚠️ tylko duży tekst                              |
+| white na blue-400      | 3,0      | ⚠️ tylko bardzo duży tekst                       |
+| blue-500 na yellow-500 | 2,5      | ❌ tylko logo i tytuły od 40 px jako grafika     |
+| yellow-500 na blue-500 | 2,5      | ❌ tylko tytuły od 40 px                         |
+| red-nav na yellow-500  | 3,5      | ⚠️ tylko duży tekst – menu 18 px to wyjątek D-22 |
 
 W praktyce:
 
-1. Tekst ciągły, listy i nawigacja: na żółtym zawsze granat, na niebieskim zawsze biel.
+1. Tekst ciągły, listy i nawigacja: na żółtym i białym zawsze granat, na niebieskim zawsze biel.
 2. Tytuły w kolorach marki (niebieski na żółtym, żółty na niebieskim) – co najmniej 40 px, także na
-   telefonie.
-3. Przycisk na żółtym: pigułka `blue-500` z białym tekstem co najmniej 20 px bold. Na niebieskim:
-   pigułka `yellow-500` z granatowym tekstem.
+   telefonie. Niebieski na białym – jak duży tekst (od 24 px albo 19 px pogrubione). Tytuły kart
+   (`h3`) mają kolor tekstu.
+3. Przycisk na żółtym i białym: pigułka `blue-500` z białym tekstem co najmniej 20 px bold. Na
+   niebieskim: pigułka `yellow-500` z granatowym tekstem.
 4. Link w tekście ma kolor tekstu i podkreślenie – nigdy nie odróżniamy go samym kolorem.
 
 ## Tło „rysunek techniczny”
 
-Podpis graficzny marki – każda sekcja ma siatkę i winietę, tło nigdy nie jest płaskie.
+Podpis graficzny marki – każda sekcja ma siatkę i winietę, tło nigdy nie jest płaskie. Wdrożone w
+[`src/styles/globals.css`](../src/styles/globals.css) (`grid-lines`, `paper`, `blueprint`, `body`).
 
-```css
-background-color: var(--bg);
-background-image:
-  linear-gradient(var(--grid-line) 1px, transparent 1px),
-  linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
-  radial-gradient(ellipse 80% 60% at 50% 30%, var(--bg-glow), var(--bg-edge));
-background-size:
-  54px 54px,
-  54px 54px,
-  100% 100%;
-```
-
+- **Siatka należy do ekranu, kolor do sekcji** ([decyzje.md](decyzje.md) D-17, D-27, D-33). Siatka
+  stoi w miejscu, a treść przewija się nad nią – w przypiętych scenach nic się nie rusza. Jedna
+  siatka przez wszystkie sekcje i miejsce pod nimi, bez szwów. Sekcja (`paper`) daje kolor i winietę,
+  a siatkę tylko przerysowuje w kolorze swoich linii (`--grid-line`). Zawsze jako warstwa `fixed`
+  (`screen-grid`), nigdy `background-attachment: fixed` – to przerysowuje tło przy każdej klatce. Tło `body` poza sekcjami –
+  `yellow-600` (krawędź żółtej winiety), więc żółta sekcja przechodzi w nie bez szwu.
+- Sekcja i panel przycinają wszystko, co z nich wystaje. `transform` na przodku sekcji przypiąłby
+  jej siatkę do tego przodka (tak jest tylko w hero, gdy stoi w miejscu – D-21).
+- Elementy, które przesuwają się względem strony (nagłówek, panele menu, pasek telefonu na
+  telefonie), mają własną siatkę od swojej górnej krawędzi (`blueprint`).
 - Siatka co **54 px** (na telefonie 40 px), linie 1 px. Jeden krok siatki w całej stronie.
 - Winieta: jaśniejszy środek w górnej części sekcji (tam, gdzie tytuł), różnica jasności około 6% –
   ma być wyczuwalna, nie widoczna.
-- Siatka jest statyczna, bez paralaksy.
-- **Dwa „papiery”:** sekcja niebieska to cyjanotypia (białe linie rysunku), żółta to kalka (granatowe
-  linie). Oba kolory mają ten sam sens – rysunek techniczny.
+- Siatka jest statyczna – nie przewija się i nie ma paralaksy. Hero zostaje w miejscu, a sekcja 2
+  nasuwa się na nie ([decyzje.md](decyzje.md) D-21, [Ruch](#ruch)).
+- **Trzy „papiery”:** sekcja niebieska to cyjanotypia (białe linie rysunku), żółta to kalka (granatowe
+  linie), biała to papier kreślarski (granatowe linie, opcjonalnie). Wszystkie mają ten sam sens –
+  rysunek techniczny.
 - **Ozdobniki z rysunku technicznego:** znaczniki narożne („L” w rogach paneli), linie wymiarowe ze
   strzałkami i liczbą, linie odniesienia z opisem, numeracja arkuszy w nadtytułach („ARKUSZ 03 / 09”).
+
+## Przejścia między sekcjami
+
+Skośna krawędź to spadek dachu ([decyzje.md](decyzje.md) D-18). Wdrożone jako `slant` w `Section`
+(klasy `slant-rising` / `slant-falling` w [`src/styles/globals.css`](../src/styles/globals.css)).
+
+- Górna krawędź sekcji ścięta pod kątem około 2° (`--slant-rise`: 3,75% szerokości ekranu, na
+  1440 px dokładnie jeden krok siatki). Sekcja zachodzi na poprzednią, a jej treść zostaje na
+  miejscu.
+- Linie siatki biegną przez skos bez przerwy – zmienia się tylko kolor papieru.
+- Kierunek czytany od lewej: `rising` (/) albo `falling` (\).
+- **Na zmianę na każdej stronie** ([decyzje.md](decyzje.md) D-24): pierwsza sekcja (hero) bez
+  skosu, sekcje parzyste `rising`, nieparzyste `falling`. Liczy się kolejność w `<main>`, więc
+  nowa sekcja sama dostaje właściwy kierunek; `slant` w `Section` ustawiamy tylko, żeby to
+  nadpisać. Animowana zmiana koloru („wipe”) – [Ruch](#ruch).
+- Poprzednia sekcja traci przy skosie do `--slant-rise` dolnego odstępu – nic w niej nie może
+  stać tuż przy dolnej krawędzi.
 
 ## Typografia
 
@@ -140,7 +168,8 @@ Podzbiory `latin` i `latin-ext`, ładowany w
 | `list`    | 18 → 22 px                      | 500     | 1,35       | punkty z ikonami ✓ ✗            |
 | `small`   | 14 px                           | 400     | 1,4        | stopka, lokalizacja             |
 
-Wyrównanie do lewej we wszystkich sekcjach treści. Wyśrodkowany jest tylko blok kontaktowy.
+Wyrównanie do lewej we wszystkich sekcjach treści. Wyśrodkowany jest tylko blok kontaktowy i
+nagłówek sekcji „Autoryzacje i nagroda” ([decyzje.md](decyzje.md) D-26).
 
 ## Układ
 
@@ -188,23 +217,23 @@ na niebieskim. Teraz w hero; rola poza hero – ⚠ P-20.
 
 ## Komponenty
 
-| Komponent        | Specyfikacja                                                                                                                                                                                                                                                                                         |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Nadtytuł         | logo w kolorze `--title` + pionowa kreska 2 px (krycie 40%) + etykieta `eyebrow` w kolorze `--label`. W każdej sekcji treści – to on spina stronę z reklamą. Wyjątek: hero – sama etykieta, bo obok jest logo z postacią                                                                             |
-| Tytuł sekcji     | `h2` w kolorze `--title`; zasady treści – [komunikacja.md](komunikacja.md#zasady-pisania)                                                                                                                                                                                                            |
-| Lista z ikonami  | pełne kółko około 1,1 em. ✓ korzyść: `--icon-ok-bg` / `--icon-ok-fg`. ✗ problem: zawsze `red-500` z białym znakiem                                                                                                                                                                                   |
-| Pigułka statusu  | `blue-500`, biała ikona ✓ i tekst 14–15 px bold, np. „Pokrycie nienaruszone”, „Od 1992”                                                                                                                                                                                                              |
-| Notatka pisakiem | Kalam 700 w rozmiarze `list`, granat; po lewej pole 36 px z odręcznym ptaszkiem `blue-500` albo ze znakiem (np. PSD); obrót −1…−2°; notatki jedna pod drugą. Dowody w hero zamiast pigułek statusu                                                                                                   |
-| Przycisk-telefon | główne CTA. Pigułka `--btn-bg`, numer 700 co najmniej 20 px, po lewej kółko ze słuchawką, wysokość co najmniej 48 px, zawsze link `tel:`. Na telefonie przyklejony pasek u dołu ekranu, na komputerze w nagłówku. Numer – [firma.md](firma.md#kontakt)                                               |
-| Przycisk główny  | ta sama pigułka bez ikony, np. „Bezpłatna wycena”                                                                                                                                                                                                                                                    |
-| Panel ilustracji | ostre rogi, bez obrysu i cienia – patrz [Ilustracje](#ilustracje)                                                                                                                                                                                                                                    |
-| Celownik         | okrąg + 4 kreski na zewnątrz; granatowy na żółtym, żółty na niebieskim; opcjonalna etykieta w granatowej pigułce („± 1 cm”). Znak precyzji: punkty na interaktywnych rysunkach, „tu jest przeciek”                                                                                                   |
-| Licznik          | granatowy prostokąt (zaokrąglenie około 6 px), duża biała liczba 700 + mała jednostka („m²/dzień”)                                                                                                                                                                                                   |
-| Linia wymiarowa  | linia ze strzałkami na końcach i liczbą pośrodku, np. „1992 ↔ dziś”                                                                                                                                                                                                                                  |
-| Separator        | kreska około 80 × 2 px, `blue-500` z kryciem około 50%, wyśrodkowana                                                                                                                                                                                                                                 |
-| Blok kontaktowy  | wyśrodkowany, tło żółte z siatką: nadtytuł → duże logo → hasło → separator → przycisk-telefon → e-mail i www (granat, bold) → lokalizacja (granat, mniejsza)                                                                                                                                         |
-| Nagłówek         | żółty pasek z siatką: logo `blue-500` po lewej, nawigacja granatowa 500, przycisk-telefon po prawej. Po przewinięciu jednolity (bez winiety), z cienką granatową linią u dołu. Nad hero strony głównej do pierwszego przewinięcia bez własnego tła (`under-header`), więc siatka przechodzi bez szwu |
-| Stopka           | „tabliczka rysunkowa” jak w rogu rysunku technicznego: Wykonawca · Adres · Telefon · Od 1992 · członek PSD · „Arkusz 01 / 01 · Skala 1:1 · Rew. 2027”. Dane – [firma.md](firma.md)                                                                                                                   |
+| Komponent        | Specyfikacja                                                                                                                                                                                                                                                                                                   |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Nadtytuł         | logo w kolorze `--title` + pionowa kreska 2 px (krycie 40%) + etykieta `eyebrow` w kolorze `--label`. W każdej sekcji treści – to on spina stronę z reklamą. Wyjątek: hero – sama etykieta, bo obok jest logo z postacią                                                                                       |
+| Tytuł sekcji     | `h2` w kolorze `--title`, nad nim nadtytuł, pod nim opcjonalny lead i dalszy opis – `SectionHeading` (pojawia się raz, [Ruch](#ruch)); zasady treści – [komunikacja.md](komunikacja.md#zasady-pisania)                                                                                                         |
+| Lista z ikonami  | pełne kółko około 1,1 em. ✓ korzyść: `--icon-ok-bg` / `--icon-ok-fg` (`CheckList`). ✗ problem: zawsze `red-500` z białym znakiem                                                                                                                                                                               |
+| Pigułka statusu  | `blue-500`, biała ikona ✓ i tekst 14–15 px bold, np. „Pokrycie nienaruszone”, „Od 1992”                                                                                                                                                                                                                        |
+| Notatka pisakiem | Kalam 700 w rozmiarze `list`, granat; po lewej pole 36 px z odręcznym ptaszkiem `blue-500` albo ze znakiem (np. PSD); obrót −1…−2°; notatki jedna pod drugą. Dowody w hero zamiast pigułek statusu                                                                                                             |
+| Przycisk-telefon | główne CTA. Pigułka `--btn-bg`, numer 700 co najmniej 20 px, po lewej kółko ze słuchawką, wysokość co najmniej 48 px, zawsze link `tel:`. Na telefonie przyklejony pasek u dołu ekranu, na komputerze w nagłówku. Numer – [firma.md](firma.md#kontakt)                                                         |
+| Przycisk główny  | ta sama pigułka bez ikony, np. „Bezpłatna wycena”                                                                                                                                                                                                                                                              |
+| Panel ilustracji | ostre rogi, bez obrysu i cienia – patrz [Ilustracje](#ilustracje)                                                                                                                                                                                                                                              |
+| Celownik         | okrąg + 4 kreski na zewnątrz; granatowy na żółtym, żółty na niebieskim; opcjonalna etykieta w granatowej pigułce („± 1 cm”). Znak precyzji: punkty na interaktywnych rysunkach, „tu jest przeciek”                                                                                                             |
+| Licznik          | granatowy prostokąt (zaokrąglenie około 6 px), duża biała liczba 700 + mała jednostka („m²/dzień”)                                                                                                                                                                                                             |
+| Linia wymiarowa  | linia ze strzałkami na końcach i liczbą pośrodku, np. „1992 ↔ dziś”                                                                                                                                                                                                                                            |
+| Separator        | kreska około 80 × 2 px, `blue-500` z kryciem około 50%, wyśrodkowana                                                                                                                                                                                                                                           |
+| Blok kontaktowy  | wyśrodkowany, tło żółte z siatką: nadtytuł → duże logo → hasło → separator → przycisk-telefon → e-mail i www (granat, bold) → lokalizacja (granat, mniejsza)                                                                                                                                                   |
+| Nagłówek         | żółty pasek z siatką: logo `blue-500` po lewej, nawigacja `pd-red-nav` 500 (D-22), przycisk-telefon po prawej. Po przewinięciu jednolity (bez winiety), z cienką granatową linią u dołu. Nad hero strony głównej do pierwszego przewinięcia bez własnego tła (`under-header`), więc siatka przechodzi bez szwu |
+| Stopka           | „tabliczka rysunkowa” jak w rogu rysunku technicznego: Wykonawca · Adres · Telefon · Od 1992 · członek PSD · „Arkusz 01 / 01 · Skala 1:1 · Rew. 2027”. Dane – [firma.md](firma.md)                                                                                                                             |
 
 ## Ilustracje
 
@@ -221,6 +250,10 @@ na niebieskim. Teraz w hero; rola poza hero – ⚠ P-20.
   ocieplenie, membrana, kontrłaty, łaty, dachówka lub blachodachówka, obróbki, rynna, okno dachowe) –
   główny bohater strony; hala z dachem płaskim; drzwi zewnętrzne i wewnętrzne; przekrój podłogi;
   parapet; demontaż płyt eternitowych.
+- **Rysunki usług** (kafle oferty, D-29) – [`OfferDrawing`](../src/components/illustrations/OfferDrawing.tsx):
+  jeden mały rysunek na podstronę z menu „Usługi”, na niebieskim papierze. Linie białe (krawędzie
+  1,75 px, szczegóły 1 px), wypełnienia `blue-700`, `blue-400` i granat, jeden żółty akcent
+  (`--title`), ukryta konstrukcja przerywana na żółto, celownik i strzałka – żółte.
 - **Źródło:** istniejące rysunki eksportujemy z projektu reklamy (te same kształty).
 
 ## Zdjęcia
@@ -244,16 +277,24 @@ Każda animacja coś tłumaczy, a nie tylko się rusza. Momenty popisowe opisuje
 [mapa-strony.md](mapa-strony.md), wymagania (reduced motion, działanie bez JS) –
 [standardy.md](standardy.md#dostępność).
 
-| Efekt                         | Parametry                                                                                                                                                                                                                                                                                                                                            |
-| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Tytuł sekcji                  | wjeżdża od dołu spod maski, raz przy wejściu w widok, 400–500 ms, `ease-out`                                                                                                                                                                                                                                                                         |
-| Punkty listy                  | pojawiają się kolejno co około 120 ms                                                                                                                                                                                                                                                                                                                |
-| Ikony ✓, celownik             | sprężyste pojawienie: skala 0,6 → 1 z lekkim przestrzeleniem, 300 ms                                                                                                                                                                                                                                                                                 |
-| Licznik                       | odlicza od zera raz, przy pierwszym pokazaniu                                                                                                                                                                                                                                                                                                        |
-| Rysunek                       | kontur rysuje się linią, potem wypełnienie kolorem                                                                                                                                                                                                                                                                                                   |
-| Logo z postacią (hero)        | raz przy każdym wejściu na stronę, około 5,2 s: postać wygląda zza biurka, chowa się i wyskakuje → parasol wysuwa się i otwiera → litery POLDACH co 64 ms → hasło wjeżdża od dołu. Sam CSS – [`LogoEntrance`](../src/components/motion/LogoEntrance.module.css) (czasy z makiety `design/makiety/animacja-spod-biurka/` × 0,8, czyli 1,25× szybciej) |
-| Zmiana koloru sekcji („wipe”) | ostra pionowa lub ukośna krawędź albo komórki siatki 54 px odsłaniające nowy kolor; 2–3 razy na stronę, nie przy każdej sekcji                                                                                                                                                                                                                       |
-| Mgła, iskra, kapanie          | małe zapętlone animacje SVG, tylko w ilustracjach metod diagnostyki                                                                                                                                                                                                                                                                                  |
+| Efekt                         | Parametry                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Nagłówek sekcji               | nadtytuł, tytuł i opis pojawiają się razem, łagodnie (`opacity`, 600 ms, `ease-out`), raz – gdy sekcja zajmuje połowę ekranu, czyli jej górna krawędź dochodzi do środka ekranu (D-36). Potem zostają, także przy przewijaniu w górę. Bez JS i przy reduced motion – widoczne od razu; gdy skrypt się nie załaduje – po 3 s. Bez hero: jego tytuł widać od pierwszej klatki. [`FadeInOnce`](../src/components/motion/FadeInOnce.tsx), używa go `SectionHeading`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| Punkty listy                  | pojawiają się kolejno co około 120 ms                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| Ikony ✓, celownik             | sprężyste pojawienie: skala 0,6 → 1 z lekkim przestrzeleniem, 300 ms                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| Licznik                       | odlicza od zera raz, przy pierwszym pokazaniu                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| Rysunek                       | kontur rysuje się linią, potem wypełnienie kolorem                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| Rysunek – przy przewijaniu    | sterowany przewijaniem (D-29), bez przypinania, na każdym ekranie: kontur rysuje się, gdy rysunek wjeżdża na ekran, potem po kolei wypełnienia, żółty akcent i konstrukcja przerywana – gotowe, zanim środek rysunku dojdzie do środka ekranu; przy przewijaniu w górę rysunek się cofa. Kafle w rzędzie ruszają po kolei (przesunięcie 5% na kolumnę). Bez obsługi i przy reduced motion – gotowy rysunek. Sam CSS – [`DrawOnScroll`](../src/components/motion/DrawOnScroll.module.css)                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Oferta – sekwencja            | sterowana przewijaniem (D-30, D-31), ściśle po kolei – następny element rusza dopiero, gdy poprzedni jest gotowy. Każdy element wjeżdża od dołu (1,5 rem) i pojawia się, znaczniki w rogach zbiegają się do rogów. Kafel po kafelku: znaczniki z numerem → rysunek (kontur, potem wypełnienia – `DrawOnScroll` sterowany z sekcji) → tytuł → opis → strzałka. Od 1024 px i około 740 px wysokości ekranu (D-33) scena przypina się pod nagłówkiem strony na 3,6 ekranu przewijania (`360vh`, po około 0,56 ekranu na kafel; przypięcie – [`PinnedScene`](../src/components/motion/PinnedScene.module.css)); kafle ciaśniejsze, rysunek dopasowany do wysokości ekranu. Mniejsze ekrany – bez przypinania, każdy kafel gra, gdy przechodzi przez ekran; pierwszy rząd czeka na pojawienie się nagłówka. Przewijanie w górę cofa ruch; fokus klawiatury w kaflu pokazuje go od razu. [`OfferSection.module.css`](../src/sections/home/OfferSection.module.css) |
+| Arkusz oferty – najechanie    | znaczniki w rogach kafla domykają się w ramkę (300 ms), strzałka przesuwa się w prawo (200 ms); przy fokusie klawiatury ramka i obrys fokusu. [`OfferSection.module.css`](../src/sections/home/OfferSection.module.css)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| Logo z postacią (hero)        | raz przy każdym wejściu na stronę, około 5,2 s: postać wygląda zza biurka, chowa się i wyskakuje → parasol wysuwa się i otwiera → litery POLDACH co 64 ms → hasło wjeżdża od dołu. Sam CSS – [`LogoEntrance`](../src/components/motion/LogoEntrance.module.css) (czasy z makiety `design/makiety/animacja-spod-biurka/` × 0,8, czyli 1,25× szybciej)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| Zmiana koloru sekcji („wipe”) | ostra pionowa lub ukośna krawędź albo komórki siatki 54 px odsłaniające nowy kolor; 2–3 razy na stronę, nie przy każdej sekcji                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| Zdjęcie → rysunek             | sterowana przewijaniem (D-20): prosta krawędź jedzie od dołu, pod nią zdjęcia już nie ma, a rysunek leży na papierze sekcji z siatką strony; zdjęcie i rysunek się nie przesuwają. Zdjęcie na całą szerokość, na komputerze przypięte na wysokość ekranu pod nagłówkiem. Linie `navy-900`, ukryta konstrukcja przerywana `blue-600`, opisy na końcu (od 1024 px; węższe ekrany – lista pod zdjęciem). Bez obsługi i przy reduced motion – samo zdjęcie. Sam CSS – [`TracingReveal`](../src/components/motion/TracingReveal.module.css)                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Płynne przewijanie            | kółko myszy i touchpad (D-35): strona dopływa do celu z wygaszaniem zamiast przeskakiwać – jak na metriccivil.ca (Lenis, `lerp` 0,1, `wheelMultiplier` 0,65). Dotyk, klawiatura, reduced motion i brak JS – zwykłe przewijanie. Przewijane elementy na wierzchu strony (menu mobilne) mają `data-lenis-prevent`. [`SmoothScroll`](../src/components/motion/SmoothScroll.tsx)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| Hero zostaje w miejscu        | sterowana przewijaniem (D-21): gdy dół hero dojdzie do dołu ekranu, hero przesuwa się w dół tak szybko, jak strona w górę, więc stoi, a sekcja 2 (ze skosem) je przykrywa. Bez obsługi, przy reduced motion i przy fokusie w hero – zwykłe przewijanie. Sam CSS – [`StayInPlace`](../src/components/motion/StayInPlace.module.css)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| O firmie – sekwencja          | sterowana przewijaniem (D-25). Od 1024 px i przy ekranie od około 740 px wysokości scena przypina się pod nagłówkiem na około 4 ekrany przewijania (`390vh`): zdjęcie siedziby wjeżdża z prawej (pojawia się), potem linia wymiarowa rośnie w prawo od krótkiego odcinka z samym 1992, lata liczą się od 0, kamienie milowe pojawiają się, gdy linia do nich dochodzi; słowo „lata” dopiero przy wartości końcowej. Mniejsze ekrany – te same ruchy bez przypinania. Sam CSS – [`AboutSection.module.css`](../src/sections/home/AboutSection.module.css)                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Dokumenty – sekwencja         | sterowana przewijaniem (D-26, wzorzec „Full-scope” z metriccivil.ca). Pod wyśrodkowanym nagłówkiem scena przypina się na 3 ekrany (`300vh`): pierwszy skan od razu stoi na środku w pełnym rozmiarze, potem maleje do lewego górnego rogu, a z miniatury w prawym dolnym rogu rośnie następny; opis obok (numer „01 / 03 · rok”, nazwa, tytuł) widać tylko, gdy jego skan stoi na środku. Skany pojawiają się i znikają wyłącznie przez rozmiar (od i do 0 × 0 px), bez przenikania; opisy przenikają wraz z przewijaniem – znikają tuż przed ruchem skanów i pojawiają się tuż po tym, jak skan stanie na środku. Skany jadą jak łańcuch – wszystkie naraz, ze stałym odstępem między sąsiadami (10% szerokości skanu), więc nic na nic nie nachodzi. Warunki jak w sekwencji „O firmie”; poza nimi – siatka trzech skanów. Sam CSS – [`DocumentsSection.module.css`](../src/sections/home/DocumentsSection.module.css)                                     |
+| Mgła, iskra, kapanie          | małe zapętlone animacje SVG, tylko w ilustracjach metod diagnostyki                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 
 Animacja tylko przy pierwszym pojawieniu się; nic nie miga w pętli obok tekstu.
 

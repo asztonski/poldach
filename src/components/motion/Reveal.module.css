@@ -1,0 +1,19 @@
+/*
+ * An element comes up from below and appears, driven by the scroll. The class holds the motion; the
+ * scene sets when it plays: animation-timeline and animation-range, only where scroll-driven
+ * animations run. Without a timeline the animation has no duration, so the element simply stands.
+ * --rise-distance sets how far it comes from.
+ */
+.rise {
+  animation-name: rise;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+
+/* transform, not translate – a hover may move the same element with translate */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--rise-distance, 0.75rem));
+  }
+}

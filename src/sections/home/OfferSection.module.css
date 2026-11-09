@@ -1,0 +1,286 @@
+/*
+ * Offer sheets (docs/decyzje.md D-29): no frame, only the corner marks of a drawing sheet
+ * (docs/design-system.md#tło-rysunek-techniczny). On hover and keyboard focus the marks grow into
+ * a full frame – the sheet is picked up.
+ */
+@property --mark-length {
+  syntax: '<length-percentage>';
+  inherits: false;
+  /* Must be an absolute unit – a rem here would void the whole rule */
+  initial-value: 16px;
+}
+
+.sheet {
+  /* Sheets in a row start one after another (unpinned) */
+  --draw-shift: 0%;
+  --rise-distance: 1.5rem;
+}
+
+.sheet::before {
+  --mark: color-mix(in srgb, currentColor 45%, transparent);
+  --w: 2px;
+
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--mark) 0 0) left top / var(--mark-length) var(--w),
+    linear-gradient(var(--mark) 0 0) left top / var(--w) var(--mark-length),
+    linear-gradient(var(--mark) 0 0) right top / var(--mark-length) var(--w),
+    linear-gradient(var(--mark) 0 0) right top / var(--w) var(--mark-length),
+    linear-gradient(var(--mark) 0 0) left bottom / var(--mark-length) var(--w),
+    linear-gradient(var(--mark) 0 0) left bottom / var(--w) var(--mark-length),
+    linear-gradient(var(--mark) 0 0) right bottom / var(--mark-length) var(--w),
+    linear-gradient(var(--mark) 0 0) right bottom / var(--w) var(--mark-length);
+  background-repeat: no-repeat;
+}
+
+.sheet:hover::before,
+.sheet:has(:focus-visible)::before {
+  --mark-length: 50%;
+}
+
+.sheet:hover .arrow {
+  translate: 0.375rem 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sheet::before {
+    transition: --mark-length 300ms ease-out;
+  }
+
+  .arrow {
+    transition: translate 200ms ease-out;
+  }
+}
+
+@media (width >= 40rem) {
+  .sheet:nth-child(2n) {
+    --draw-shift: 5%;
+  }
+}
+
+@media (width >= 64rem) {
+  .sheet:nth-child(n) {
+    --draw-shift: 0%;
+  }
+
+  .sheet:nth-child(3n + 2) {
+    --draw-shift: 5%;
+  }
+
+  .sheet:nth-child(3n) {
+    --draw-shift: 10%;
+  }
+}
+
+/*
+ * The scroll brings the section in, strictly one element after another – the next one starts only
+ * when the previous one is complete (docs/decyzje.md D-30, D-31). Sheet by sheet: corner marks with
+ * the number → drawing (outline, then the fills – DrawOnScroll driven from here) → title →
+ * description → arrow. Every element moves with the scroll and goes back when scrolling up. The
+ * section's heading is not part of this: it fades in once by itself (SectionHeading, D-36).
+ *
+ * Desktop, wide and tall enough for the whole stage: the stage pins below the header and the scroll
+ * plays the six sheets. Smaller screens: each sheet plays while it crosses the screen. Without
+ * scroll-driven animations or with reduced motion the markup is the final state.
+ */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Unpinned: every sheet on its own timeline; --at is where its sequence starts */
+    .sheet {
+      --at: var(--draw-shift);
+
+      view-timeline: --sheet block;
+      --draw-timeline: --sheet;
+      --draw-trace: cover calc(var(--at) + 10%) cover calc(var(--at) + 26%);
+      --draw-fill: cover calc(var(--at) + 26%) cover calc(var(--at) + 30%);
+      --draw-accent: cover calc(var(--at) + 30%) cover calc(var(--at) + 32%);
+      --draw-late: cover calc(var(--at) + 32%) cover calc(var(--at) + 34%);
+    }
+
+    /* The motion of the number, title, text and arrow: Reveal; here – when it plays */
+    .sheet::before,
+    .number,
+    .title,
+    .text,
+    .arrow {
+      animation-timeline: --sheet;
+    }
+
+    .sheet::before {
+      animation-name: frame-in;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+    }
+
+    .sheet::before,
+    .number {
+      animation-range: cover var(--at) cover calc(var(--at) + 10%);
+    }
+
+    .title {
+      animation-range: cover calc(var(--at) + 34%) cover calc(var(--at) + 39%);
+    }
+
+    .text {
+      animation-range: cover calc(var(--at) + 39%) cover calc(var(--at) + 43%);
+    }
+
+    .arrow {
+      animation-range: cover calc(var(--at) + 43%) cover calc(var(--at) + 47%);
+    }
+
+    /* The first row sits right under the heading – it waits until the heading has appeared */
+    .sheet:nth-child(-n + 3) {
+      --at: calc(var(--draw-shift) + 14%);
+    }
+
+    /* The condition of PinnedScene */
+    @media (width >= 64rem) and (height >= 46rem) {
+      /* The whole section on one screen below the header */
+      .stage {
+        display: flex;
+        flex-direction: column;
+        padding-block: 0.75rem 1rem;
+      }
+
+      /* Eyebrow and title on the left, the lead next to them */
+      .heading {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 26rem);
+        column-gap: 2rem;
+      }
+
+      .lead {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        align-self: end;
+        margin-top: 0;
+      }
+
+      .sheets {
+        flex: 1 1 0;
+        min-height: 0;
+        margin-top: 1.25rem;
+        row-gap: 1rem;
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+      }
+
+      /* Compact sheets: the drawing takes what the text leaves, the arrow goes up to the number */
+      .sheet {
+        padding: 1rem;
+      }
+
+      .drawing {
+        flex: 1 1 0;
+        min-height: 0;
+        margin-top: 0.5rem;
+      }
+
+      .drawing svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      .title {
+        margin-top: 0.625rem;
+        font-size: 1.5rem;
+      }
+
+      .text {
+        margin: 0.125rem 0 0;
+      }
+
+      .arrow {
+        position: absolute;
+        top: 0.75rem;
+        right: 1rem;
+      }
+
+      /*
+       * One slot per sheet (--slot), one after another from --at; inside a slot the parts follow
+       * each other at fixed fractions
+       */
+      .sheet {
+        --slot: 15.5%;
+        --draw-timeline: --pinned;
+        --draw-trace: contain calc(var(--at) + var(--slot) * 0.18) contain
+          calc(var(--at) + var(--slot) * 0.55);
+        --draw-fill: contain calc(var(--at) + var(--slot) * 0.55) contain
+          calc(var(--at) + var(--slot) * 0.63);
+        --draw-accent: contain calc(var(--at) + var(--slot) * 0.63) contain
+          calc(var(--at) + var(--slot) * 0.68);
+        --draw-late: contain calc(var(--at) + var(--slot) * 0.68) contain
+          calc(var(--at) + var(--slot) * 0.72);
+      }
+
+      .sheet:nth-child(1) {
+        --at: 2%;
+      }
+
+      .sheet:nth-child(2) {
+        --at: 17.5%;
+      }
+
+      .sheet:nth-child(3) {
+        --at: 33%;
+      }
+
+      .sheet:nth-child(4) {
+        --at: 48.5%;
+      }
+
+      .sheet:nth-child(5) {
+        --at: 64%;
+      }
+
+      .sheet:nth-child(6) {
+        --at: 79.5%;
+      }
+
+      .sheet::before,
+      .number,
+      .title,
+      .text,
+      .arrow {
+        animation-timeline: --pinned;
+      }
+
+      .sheet::before,
+      .number {
+        animation-range: contain var(--at) contain calc(var(--at) + var(--slot) * 0.18);
+      }
+
+      .title {
+        animation-range: contain calc(var(--at) + var(--slot) * 0.72) contain
+          calc(var(--at) + var(--slot) * 0.84);
+      }
+
+      .text {
+        animation-range: contain calc(var(--at) + var(--slot) * 0.84) contain
+          calc(var(--at) + var(--slot) * 0.92);
+      }
+
+      .arrow {
+        animation-range: contain calc(var(--at) + var(--slot) * 0.92) contain
+          calc(var(--at) + var(--slot));
+      }
+    }
+
+    /* A sheet reached with the keyboard is shown whole, wherever the scroll is */
+    .sheet:focus-within::before,
+    .sheet:focus-within * {
+      animation: none !important;
+    }
+  }
+}
+
+/* Corner marks close in on the sheet from inside */
+@keyframes frame-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
