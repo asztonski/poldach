@@ -1,12 +1,14 @@
 /*
- * Company section choreography (docs/design-system.md#ruch – O firmie). Scroll-driven, CSS only; the
- * markup is the final state, used as it is without support and with reduced motion.
+ * Company section choreography (docs/design-system.md#ruch – O firmie, docs/decyzje.md D-25, D-63).
+ * Desktop (wide and tall enough for the pin): the stage is pinned below the header and scrolling down
+ * plays it – one way: OneWayScene keeps the furthest progress in `--p` (0–1), so scrolling up never
+ * rewinds it, and once complete the scene unpins. Each animation is paused and drawn from `--p`: its
+ * delay is how far `--p` is from the start of its range, its length the length of the range.
+ * Elsewhere, without JS and with reduced motion the markup – the final state – stands.
  *
- * The heading with the description fades in once by itself (SectionHeading, D-36). The scroll plays
- * the rest: the photo slides in from the right, the years count up while the dimension line grows to
- * the right, milestones appear as the line reaches them. Desktop (wide and tall enough for the whole
- * stage): the stage is pinned below the header while it plays. Smaller screens: every part plays as
- * it crosses the screen. Transforms, opacity and one counter only.
+ * The heading fades in by itself (D-36). The photo slides in from the right, the years count up
+ * while the dimension line grows to the right, milestones appear as the line reaches them, "lata"
+ * comes with the final number. Transforms, opacity and one counter only.
  */
 
 @property --years {
@@ -15,36 +17,56 @@
   initial-value: 0;
 }
 
+/* The condition of PinnedScene, repeated (CSS cannot share a media query) */
 @supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .right,
-    .years,
-    .bar,
-    .end,
-    .milestones > li {
-      animation-timing-function: linear;
-      animation-fill-mode: both;
-      animation-timeline: view();
+  @media (prefers-reduced-motion: no-preference) and (width >= 64rem) and (height >= 46rem) {
+    .stage {
+      display: flex;
+      flex-direction: column;
+      /* Centred, but a stage too tall for the screen still starts at its top */
+      justify-content: safe center;
     }
 
-    .right {
+    /* A low screen: less air above the timeline, so the whole scene keeps its space below */
+    @media (height < 50rem) {
+      .timeline {
+        margin-top: 1rem;
+      }
+    }
+
+    [data-scrub] :is(.right, .years, .yearsWord, .bar, .end, .milestones > li) {
+      animation-duration: calc((var(--end) - var(--start)) * 1s);
+      animation-delay: calc((var(--start) - var(--p, 0)) * 1s);
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-play-state: paused;
+    }
+
+    /* Ranges as parts of the pin (0–1) */
+    [data-scrub] .right {
+      --start: 0.02;
+      --end: 0.12;
       animation-name: from-right;
-      animation-range: entry 10% entry 100%;
+    }
+
+    /* Line and years together; at the start only the first milestone is there */
+    [data-scrub] :is(.years, .bar, .end) {
+      --start: 0.16;
+      --end: 0.85;
     }
 
     /* The number is drawn by ::before from the animated counter; the real one is kept for screen readers */
-    .years {
+    [data-scrub] .years {
       counter-reset: years var(--years);
       animation-name: years-up;
-      animation-range: entry 40% cover 55%;
     }
 
-    .years::before {
+    [data-scrub] .years::before {
       content: counter(years);
       content: counter(years) / '';
     }
 
-    .yearsValue {
+    [data-scrub] .yearsValue {
       position: absolute;
       width: 1px;
       height: 1px;
@@ -53,89 +75,50 @@
       white-space: nowrap;
     }
 
-    /* "lata" agrees only with the final number – it appears when the count ends */
-    .yearsWord {
-      animation: word-in linear both;
-      animation-timeline: view();
-      animation-range: cover 55% cover 62%;
-    }
-
-    .bar {
+    [data-scrub] .bar {
       animation-name: bar-grow;
-      animation-range: entry 40% cover 55%;
     }
 
-    .end {
+    [data-scrub] .end {
       animation-name: end-move;
-      animation-range: entry 40% cover 55%;
     }
 
-    .milestones > li {
+    /* "lata" agrees only with the final number – it appears when the count ends */
+    [data-scrub] .yearsWord {
+      --start: 0.84;
+      --end: 0.9;
+      animation-name: word-in;
+    }
+
+    /* Each milestone when the line reaches its column (columns at 10, 30, 50, 70, 90 %); the first
+       one comes with the short line */
+    [data-scrub] .milestones > li {
       animation-name: rise;
-      animation-range: entry 10% entry 90%;
     }
 
-    /* The condition of PinnedScene */
-    @media (width >= 64rem) and (height >= 46rem) {
-      .stage {
-        display: flex;
-        flex-direction: column;
-        /* Centred, but a stage too tall for the screen still starts at its top */
-        justify-content: safe center;
-      }
+    [data-scrub] .milestones > li:nth-child(1) {
+      --start: 0.14;
+      --end: 0.2;
+    }
 
-      /* A low screen: less air above the timeline, so the whole scene keeps its space below */
-      @media (height < 50rem) {
-        .timeline {
-          margin-top: 1rem;
-        }
-      }
+    [data-scrub] .milestones > li:nth-child(2) {
+      --start: 0.31;
+      --end: 0.38;
+    }
 
-      .right,
-      .years,
-      .yearsWord,
-      .bar,
-      .end,
-      .milestones > li {
-        animation-timeline: --pinned;
-      }
+    [data-scrub] .milestones > li:nth-child(3) {
+      --start: 0.46;
+      --end: 0.53;
+    }
 
-      .right {
-        animation-range: contain 2% contain 12%;
-      }
+    [data-scrub] .milestones > li:nth-child(4) {
+      --start: 0.61;
+      --end: 0.68;
+    }
 
-      .yearsWord {
-        animation-range: contain 84% contain 90%;
-      }
-
-      /* Line and years together; at the start only the first milestone is there */
-      .years,
-      .bar,
-      .end {
-        animation-range: contain 16% contain 85%;
-      }
-
-      /* Each milestone when the line reaches its column (columns at 10, 30, 50, 70, 90 %); the
-         first one comes with the short line */
-      .milestones > li:nth-child(1) {
-        animation-range: contain 14% contain 20%;
-      }
-
-      .milestones > li:nth-child(2) {
-        animation-range: contain 31% contain 38%;
-      }
-
-      .milestones > li:nth-child(3) {
-        animation-range: contain 46% contain 53%;
-      }
-
-      .milestones > li:nth-child(4) {
-        animation-range: contain 61% contain 68%;
-      }
-
-      .milestones > li:nth-child(5) {
-        animation-range: contain 76% contain 83%;
-      }
+    [data-scrub] .milestones > li:nth-child(5) {
+      --start: 0.76;
+      --end: 0.83;
     }
   }
 }

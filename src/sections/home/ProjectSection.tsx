@@ -6,27 +6,30 @@ import {
   TenementDrawing,
 } from '@/components/illustrations/TenementDrawing';
 import { TracingReveal } from '@/components/motion/TracingReveal';
-import { CheckList, Container, Section, SectionHeading } from '@/components/ui';
+import { CheckList, Container, Section } from '@/components/ui';
+import { cn } from '@/lib/cn';
+import styles from './ProjectSection.module.css';
+
+// TODO(P-21): town and name of the building, confirmed year – the year is the photo's (EXIF)
+const CAPTION = 'Kamienica narożna · 2009';
 
 /**
- * Projects – opened by one project up close (docs/mapa-strony.md#strona-główna, docs/decyzje.md
- * D-19, D-20, D-23): the photo from the old site, edge to edge, turns into its technical drawing
- * on the section's paper while scrolling – white lines on blue, like a cyanotype.
+ * One project up close, right under the hero (docs/mapa-strony.md#strona-główna, docs/decyzje.md
+ * D-19, D-20, D-50): the photo from the old site, edge to edge, and its technical drawing on tracing
+ * paper slides over it while scrolling – navy lines, hidden structure in blue. No heading band: the
+ * photo speaks for itself; the caption and the notes name what it shows.
  */
 export function ProjectSection() {
   return (
-    <Section theme="blue" contained={false} aria-labelledby="project-title">
-      <Container>
-        <SectionHeading
-          id="project-title"
-          eyebrow="Realizacja z bliska"
-          title="Co kryje dobrze zrobiony dach"
-          lead="Zdjęcie jednej z naszych realizacji zamienia się w rysunek techniczny – od więźby po rynny."
-          className="max-w-3xl"
-        />
-      </Container>
-
-      <figure className="mt-(--grid-step)">
+    <Section
+      theme="white"
+      contained={false}
+      aria-label="Realizacja z bliska – zdjęcie i rysunek techniczny"
+      // The photo starts right at the slanted edge: no space above it
+      className={cn('pt-0', styles.coveredByNext)}
+    >
+      {/* Reaches up into the slant, like a heading band (--slant-edge, globals.css) */}
+      <figure className="mt-[calc(-1*var(--slant-edge,0px))]">
         <TracingReveal
           ratio={TENEMENT_RATIO}
           photo={
@@ -45,11 +48,19 @@ export function ProjectSection() {
             />
           }
           drawing={<TenementDrawing preserveAspectRatio="xMidYMin slice" />}
+          label={
+            <Container>
+              <span className="inline-block bg-pd-white px-3 py-2 text-eyebrow text-pd-navy-900 uppercase">
+                {CAPTION}
+              </span>
+            </Container>
+          }
         />
         <Container>
-          <figcaption className="mt-4 text-eyebrow text-(--label) uppercase">
-            {/* TODO(P-21): town and name of the building, confirmed year – the year is the photo's (EXIF) */}
-            Kamienica narożna · 2009
+          <figcaption
+            className={cn('mt-4 text-eyebrow text-(--label) uppercase', styles.captionBelow)}
+          >
+            {CAPTION}
           </figcaption>
           {/* The notes of the drawing as text – visible on narrower screens, for screen readers always */}
           <CheckList items={TENEMENT_NOTES} className="mt-6 lg:sr-only" />

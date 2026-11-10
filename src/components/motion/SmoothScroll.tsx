@@ -3,11 +3,32 @@
 import { useEffect } from 'react';
 import type Lenis from 'lenis';
 
-// The feel of metriccivil.ca (docs/decyzje.md D-35): the page glides to where the wheel sent it
-const OPTIONS = { autoRaf: true, lerp: 0.1, wheelMultiplier: 0.65 };
+// The feel of metriccivil.ca (docs/decyzje.md D-35): the page glides to where the wheel sent it.
+// Wheel: 0.65 × 1.75 – the owner asked for a more sensitive scroll (D-55)
+const OPTIONS = { autoRaf: true, lerp: 0.1, wheelMultiplier: 0.65 * 1.75 };
 
 // Mouse and touchpad only: a finger already scrolls smoothly
 const WANTED = '(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)';
+
+/** Sent right after the page has moved its own scroll position (moveScrollBy) – not a user's move. */
+export const SCROLL_JUMP_EVENT = 'poldach:scroll-jump';
+
+let instance: Lenis | undefined;
+
+/** True while the wheel is smoothed – the scroll position then also moves in sub-pixel steps back. */
+export const isSmoothScrolling = () => Boolean(instance);
+
+/**
+ * Moves the scroll position by `shift` px at once, as the page's own correction, not a move of the
+ * user (OneWayScene): Lenis takes the new position over too, so its glide does not pull the page
+ * back, and listeners (the header) hear SCROLL_JUMP_EVENT once the position is there.
+ */
+export function moveScrollBy(shift: number) {
+  if (!shift) return;
+  if (instance) instance.scrollTo(window.scrollY + shift, { immediate: true, force: true });
+  else window.scrollBy({ top: shift, behavior: 'instant' });
+  window.dispatchEvent(new Event(SCROLL_JUMP_EVENT));
+}
 
 /**
  * Smooth wheel scrolling (Lenis). It still moves the real scroll position, so sticky elements and
@@ -21,12 +42,13 @@ export function SmoothScroll() {
     let unmounted = false;
     // Imported here – it runs only after the page has loaded, and only where it is wanted
     void import('lenis').then(({ default: Lenis }) => {
-      if (!unmounted) lenis = new Lenis(OPTIONS);
+      if (!unmounted) instance = lenis = new Lenis(OPTIONS);
     });
 
     return () => {
       unmounted = true;
       lenis?.destroy();
+      instance = undefined;
     };
   }, []);
 

@@ -3,7 +3,7 @@ import type { NavItem } from '@/types';
 // `trailingSlash: true` can make pathname end with "/" – compare without it
 export const normalizePath = (path: string) => (path.length > 1 ? path.replace(/\/$/, '') : path);
 
-/** True on the item's own page and, for an item with a panel, on any page the panel lists. */
+/** True on the item's own page and on any page of its groups. */
 export function isItemActive(item: NavItem, path: string) {
   return (
     path === item.href ||
@@ -13,7 +13,7 @@ export function isItemActive(item: NavItem, path: string) {
 
 /**
  * Header content moves down by half of the header's slide-up, so it stays centred in the shorter
- * bar. Applied per element: a transform on a wrapper would trap the services panel.
+ * bar. Applied per element, as the header's other parts are.
  */
 export const SHIFT_WITH_HEADER =
   'transition-transform duration-300 ease-out motion-reduce:transition-none group-data-scrolled:translate-y-[calc(var(--header-shift)/2)]';

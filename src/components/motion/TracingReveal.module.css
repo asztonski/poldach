@@ -1,9 +1,9 @@
 /*
- * Photo -> drawing. Two windows share one edge: the photo's window moves up and out, the drawing's
- * window follows it from below; their contents move the other way by the same amount, so neither
- * the photo nor the drawing moves – only the edge travels. Transforms only (docs/architektura.md,
- * rule 5). Nothing here paints a background: below the edge the section's paper and the page grid
- * show through, so the drawing ends up on the page itself.
+ * Photo -> drawing (docs/decyzje.md D-50): the drawing lies right under the photo, in the same place.
+ * While scrolling the photo gets shorter from the bottom – its bottom edge travels up, its width and
+ * its content stay – and uncovers the drawing. Its window moves up and out, the photo inside moves
+ * down by the same amount, so the photo itself stands still and only the edge travels. Transforms
+ * only (docs/architektura.md, rule 5).
  */
 
 .track {
@@ -24,7 +24,16 @@
   inset: 0;
 }
 
-.photoWindow,
+/* The photo above the drawing */
+.photoWindow {
+  z-index: 1;
+  overflow: hidden;
+}
+
+/*
+ * The sheet paints no background of its own: under the lines the section's paper with the page
+ * grid shows through, fixed to the screen like everywhere else (docs/decyzje.md D-27)
+ */
 .drawingWindow {
   overflow: hidden;
 }
@@ -50,6 +59,15 @@
   height: 100%;
 }
 
+/* A caption on the frame, above the photo: only where the frame is pinned (see below) */
+.label {
+  display: none;
+  position: absolute;
+  z-index: 2;
+  inset-inline: 0;
+  bottom: 1.5rem;
+}
+
 /* Without the animation the photo stays and the drawing is not shown */
 .drawingWindow {
   visibility: hidden;
@@ -69,14 +87,11 @@
     }
 
     .photoWindow,
-    .photo,
-    .drawingWindow,
-    .drawing,
-    .drawing [data-layer='notes'] {
+    .photo {
       animation-timing-function: linear;
       animation-fill-mode: both;
       animation-timeline: --tracing;
-      /* Phone and tablet: no pinning – the edge travels while the photo crosses the screen */
+      /* Phone and tablet: no pinning – the edge travels while the frame crosses the screen */
       animation-range: contain 0% contain 70%;
     }
 
@@ -85,93 +100,56 @@
     }
 
     .photo {
-      animation-name: hold-out;
-    }
-
-    .drawingWindow {
-      animation-name: window-in;
-    }
-
-    .drawing {
-      animation-name: hold-in;
+      animation-name: hold-in-place;
     }
 
     /*
-     * Desktop: the photo fills the screen below the header and is pinned for one screen of
-     * scrolling; the edge travels in the first 80 %, the notes appear after that. Not a
-     * PinnedScene: a photo fills a screen of any height, and its timeline also runs unpinned
+     * Desktop: the frame fills the whole screen, from its top edge – the header, when it comes
+     * back, covers its top (decision of the owner) – and is pinned for two and a half screens of
+     * scrolling. First half a screen: the whole photo holds, full screen (D-54). Then a screen: the
+     * photo's bottom edge travels up exactly as fast as the page scrolls, while the photo and the
+     * drawing stay. The last screen, once the photo is gone: the next section
+     * slides over the drawing – the section using this pulls the next one up by a screen
+     * (ProjectSection.module.css, docs/decyzje.md D-51). Not a PinnedScene: a photo fills a screen
+     * of any height, and its timeline also runs unpinned
      */
     @media (width >= 64rem) {
       /* Room to scroll while pinned – content, not padding: sticky moves only in the content box */
       .track::after {
         content: '';
         display: block;
-        height: 100vh;
+        height: 250vh;
       }
 
       .frame {
         position: sticky;
-        top: var(--header-pinned);
-        height: calc(100vh - var(--header-pinned));
+        top: 0;
+        height: 100vh;
         aspect-ratio: auto;
       }
 
+      /* After the hold, one frame height of scrolling: the edge keeps pace with the page */
       .photoWindow,
-      .photo,
-      .drawingWindow,
-      .drawing {
-        animation-range: contain 0% contain 80%;
+      .photo {
+        animation-range: contain 50vh contain 150vh;
       }
 
-      .drawing [data-layer='notes'] {
-        animation-name: notes-in;
-        animation-range: contain 80% contain 95%;
+      /* The caption on the pinned frame – below it, the next section would cover it */
+      .label {
+        display: block;
       }
     }
   }
 }
 
 @keyframes window-out {
-  from {
-    transform: translateY(0);
-  }
   to {
     transform: translateY(-100%);
   }
 }
 
-@keyframes hold-out {
-  from {
-    transform: translateY(0);
-  }
+@keyframes hold-in-place {
   to {
     transform: translateY(100%);
-  }
-}
-
-@keyframes window-in {
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-
-@keyframes hold-in {
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-
-@keyframes notes-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
   }
 }

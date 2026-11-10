@@ -108,7 +108,7 @@ export function MobileMenu({ className }: MobileMenuProps) {
                             onClick={close}
                             className="inline-flex min-h-11 items-center text-lg font-bold underline decoration-2 underline-offset-4"
                           >
-                            Wszystkie usługi
+                            {item.allLabel ?? item.label}
                           </Link>
                         </div>
                       </details>

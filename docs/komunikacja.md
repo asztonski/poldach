@@ -5,15 +5,19 @@ Co mówimy, do kogo i jakim językiem. Fakty, na których się opieramy, są w [
 ## Oś przekazu
 
 > POLDACH to rodzinna firma dekarska z Kokoszkowych, która od 1992 r. robi dachy kompleksowo – od
-> doradztwa i materiału po montaż – a w domu także drzwi i podłogi.
+> doradztwa i materiału po montaż – a w swoim salonie sprzedaje i montuje drzwi i podłogi.
 
-| Filar                   | Dowód                                                                                                             |
-| ----------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| Doświadczenie i rodzina | od 1992, „z ojca na syna”, bracia Supińscy, członkostwo w PSD                                                     |
-| Wszystko z jednej ręki  | pełna oferta dekarska + drzwi, podłogi, parapety; materiał własny lub powierzony; bezpłatne doradztwo i kosztorys |
-| Fachowość i precyzja    | rysunek techniczny jako motyw strony, certyfikaty producentów, diagnostyka dachów płaskich                        |
-| Lokalność               | Kokoszkowy i okolice, lokalne realizacje i opinie                                                                 |
-| Dwie grupy klientów     | osobne ścieżki: „Dom” oraz „Firma, zarządca, deweloper”                                                           |
+Oferta stoi na **dwóch filarach** – usługach (dach i montaż) i sprzedaży detalicznej w salonie, przede
+wszystkim drzwi i podłóg ([firma.md](firma.md#oferta), D-58). Strona pokazuje oba na równi: dwie pierwsze
+pozycje menu („Usługi” i „Sprzedaż”), oba w stopce i w Ofercie; drzwi i podłogi to nie dodatek do dachu.
+
+| Filar                   | Dowód                                                                                                                             |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Doświadczenie i rodzina | od 1992, „z ojca na syna”, bracia Supińscy, członkostwo w PSD                                                                     |
+| Wszystko z jednej ręki  | pełna oferta dekarska + salon z drzwiami i podłogami, z montażem; materiał własny lub powierzony; bezpłatne doradztwo i kosztorys |
+| Fachowość i precyzja    | rysunek techniczny jako motyw strony, certyfikaty producentów, diagnostyka dachów płaskich                                        |
+| Lokalność               | Kokoszkowy i okolice, lokalne realizacje i opinie                                                                                 |
+| Dwie grupy klientów     | osobne ścieżki: „Dom” oraz „Firma, zarządca, deweloper”                                                                           |
 
 Wykrywanie nieszczelności dachów płaskich to **dowód fachowości i osobna usługa**, a nie główny temat
 strony ([decyzje.md](decyzje.md), D-02).

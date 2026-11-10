@@ -18,7 +18,10 @@ type PinnedSceneProps = {
 export function PinnedScene({ length, className, children }: PinnedSceneProps) {
   return (
     <div className={styles.track} style={{ '--scene-length': length } as CSSProperties}>
-      <div className={cn(styles.stage, className)}>{children}</div>
+      {/* data-pin: while it is stuck, a move up does not bring the header back (useHeaderScroll) */}
+      <div data-pin className={cn(styles.stage, className)}>
+        {children}
+      </div>
     </div>
   );
 }

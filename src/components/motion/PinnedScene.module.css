@@ -21,6 +21,11 @@
       height: var(--scene-length);
     }
 
+    /* A one-way scene let go gives its scroll distance back (OneWayScene, docs/decyzje.md D-63) */
+    [data-released] .track::after {
+      display: none;
+    }
+
     /*
      * The same space above and below the scene, measured from the edges of the screen: the part of
      * it under the header is the place kept free for the header. A low screen gets less of it, to

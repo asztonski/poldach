@@ -18,10 +18,11 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      <OfferSection />
-      <AboutSection />
-      <DocumentsSection />
+      {/* The project up close, right under the hero (D-50) */}
       <ProjectSection />
+      <AboutSection />
+      <OfferSection />
+      <DocumentsSection />
       <PathChoiceSection />
     </>
   );

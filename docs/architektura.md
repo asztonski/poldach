@@ -49,7 +49,7 @@ src/
 ├── brand/                # elementy marki: Logo.tsx, LogoWithFigure.tsx; (planowane) tokens.ts, icons.tsx
 ├── components/
 │   ├── common/           # komponenty współdzielone (LogoLink)
-│   ├── layout/           # Header, DesktopNav, MobileMenu, MobileCallBar; (planowane) Footer
+│   ├── layout/           # Header, DesktopNav, MobileMenu, MobileCallBar; Footer
 │   ├── ui/               # klocki design systemu (Section, Eyebrow, PhoneButton, ButtonLink, …)
 │   ├── illustrations/    # rysunki SVG jako czyste komponenty TSX (TenementDrawing)
 │   └── motion/           # CenterStage, FadeInOnce, LogoEntrance, PinnedScene, SmoothScroll, StayInPlace, TracingReveal; (planowane) CountUp, SectionWipe

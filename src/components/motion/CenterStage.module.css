@@ -8,10 +8,9 @@
  * so the gap stays the same through a change and nothing overlaps. "Gone" is a point (scale 0) just
  * past that gap: visuals appear and disappear by size only.
  *
- * By default the heading stands above the items on the same screen, so the box also has to fit what
- * is left of the screen's height: its width is the smaller of a share of the list's width and a
- * share of its height (cqh). In .fullScreen the heading stays above the pin and the screen sizes the
- * box. Both are set up for a portrait visual (a scan, a 5:7 photo).
+ * The items have the screen to themselves (the heading stays in the section's band above the pin), so
+ * the screen sizes the box: a portrait visual (a scan, a 5:7 photo) takes 80 % of its height, less
+ * only where the width runs out.
  *
  * Time is counted in units: a change takes 24, a stop between changes 10, the first stop 22 and the
  * last 20, so n items take 34n − 2 units of the pin. An item reaches the centre at 34i + 12, and its
@@ -22,20 +21,20 @@
 @supports (animation-timeline: view()) {
   /* The condition of PinnedScene */
   @media (prefers-reduced-motion: no-preference) and (width >= 64rem) and (height >= 46rem) {
-    /* The heading on top, the items take the rest of the screen */
+    /*
+     * The small previous visual (0.88 of the width left of the centre), the visual and the text
+     * stand centred as one group, so the sides stay even
+     */
     .stage {
+      --visual-width: min(80vh * 5 / 7, 44vw);
+      --text-width: min(30rem, 30vw);
+      --text-gap: 3rem;
+      --visual-left: calc(
+        50% - (var(--text-gap) + var(--text-width) - var(--visual-width) * 0.38) / 2
+      );
+
       display: flex;
       flex-direction: column;
-      justify-content: center;
-    }
-
-    .stage > :not(.list) {
-      flex: none;
-    }
-
-    /* A thin line under the heading, tighter than below: the screen's height goes to the items */
-    .divider {
-      margin-top: 1.5rem;
     }
 
     .list {
@@ -46,16 +45,7 @@
 
       position: relative;
       display: block;
-      /*
-       * As tall as the slots need at full size, less on a low screen: heading and list stay
-       * together, centred, so the space above equals the space below
-       */
-      aspect-ratio: 1.98;
-      flex: 0 1 auto;
-      min-height: 0;
-      margin-top: 1.25rem;
-      /* Sizes the box by the height that is left (cqh) */
-      container-type: size;
+      flex: 1;
     }
 
     /* Static items: their visual and text are placed against the list */
@@ -101,58 +91,24 @@
         calc(var(--unit) * (var(--i) * 34 + 80));
     }
 
-    /* The slots stay within the height of the box */
     .visual {
       top: 50%;
-      left: 42%;
-      width: min(36%, 71cqh);
-      translate: -50% -50%;
-      animation-name: pass;
-    }
-
-    /* From the visual's top edge down: a long title stays clear of the small next visual below it */
-    .text {
-      top: 0;
-      left: 64%;
-      width: 34%;
-      margin-top: 0;
-      animation-name: pass-text;
-    }
-
-    /*
-     * The items have the screen to themselves: a 5:7 visual takes 80 % of the screen's height, less
-     * only where the width runs out. The small previous visual (0.88 of the width left of the
-     * centre), the visual and the text stand centred as one group, so the sides stay even.
-     */
-    .fullScreen {
-      --visual-width: min(80vh * 5 / 7, 44vw);
-      --text-width: min(30rem, 30vw);
-      --text-gap: 3rem;
-      --visual-left: calc(
-        50% - (var(--text-gap) + var(--text-width) - var(--visual-width) * 0.38) / 2
-      );
-    }
-
-    .fullScreen .list {
-      flex: 1;
-      aspect-ratio: auto;
-      margin-top: 0;
-    }
-
-    .fullScreen .visual {
       left: var(--visual-left);
       width: var(--visual-width);
+      translate: -50% -50%;
+      animation-name: pass;
     }
 
     /*
      * The text ends just above the small next visual, whose top edge is 0.22 of the visual's height
      * (1.4 of its width) below the centre; a longer title grows upwards and never reaches it
      */
-    .fullScreen .text {
-      top: auto;
+    .text {
       bottom: calc(50% - var(--visual-width) * 1.4 * 0.22 + 2rem);
       left: calc(var(--visual-left) + var(--visual-width) / 2 + var(--text-gap));
       width: var(--text-width);
+      margin-top: 0;
+      animation-name: pass-text;
     }
 
     /*

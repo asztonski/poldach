@@ -1,4 +1,4 @@
-import { ButtonLink, CheckList, Panel, Section, SectionHeading } from '@/components/ui';
+import { ButtonLink, CheckList, Panel, Section } from '@/components/ui';
 import type { SectionTheme } from '@/components/ui';
 import { ROUTES, type RoutePath } from '@/config/routes';
 
@@ -38,15 +38,11 @@ const PATHS: Path[] = [
  */
 export function PathChoiceSection() {
   return (
-    <Section theme="white" aria-labelledby="paths-title">
-      <SectionHeading
-        id="paths-title"
-        eyebrow="Dla kogo pracujemy"
-        title="Dla domu i dla firmy – wszystko z jednej ręki"
-        className="max-w-3xl"
-      />
-
-      <div className="mt-(--grid-step) grid gap-6 lg:grid-cols-2 lg:gap-8">
+    <Section
+      theme="white"
+      heading={{ id: 'paths-title', title: 'Dla domu i dla firmy – wszystko z jednej ręki' }}
+    >
+      <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
         {PATHS.map((path) => (
           <Panel key={path.title} theme={path.theme} className="flex flex-col p-8 lg:p-10">
             <p className="text-eyebrow text-(--label) uppercase">{path.audience}</p>

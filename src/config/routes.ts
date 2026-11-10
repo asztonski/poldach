@@ -7,15 +7,20 @@
 export const ROUTES = {
   home: '/',
   services: '/uslugi',
-  roofing: '/pokrycia-dachowe',
-  flashingGutters: '/obrobki-blacharskie-i-rynny',
-  insulation: '/docieplenia',
+  // Offer categories at the old site's addresses (docs/mapa-strony.md#przekierowania-301-ze-starej-strony)
+  roofs: '/dachy',
   leakDetection: '/wykrywanie-nieszczelnosci-dachow-plaskich',
   asbestosRemoval: '/usuwanie-eternitu',
-  doorsFloors: '/drzwi-i-podlogi',
+  windows: '/okna',
+  doors: '/drzwi',
+  floors: '/podlogi',
+  sillsWorktops: '/parapety-i-blaty',
+  terraces: '/tarasy-balkony-elewacje',
+  // The second pillar – sales in the shop in Kokoszkowy, doors and floors first (docs/decyzje.md D-58, D-59)
+  shop: '/sprzedaz',
+  // Not in the menu (D-59); the home page's "Dom / Firma" cards still link here
   business: '/dla-firm',
   projects: '/realizacje',
-  about: '/o-nas',
   contact: '/kontakt',
   privacy: '/polityka-prywatnosci',
 } as const;

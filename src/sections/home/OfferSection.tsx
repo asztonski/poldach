@@ -1,55 +1,57 @@
 import Image, { type StaticImageData } from 'next/image';
 import Link from 'next/link';
-import doorsFloors from '@/assets/images/oferta/drzwi-podlogi.webp';
+import roofs from '@/assets/images/oferta/dachy.webp';
+import doors from '@/assets/images/oferta/drzwi.webp';
 import asbestosRemoval from '@/assets/images/oferta/eternit.webp';
-import insulation from '@/assets/images/oferta/docieplenia.webp';
 import leakDetection from '@/assets/images/oferta/nieszczelnosci.webp';
-import flashingGutters from '@/assets/images/oferta/obrobki.webp';
-import roofing from '@/assets/images/oferta/pokrycia.webp';
+import windows from '@/assets/images/oferta/okna.webp';
+import sillsWorktops from '@/assets/images/oferta/parapety-blaty.webp';
+import floors from '@/assets/images/oferta/podlogi.webp';
+import terraces from '@/assets/images/oferta/tarasy.webp';
 import { CenterStage } from '@/components/motion/CenterStage';
-import { Section, SectionHeading } from '@/components/ui';
-import { SERVICE_NAV } from '@/config/navigation';
+import { Section } from '@/components/ui';
+import { SERVICE_NAV, SHOP_NAV } from '@/config/navigation';
 import { ROUTES } from '@/config/routes';
 import { sheetNumber } from '@/lib/format';
 
-// The same services as the "Usługi" menu – one source (src/config/navigation.ts).
-// TODO(P-04): windows, decking and worktops from the old site wait for the client's answer
-// TODO(P-10): the weight of doors and floors against roofs
-const OFFER = SERVICE_NAV.flatMap((group) => group.links);
+// Both pillars, as in the menu – one source (src/config/navigation.ts): services, then the shop
+const OFFER = [...SERVICE_NAV, ...SHOP_NAV].flatMap((group) => group.links);
 
-// TODO(P-22): all from the old site's gallery, waiting for permissions. Stand-ins until the client's
-// photos: insulation (scaffolding on a facade), asbestos removal (a site, no asbestos in the old
-// gallery), doors and floors (the showroom, 700 px wide in the source)
+// TODO(P-22): all from the old poldach.eu, licences and permissions unknown. Roofs, windows, doors,
+// floors and decking look like stock or producers' photos; windows, doors, floors and decking exist
+// only as 380 × 511 tiles (enlarged in the file). Asbestos removal – a stand-in (a site).
 const PHOTOS: Record<string, StaticImageData> = {
-  [ROUTES.roofing]: roofing,
-  [ROUTES.flashingGutters]: flashingGutters,
-  [ROUTES.insulation]: insulation,
+  [ROUTES.roofs]: roofs,
   [ROUTES.leakDetection]: leakDetection,
   [ROUTES.asbestosRemoval]: asbestosRemoval,
-  [ROUTES.doorsFloors]: doorsFloors,
+  [ROUTES.windows]: windows,
+  [ROUTES.doors]: doors,
+  [ROUTES.floors]: floors,
+  [ROUTES.sillsWorktops]: sillsWorktops,
+  [ROUTES.terraces]: terraces,
 };
 
 /**
- * Section 2 – the offer at a glance, like the old site's "Czym się zajmujemy" tiles
- * (docs/mapa-strony.md#strona-główna, docs/decyzje.md D-29, D-37, D-44): a big centred heading, and
- * below it the services pass through the centre on desktop (CenterStage), each as a large photo on
- * calm cream paper; the slanted edge comes from its position (D-24).
+ * Section 2 – the offer at a glance, the old site's "Czym się zajmujemy" categories and photos
+ * (docs/mapa-strony.md#strona-główna, docs/decyzje.md D-29, D-37, D-44–D-47): the blue band with
+ * the heading, and below it the categories pass through the centre on desktop (CenterStage), each as
+ * a large photo; the slanted edge over the yellow hero comes from its position.
  */
 export function OfferSection() {
   return (
-    <Section theme="cream" aria-labelledby="offer-title">
+    <Section
+      theme="white"
+      // Yellow band, after the all-blue "O nas" (D-53)
+      bandTheme="yellow"
+      heading={{
+        id: 'offer-title',
+        title: 'Czym się zajmujemy',
+        lead: 'Dach od pokrycia po rynnę i montaż w domu, a w naszym salonie w Kokoszkowych – drzwi i podłogi.',
+      }}
+    >
       <CenterStage
-        heading={
-          <SectionHeading
-            id="offer-title"
-            title="Czym się zajmujemy"
-            lead="Dach od pokrycia po rynnę – i to, co w domu pod nim: drzwi, podłogi i parapety."
-            centered
-          />
-        }
-        // 50 % faster than the default on request: six items at one screen each were too long
+        // 50 % faster than the default on request: an item a screen was too long
         vhPerItem={67}
-        fullScreen
         className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3"
         items={OFFER.map((item, i) => ({
           id: item.href,

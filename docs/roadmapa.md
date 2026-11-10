@@ -7,8 +7,8 @@ Kolejność prac i stan projektu. Zakres każdej strony – [mapa-strony.md](map
 **Zrobione:** szkielet Next.js ze statycznym eksportem, mapa witryny i `robots.txt`, narzędzia
 jakości (TS strict, ESLint, Prettier), dokumentacja, tokeny (kolory, typografia, kontener, cień),
 motywy sekcji i tło „rysunek techniczny”, Roboto Condensed, favicon (parasol na biurku, D-14) i `theme-color`, dane
-firmy w `src/config/site.ts`, nagłówek z nawigacją (panel usług, menu mobilne w `<dialog>`, pasek z
-telefonem na telefonie), hero z logo z postacią (D-15), jedna siatka dla całej strony (D-17), motyw
+firmy w `src/config/site.ts`, nagłówek z nawigacją (zwykłe linki, D-60; menu mobilne w `<dialog>`, pasek z
+telefonem na telefonie), stopka wspólna dla wszystkich stron z pełną listą linków (D-57), hero z logo z postacią (D-15), jedna siatka dla całej strony (D-17), motyw
 biały i skośne przejścia (D-18), układ strony głównej według KISS (D-23, D-29): oferta ze
 zdjęciami usług (prototyp, D-44), „O firmie” (linia wymiarowa, licznik lat, siedziba), autoryzacje i nagroda (D-26,
 D-28), realizacja, której zdjęcie zamienia się w rysunek (D-19, D-20), tymczasowo karty dom /
@@ -19,10 +19,8 @@ firma; strona 404, skany certyfikatów z opisem
 
 - menu linkuje do stron, których jeszcze nie ma (404) – przed publikacją strony powstają albo
   znikają z menu,
-- brak stopki; to ona ma dawać pełną listę linków także bez JavaScriptu (panel usług i menu mobilne
-  wymagają JS),
 - wartości oznaczone `TODO` w hero i w danych firmy (P-01, P-07, P-19, ocena Google),
-- do zbudowania: sekcja 6 „Kontakt”, stopka (D-23, D-29),
+- do zbudowania: sekcja „Kontakt” (D-23, D-29), strony przeglądowe `/uslugi/` i `/sprzedaz/`,
 - teksty sekcji „Oferta”, „O firmie” i realizacji – propozycja do akceptacji klienta; zakres oferty
   – P-04, P-10, kamienie milowe – P-09, podpis i opisy realizacji – P-21, dokumenty – P-05.
 

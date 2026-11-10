@@ -5,6 +5,9 @@
 export const SITE = {
   name: 'POLDACH',
   legalName: 'P.H.U. „POLDACH” S.C. Jacek Supiński i Piotr Supiński',
+  /** The partnership's numbers only, not the partners' own (docs/firma.md#dane-rejestrowe) */
+  nip: '5922015403',
+  regon: '192821185',
   url: 'https://poldach.eu',
   tagline: 'Dach – to nasz fach',
   /** Jacek Supiński starts the business (docs/firma.md#historia) */
@@ -21,6 +24,12 @@ export const SITE = {
     },
   },
 } as const;
+
+/**
+ * The year the site was built – counted at build time (static export), so the site has to be
+ * rebuilt at least once a year ("34 lata" in "O nas", the footer's revision).
+ */
+export const BUILD_YEAR = new Date().getFullYear();
 
 export const phoneHref = `tel:+48${SITE.contact.phone.replace(/\s/g, '')}`;
 export const emailHref = `mailto:${SITE.contact.email}`;

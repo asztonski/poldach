@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import { Roboto_Condensed } from 'next/font/google';
+import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
 import { MobileCallBar } from '@/components/layout/MobileCallBar';
 import { SmoothScroll } from '@/components/motion/SmoothScroll';
@@ -15,7 +16,7 @@ const robotoCondensed = Roboto_Condensed({
   variable: '--font-roboto-condensed',
 });
 
-const defaultTitle = `${SITE.name} – rodzinna firma dekarska od 1992`;
+const defaultTitle = `${SITE.name} – rodzinna firma dekarska od ${SITE.foundingYear}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -51,6 +52,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <main id="main" className="flex-1">
           {children}
         </main>
+        {/* Right after main – its slant follows the last section (globals.css) */}
+        <Footer />
         <MobileCallBar />
         <SmoothScroll />
       </body>

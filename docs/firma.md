@@ -33,6 +33,9 @@ dane spółki.
 
 ## Oferta
 
+**Dwa filary** ([decyzje.md](decyzje.md) D-58): **usługi** – dach i montaż – oraz **sprzedaż
+detaliczna** w salonie w Kokoszkowych, przede wszystkim drzwi i podłogi.
+
 **Model pracy:** bezpłatne doradztwo → wycena (kosztorys) → dostawa materiału → wykonanie.
 Realizacja z materiałów własnych lub powierzonych przez klienta.
 
@@ -48,17 +51,22 @@ Realizacja z materiałów własnych lub powierzonych przez klienta.
 - Usuwanie i utylizacja eternitu (⚠ P-18: aktualność wpisu w bazaazbestowa.gov.pl)
 - Wykrywanie nieszczelności dachów płaskich – szczegóły niżej
 
-### Montaż wykończeniowy (z siedziby w Kokoszkowych)
+### Montaż w domu
 
 - Drzwi wewnętrzne i zewnętrzne, bramy garażowe
 - Podłogi laminowane i drewniane
-- Parapety wewnętrzne i zewnętrzne
+- Okna, parapety wewnętrzne i zewnętrzne, blaty
+- Deski tarasowe i okładziny (tarasy, balkony, elewacje)
 
-### Sprzedaż materiałów
+### Salon w Kokoszkowych
 
-- Pokrycia dachowe, papy, folie i membrany, gonty, akcesoria dekarskie, rynny
-- ⚠ P-04: czy nadal w ofercie są okna (Sonarol), deski tarasowe (EcoTeak), okładziny Stegu, parapety i
-  blaty
+Sprzedaż detaliczna w siedzibie (ul. Gdańska 1B), także z montażem. Zamknięty salon na Zaspie – patrz
+[Historia](#historia). Godziny – ⚠ P-02.
+
+- **Drzwi i podłogi** – główny asortyment
+- Okna i parapety, blaty
+- Deski tarasowe, okładziny
+- Materiały dachowe: pokrycia, papy, folie i membrany, gonty, akcesoria dekarskie, rynny
 - ⚠ P-05: czy aktualna jest lista producentów z logotypów starej strony – dachówki: Creaton, Tondach,
   Braas, Bogener, Wienerberger, Euronit, Röben; blachy: Blachprofil 2, Balex Metal, Pruszyński,
   Ruukki, Prefa; dachy płaskie: Icopal, Lemar, Izolmat, Protan, Dörken; okna dachowe: Fakro, Velux;

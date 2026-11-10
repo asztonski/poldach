@@ -109,12 +109,11 @@
   color: var(--text);
 }
 
-/* Optional third paper – a break between the brand colours, at most 1–2 sections a page */
+/* Every section after the hero: white with the grid, no vignette (docs/decyzje.md D-47) */
 @utility theme-white {
   --bg: var(--color-pd-white);
   --bg-glow: var(--color-pd-white);
-  /* Half-way to yellow-50: a warm hint, so the white reads as drawing paper, not as cream */
-  --bg-edge: color-mix(in srgb, var(--color-pd-yellow-50) 50%, var(--color-pd-white));
+  --bg-edge: var(--color-pd-white);
   --title: var(--color-pd-blue-500);
   --text: var(--color-pd-navy-900);
   --label: var(--color-pd-navy-900);
@@ -127,20 +126,20 @@
   color: var(--text);
 }
 
-/* Calm paper for large photos: one flat colour, no vignette and no grid (docs/decyzje.md D-44) */
-@utility theme-cream {
-  --bg: var(--color-pd-yellow-50);
-  --bg-glow: var(--color-pd-yellow-50);
-  --bg-edge: var(--color-pd-yellow-50);
-  --title: var(--color-pd-blue-500);
-  --text: var(--color-pd-navy-900);
-  --label: var(--color-pd-navy-900);
-  --icon-ok-bg: var(--color-pd-blue-500);
-  --icon-ok-fg: var(--color-pd-white);
-  --grid-line: transparent;
-  --btn-bg: var(--color-pd-blue-500);
-  --btn-fg: var(--color-pd-white);
-  --focus: var(--color-pd-navy-900);
+/* Footer (docs/design-system.md#motywy-sekcji): navy ink, a faint blue glow, white lines */
+@utility theme-navy {
+  --bg: var(--color-pd-navy-900);
+  --bg-glow: color-mix(in srgb, var(--color-pd-blue-700) 25%, var(--color-pd-navy-900));
+  --bg-edge: var(--color-pd-navy-900);
+  --title: var(--color-pd-yellow-500);
+  --text: var(--color-pd-white);
+  --label: var(--color-pd-white);
+  --icon-ok-bg: var(--color-pd-yellow-500);
+  --icon-ok-fg: var(--color-pd-navy-900);
+  --grid-line: color-mix(in srgb, var(--color-pd-white) 6%, transparent);
+  --btn-bg: var(--color-pd-yellow-500);
+  --btn-fg: var(--color-pd-navy-900);
+  --focus: var(--color-pd-white);
   color: var(--text);
 }
 
@@ -190,7 +189,9 @@
  * The section slides up over the previous one by --slant-rise and cuts its top corner down by the
  * same amount, so the previous section shows in the triangle. The overlap is a transparent top
  * border: the section's content stays where it was and its own padding is untouched. Not
- * inherited, so a panel inside a slanted section stays rectangular.
+ * inherited, so a panel inside a slanted section stays rectangular. Inherited, for the section's
+ * blue heading band: --slant-edge – how far up to reach, so the blue fills the slant;
+ * --band-cut-left/right – which bottom corner to raise, so its bottom edge slants the other way.
  */
 @property --slant-left {
   syntax: '<length>';
@@ -207,6 +208,8 @@
 /* Edge rises from left to right: / */
 @utility slant-rising {
   --slant-left: var(--slant-rise);
+  --slant-edge: var(--slant-rise);
+  --band-cut-left: var(--slant-rise);
   margin-top: calc(-1 * var(--slant-rise));
   border-top: var(--slant-rise) solid transparent;
 }
@@ -214,13 +217,15 @@
 /* Edge falls from left to right: \ */
 @utility slant-falling {
   --slant-right: var(--slant-rise);
+  --slant-edge: var(--slant-rise);
+  --band-cut-right: var(--slant-rise);
   margin-top: calc(-1 * var(--slant-rise));
   border-top: var(--slant-rise) solid transparent;
 }
 
 /*
- * Section dividers alternate down the page (docs/decyzje.md D-24): the first section (hero) has
- * none, even sections rise (/), odd ones fall (\). By position, so adding a section keeps the
+ * Section dividers alternate down the page (docs/decyzje.md D-24, D-47): the first section (hero)
+ * has none, even sections rise (/), odd ones fall (\). By position, so adding a section keeps the
  * rhythm. In the components layer: a `slant` set on a Section (a utility) still wins.
  */
 @layer components {
@@ -231,11 +236,20 @@
   main > section.paper:nth-of-type(odd):not(:first-of-type) {
     @apply slant-falling;
   }
+
+  /* The footer carries the rhythm on: the other way than the last section of the page */
+  main:has(> section.paper:last-of-type:nth-of-type(odd)) + footer.paper {
+    @apply slant-rising;
+  }
+
+  main:has(> section.paper:last-of-type:nth-of-type(even)) + footer.paper {
+    @apply slant-falling;
+  }
 }
 
 /*
  * Grid + vignette drawn from the element's own top edge – for what moves against the page:
- * header, menu panels, the mobile call bar
+ * header, the mobile menu, the mobile call bar
  */
 @utility blueprint {
   background-color: var(--bg);
@@ -249,7 +263,7 @@
     100% 100%;
 }
 
-/* Grid without the vignette – header after scrolling, menu panels */
+/* Grid without the vignette – the mobile menu */
 @utility blueprint-flat {
   --vignette: none;
 }

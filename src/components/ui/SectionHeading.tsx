@@ -1,51 +1,42 @@
 import type { ReactNode } from 'react';
 import { FadeInOnce } from '@/components/motion/FadeInOnce';
 import { cn } from '@/lib/cn';
-import { Eyebrow } from './Eyebrow';
 
-type SectionHeadingProps = {
-  /** Id of the h2 – pass it to the section's `aria-labelledby`. */
+export type SectionHeadingProps = {
+  /** Id of the h2 – the section is labelled by it. */
   id: string;
-  /** The label above the title; the photo sections go without it (docs/decyzje.md D-44) */
-  eyebrow?: ReactNode;
   title: ReactNode;
-  /** The sentence under the title */
+  /** The description next to the title */
   lead?: ReactNode;
-  /**
-   * The big centred heading above a CenterStage (docs/decyzje.md D-26, D-37) – an exception to
-   * left-aligned content sections (docs/design-system.md#typografia).
-   */
-  centered?: boolean;
-  className?: string;
-  /** More description under the lead – it appears together with the heading */
+  /** Title above the description, one column on every screen (the "O nas" stage, D-53). */
+  stacked?: boolean;
+  /** More text under the description, e.g. a second paragraph; it sets its own spacing. */
   children?: ReactNode;
 };
 
 /**
- * Eyebrow → 8 px → section title → lead (docs/design-system.md#układ). Fades in once, when the
- * section covers half of the screen, and stays (docs/decyzje.md D-36).
+ * Title and description of a section (docs/design-system.md#układ, docs/decyzje.md D-47): in its
+ * band, on desktop the title on the left, the description on the right, level with its last line.
+ * Fades in once, when the section covers half of the screen, and stays (D-36).
  */
 export function SectionHeading({
   id,
-  eyebrow,
   title,
   lead,
-  centered = false,
-  className,
+  stacked = false,
   children,
 }: SectionHeadingProps) {
   return (
-    <FadeInOnce className={cn(centered && 'text-center', className)}>
-      {eyebrow ? (
-        <Eyebrow className={cn('mb-2', centered && 'justify-center')}>{eyebrow}</Eyebrow>
-      ) : null}
-      <h2 id={id} className={cn('text-(--title)', centered ? 'text-h1' : 'text-h2')}>
+    <FadeInOnce className={cn('grid gap-6', !stacked && 'lg:grid-cols-2 lg:items-end lg:gap-16')}>
+      <h2 id={id} className="text-h1 text-(--title)">
         {title}
       </h2>
-      {lead ? (
-        <p className={cn('mt-6 text-lead', centered ? 'mx-auto max-w-3xl' : 'max-w-xl')}>{lead}</p>
+      {lead || children ? (
+        <div>
+          {lead ? <p className="max-w-xl text-lead">{lead}</p> : null}
+          {children}
+        </div>
       ) : null}
-      {children}
     </FadeInOnce>
   );
 }

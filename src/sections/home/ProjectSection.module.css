@@ -1,0 +1,23 @@
+/*
+ * Desktop, where the photo is pinned (TracingReveal): the next section is pulled up by a screen, so
+ * it slides over the pinned photo with its drawing during the last screen of the pin and covers it
+ * exactly when the pin ends (docs/decyzje.md D-51). The space below this section's content is taken
+ * back too; the captions below the figure are visually hidden there. The same condition as the pin.
+ */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (width >= 64rem) {
+    .coveredByNext {
+      margin-bottom: calc(-100vh - var(--section-space));
+    }
+
+    /* The frame shows the caption there (TracingReveal label); this one stays for screen readers */
+    .captionBelow {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+}

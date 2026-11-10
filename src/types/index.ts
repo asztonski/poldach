@@ -12,9 +12,14 @@ export type NavGroup = {
   links: NavLink[];
 };
 
-/** Top-level menu entry; with `groups` it opens a panel instead of navigating. */
+/**
+ * Top-level menu entry. `groups` – the pages it covers, listed in the footer and the mobile menu;
+ * in the desktop header the entry is a plain link to `href` (docs/decyzje.md D-60).
+ */
 export type NavItem = NavLink & {
   groups?: NavGroup[];
+  /** The link to `href` below its groups in the mobile menu, e.g. "Wszystkie usługi". */
+  allLabel?: string;
 };
 
 export type CertificateKind =
