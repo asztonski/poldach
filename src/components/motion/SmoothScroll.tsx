@@ -13,6 +13,9 @@ const WANTED = '(hover: hover) and (pointer: fine) and (prefers-reduced-motion: 
 /** Sent right after the page has moved its own scroll position (moveScrollBy) – not a user's move. */
 export const SCROLL_JUMP_EVENT = 'poldach:scroll-jump';
 
+/** Sent when the page starts a glide of its own (glideTo) – the moves until it stops are not the user's. */
+export const GLIDE_EVENT = 'poldach:glide';
+
 let instance: Lenis | undefined;
 
 /** True while the wheel is smoothed – the scroll position then also moves in sub-pixel steps back. */
@@ -28,6 +31,16 @@ export function moveScrollBy(shift: number) {
   if (instance) instance.scrollTo(window.scrollY + shift, { immediate: true, force: true });
   else window.scrollBy({ top: shift, behavior: 'instant' });
   window.dispatchEvent(new Event(SCROLL_JUMP_EVENT));
+}
+
+/**
+ * Glides the page to `top` in `duration` seconds – through Lenis when it runs, so the glide feels the
+ * same (SceneAnchor, ThumbnailJump)
+ */
+export function glideTo(top: number, duration = 0.6) {
+  window.dispatchEvent(new Event(GLIDE_EVENT));
+  if (instance) instance.scrollTo(top, { duration });
+  else window.scrollTo({ top, behavior: 'smooth' });
 }
 
 /**

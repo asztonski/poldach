@@ -5,6 +5,6 @@ export { Container } from './Container';
 export { Eyebrow } from './Eyebrow';
 export { Panel } from './Panel';
 export { PhoneButton } from './PhoneButton';
-export { Section, type SectionSlant } from './Section';
+export { Section } from './Section';
 export { SectionHeading } from './SectionHeading';
 export { type SectionTheme, themeClass } from './theme';

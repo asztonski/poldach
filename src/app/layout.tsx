@@ -52,7 +52,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <main id="main" className="flex-1">
           {children}
         </main>
-        {/* Right after main – its slant follows the last section (globals.css) */}
         <Footer />
         <MobileCallBar />
         <SmoothScroll />

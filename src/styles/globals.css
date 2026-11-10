@@ -21,6 +21,8 @@
   --color-pd-blue-700: #26589c;
   --color-pd-navy-900: #173a6b;
   --color-pd-white: #ffffff;
+  /* A very light cool grey – the paper under white cards (opinions, D-77) */
+  --color-pd-grey-50: #f4f5f7;
   --color-pd-red-500: #d23b3b;
   /* Header menu links – the red of the old poldach.eu menu (docs/decyzje.md D-22) */
   --color-pd-red-nav: #dc2b1b;
@@ -67,6 +69,9 @@
 
   /* 1200 px of content + 2 × 24 px side margin */
   --container-site: 78rem;
+
+  /* A light rounding of every box – panels, sheets, photos, scans (docs/decyzje.md D-73) */
+  --radius-box: 0.5rem;
 
   /* The only shadow in the system – the phone button */
   --shadow-phone: 0 8px 24px color-mix(in srgb, var(--color-pd-navy-900) 25%, transparent);
@@ -126,20 +131,23 @@
   color: var(--text);
 }
 
-/* Footer (docs/design-system.md#motywy-sekcji): navy ink, a faint blue glow, white lines */
-@utility theme-navy {
-  --bg: var(--color-pd-navy-900);
-  --bg-glow: color-mix(in srgb, var(--color-pd-blue-700) 25%, var(--color-pd-navy-900));
-  --bg-edge: var(--color-pd-navy-900);
-  --title: var(--color-pd-yellow-500);
-  --text: var(--color-pd-white);
-  --label: var(--color-pd-white);
-  --icon-ok-bg: var(--color-pd-yellow-500);
-  --icon-ok-fg: var(--color-pd-navy-900);
-  --grid-line: color-mix(in srgb, var(--color-pd-white) 6%, transparent);
-  --btn-bg: var(--color-pd-yellow-500);
-  --btn-fg: var(--color-pd-navy-900);
-  --focus: var(--color-pd-white);
+/*
+ * Grey (D-77): a very light cool grey with no vignette – white cards stand out on it. Blue titles
+ * keep 3.15:1 (large text only, as on white), navy text 10.4:1
+ */
+@utility theme-grey {
+  --bg: var(--color-pd-grey-50);
+  --bg-glow: var(--color-pd-grey-50);
+  --bg-edge: var(--color-pd-grey-50);
+  --title: var(--color-pd-blue-500);
+  --text: var(--color-pd-navy-900);
+  --label: var(--color-pd-navy-900);
+  --icon-ok-bg: var(--color-pd-blue-500);
+  --icon-ok-fg: var(--color-pd-white);
+  --grid-line: color-mix(in srgb, var(--color-pd-navy-900) 6%, transparent);
+  --btn-bg: var(--color-pd-blue-500);
+  --btn-fg: var(--color-pd-white);
+  --focus: var(--color-pd-navy-900);
   color: var(--text);
 }
 
@@ -176,75 +184,11 @@
  */
 @utility paper {
   @apply screen-grid;
-  /* A rectangle, unless slant-* lowers one of the top corners */
-  clip-path: polygon(0 var(--slant-left), 100% var(--slant-right), 100% 100%, 0 100%);
+  /* Cuts the screen grid to the paper – rounded like the paper (a Panel, --paper-radius) */
+  clip-path: inset(0 round var(--paper-radius, 0px));
+  border-radius: var(--paper-radius, 0px);
   background-color: var(--bg);
   background-image: radial-gradient(ellipse 80% 60% at 50% 30%, var(--bg-glow), var(--bg-edge));
-  /* The vignette also covers the slant's transparent border, without repeating */
-  background-origin: border-box;
-}
-
-/*
- * Slanted top edge of a section – the roof pitch (docs/design-system.md#przejścia-między-sekcjami).
- * The section slides up over the previous one by --slant-rise and cuts its top corner down by the
- * same amount, so the previous section shows in the triangle. The overlap is a transparent top
- * border: the section's content stays where it was and its own padding is untouched. Not
- * inherited, so a panel inside a slanted section stays rectangular. Inherited, for the section's
- * blue heading band: --slant-edge – how far up to reach, so the blue fills the slant;
- * --band-cut-left/right – which bottom corner to raise, so its bottom edge slants the other way.
- */
-@property --slant-left {
-  syntax: '<length>';
-  inherits: false;
-  initial-value: 0px;
-}
-
-@property --slant-right {
-  syntax: '<length>';
-  inherits: false;
-  initial-value: 0px;
-}
-
-/* Edge rises from left to right: / */
-@utility slant-rising {
-  --slant-left: var(--slant-rise);
-  --slant-edge: var(--slant-rise);
-  --band-cut-left: var(--slant-rise);
-  margin-top: calc(-1 * var(--slant-rise));
-  border-top: var(--slant-rise) solid transparent;
-}
-
-/* Edge falls from left to right: \ */
-@utility slant-falling {
-  --slant-right: var(--slant-rise);
-  --slant-edge: var(--slant-rise);
-  --band-cut-right: var(--slant-rise);
-  margin-top: calc(-1 * var(--slant-rise));
-  border-top: var(--slant-rise) solid transparent;
-}
-
-/*
- * Section dividers alternate down the page (docs/decyzje.md D-24, D-47): the first section (hero)
- * has none, even sections rise (/), odd ones fall (\). By position, so adding a section keeps the
- * rhythm. In the components layer: a `slant` set on a Section (a utility) still wins.
- */
-@layer components {
-  main > section.paper:nth-of-type(even) {
-    @apply slant-rising;
-  }
-
-  main > section.paper:nth-of-type(odd):not(:first-of-type) {
-    @apply slant-falling;
-  }
-
-  /* The footer carries the rhythm on: the other way than the last section of the page */
-  main:has(> section.paper:last-of-type:nth-of-type(odd)) + footer.paper {
-    @apply slant-rising;
-  }
-
-  main:has(> section.paper:last-of-type:nth-of-type(even)) + footer.paper {
-    @apply slant-falling;
-  }
 }
 
 /*
@@ -280,8 +224,6 @@ html:has(.under-header) header:not([data-scrolled]) {
 @layer base {
   :root {
     --grid-step: 40px;
-    /* Drop of a slanted section edge: about 2°, exactly one grid step (54 px) at 1440 px */
-    --slant-rise: 3.75vw;
     /* Space above and below the content of every section: two grid steps, one on phones */
     --section-space: 3.375rem;
     /* Height of the mobile call bar (MobileCallBar) – page content ends above it */

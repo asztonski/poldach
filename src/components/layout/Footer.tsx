@@ -24,8 +24,8 @@ function Field({
   className?: string;
 }) {
   return (
-    <div className={cn('border-t border-l border-current/30 px-4 py-3', className)}>
-      <dt className="text-eyebrow text-(--title) uppercase">{label}</dt>
+    <div className={cn('-mt-px -ml-px border-t border-l border-current/30 px-4 py-3', className)}>
+      <dt className="text-eyebrow text-(--label) uppercase">{label}</dt>
       <dd className="mt-1">{children}</dd>
     </div>
   );
@@ -33,16 +33,17 @@ function Field({
 
 /**
  * Footer of every page (docs/mapa-strony.md#strona-główna, docs/design-system.md#komponenty,
- * docs/decyzje.md D-57): navy paper on the page grid. Every page of the menu as a plain link (the
- * header links only the pillars' overview pages, the mobile menu needs JavaScript); the company
+ * docs/decyzje.md D-57, D-80): the blue paper of the page, on its grid; small labels in white –
+ * yellow on blue is for large text only (docs/design-system.md#kontrast). Every page of the menu as
+ * a plain link (the header links only the pillars' overview pages, the mobile menu needs
+ * JavaScript); the company
  * details as the title block in the corner of a technical drawing; the big POLDACH at the bottom.
- * Its slanted top edge continues the rhythm of the sections (globals.css).
  */
 export function Footer() {
   const { street, postalCode, city } = SITE.contact.address;
 
   return (
-    <footer className="paper pt-(--section-space) pb-8 theme-navy">
+    <footer className="paper pt-(--section-space) pb-8 theme-blue">
       <Container>
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-4">
@@ -65,7 +66,7 @@ export function Footer() {
               aria-label={pillar.label}
               className={(pillar.groups?.length ?? 0) > 1 ? 'lg:col-span-4' : 'lg:col-span-2'}
             >
-              <h2 className="text-eyebrow text-(--title) uppercase">
+              <h2 className="text-eyebrow text-(--label) uppercase">
                 <Link href={pillar.href} className={linkClass}>
                   {pillar.label}
                 </Link>
@@ -93,7 +94,7 @@ export function Footer() {
           ))}
 
           <nav aria-label="Firma" className="lg:col-span-2">
-            <h2 className="text-eyebrow text-(--title) uppercase">Firma</h2>
+            <h2 className="text-eyebrow text-(--label) uppercase">Firma</h2>
             <ul className="mt-4 space-y-2">
               {COMPANY_NAV.map((item) => (
                 <li key={item.href}>
@@ -106,8 +107,8 @@ export function Footer() {
           </nav>
         </div>
 
-        {/* The title block of a drawing sheet: outer frame on the right and bottom, cells draw the rest */}
-        <dl className="mt-16 grid border-r border-b border-current/30 sm:grid-cols-2 lg:grid-cols-4">
+        {/* The title block of a drawing sheet: a rounded frame; cells draw the inner lines, their own top and left edges hidden under it (-1px) */}
+        <dl className="mt-16 grid overflow-hidden rounded-box border border-current/30 sm:grid-cols-2 lg:grid-cols-4">
           <Field label="Wykonawca" className="sm:col-span-2">
             {SITE.legalName}
           </Field>

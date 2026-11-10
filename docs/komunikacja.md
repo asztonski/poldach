@@ -9,7 +9,7 @@ Co mówimy, do kogo i jakim językiem. Fakty, na których się opieramy, są w [
 
 Oferta stoi na **dwóch filarach** – usługach (dach i montaż) i sprzedaży detalicznej w salonie, przede
 wszystkim drzwi i podłóg ([firma.md](firma.md#oferta), D-58). Strona pokazuje oba na równi: dwie pierwsze
-pozycje menu („Usługi” i „Sprzedaż”), oba w stopce i w Ofercie; drzwi i podłogi to nie dodatek do dachu.
+pozycje menu („Usługi” i „Sprzedaż”), oba w stopce i w sekcji „Czym się zajmujemy” – najpierw usługi, potem sprzedaż (D-79); drzwi i podłogi to nie dodatek do dachu.
 
 | Filar                   | Dowód                                                                                                                             |
 | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------- |

@@ -20,6 +20,11 @@ export default defineConfig([
       '@typescript-eslint/consistent-type-imports': 'error',
     },
   },
+  // Node scripts (scripts/) – the globals of Node
+  {
+    files: ['scripts/**/*.mjs'],
+    languageOptions: { globals: { process: 'readonly', console: 'readonly', Buffer: 'readonly' } },
+  },
   // Must stay last – disables rules that conflict with Prettier
   prettier,
 ]);

@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import {
   AboutSection,
-  DocumentsSection,
   HeroSection,
   OfferSection,
   PathChoiceSection,
+  PROJECTS,
   ProjectSection,
+  TestimonialsSection,
 } from '@/sections/home';
 
 // Title and description come from the defaults in layout.tsx
@@ -19,10 +20,13 @@ export default function HomePage() {
     <>
       <HeroSection />
       {/* The project up close, right under the hero (D-50) */}
-      <ProjectSection />
+      <ProjectSection project={PROJECTS.tenement} />
       <AboutSection />
       <OfferSection />
-      <DocumentsSection />
+      {/* Opinions of clients (D-74) – in place of the documents */}
+      <TestimonialsSection />
+      {/* A second project up close, the same way (D-81) */}
+      <ProjectSection project={PROJECTS.dormers} />
       <PathChoiceSection />
     </>
   );

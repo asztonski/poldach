@@ -51,7 +51,7 @@ src/
 │   ├── common/           # komponenty współdzielone (LogoLink)
 │   ├── layout/           # Header, DesktopNav, MobileMenu, MobileCallBar; Footer
 │   ├── ui/               # klocki design systemu (Section, Eyebrow, PhoneButton, ButtonLink, …)
-│   ├── illustrations/    # rysunki SVG jako czyste komponenty TSX (TenementDrawing)
+│   ├── illustrations/    # rysunki techniczne: TenementDrawing, DormersDrawing na technical-drawing.tsx; edges/ – krawędzie zdjęć (generowane)
 │   └── motion/           # CenterStage, FadeInOnce, LogoEntrance, PinnedScene, SmoothScroll, StayInPlace, TracingReveal; (planowane) CountUp, SectionWipe
 ├── config/               # site.ts (dane firmy), routes.ts (ścieżki), navigation.ts (menu)
 ├── data/                 # treści jako typowane dane (usługi, realizacje, …)
@@ -65,7 +65,8 @@ src/
 Import z `src` przez alias `@/`, np. `import { Section } from '@/components/ui'`.
 
 Poza `src/`: `design/` – pliki logo i makiety od projektanta, bez zmian i poza buildem
-([design/README.md](../design/README.md), [decyzje.md](decyzje.md) D-13).
+([design/README.md](../design/README.md), [decyzje.md](decyzje.md) D-13); `scripts/` – narzędzia
+deweloperskie uruchamiane `node scripts/<nazwa>.mjs` (rysunki techniczne, patrz niżej).
 
 ## Zasady kodu
 
@@ -119,9 +120,24 @@ eksportowany w `index.ts`.
 renderują. Struktura danych ma ułatwić późniejsze podpięcie lekkiego CMS (⚠ P-14).
 
 **Zdjęcie** – `next/image`; plik wrzucamy od razu w docelowym rozmiarze i formacie (brak optymalizacji
-w locie). Zdjęcie w kilku szerokościach (np. kamienica w sekcji „Realizacje”: WebP 960 i 1920 px, wygenerowane
-`sharp` z zależności Next.js do czasu planowanego skryptu) – zwykły `<img>` z `srcSet` i `sizes`,
-bo `next/image` przy `images.unoptimized` nie tworzy `srcset`.
+w locie). Zdjęcie w kilku szerokościach (np. realizacje: WebP 960 i 1920 px, wygenerowane `sharp` –
+zależność deweloperska) – zwykły `<img>` z `srcSet` i `sizes`, bo `next/image` przy
+`images.unoptimized` nie tworzy `srcset`.
+
+**Realizację z rysunkiem technicznym** ([decyzje.md](decyzje.md) D-50, D-81, D-83) – wpis w
+`src/sections/home/projects.tsx` i rysunek w `src/components/illustrations/`, zbudowany na
+`technical-drawing.tsx`. Linie rysunku to krawędzie samego zdjęcia, więc pasują do niego 1:1:
+
+1. `node scripts/photo-edges.mjs <zdjęcie> src/components/illustrations/edges/<nazwa>.ts` – detekcja
+   krawędzi (Canny), łańcuchy pikseli uproszczone do łamanych, zapis jako ścieżka SVG w pikselach
+   zdjęcia (plik generowany, nie edytujemy go). Opcje: rozmycie, progi, minimalna długość, odrzucanie
+   małych pętelek (naklejki na szybach), wycinanie obszaru (np. baner). Podgląd: to samo z `.svg` na
+   końcu.
+2. Odnośniki z opisami i ukrytą konstrukcję wpisujemy ręcznie w komponencie rysunku; współrzędne
+   odczytujemy z wycinków zdjęcia z siatką: `node scripts/photo-grid.mjs <zdjęcie> <wynik.jpg> x y szer
+wys [krok] [powiększenie]`.
+3. Kontrola: rysunek nałożony na półprzezroczyste zdjęcie (w `TracingReveal` wystarczy w DevTools
+   wyłączyć animację okna zdjęcia i dać mu `opacity: 0.45`).
 
 ## Wdrożenie
 

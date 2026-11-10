@@ -18,27 +18,42 @@
  * items because each plays it in its own range; the first two and the last two only replace the
  * slots they would reach outside the pin, so they stand still there.
  */
+/* The backdrop exists only on the pinned stage */
+.backdrop {
+  display: none;
+}
+
+/* Without the pin the intro is a plain heading above the list */
+.intro {
+  margin-bottom: 2.5rem;
+}
+
 @supports (animation-timeline: view()) {
   /* The condition of PinnedScene */
   @media (prefers-reduced-motion: no-preference) and (width >= 64rem) and (height >= 46rem) {
     /*
-     * The small previous visual (0.88 of the width left of the centre), the visual and the text
-     * stand centred as one group, so the sides stay even
+     * The visual stands in the middle of the screen; the text to its right takes the room left up
+     * to the screen's edge, at most 30rem. A narrow screen shrinks the visual first, so the text
+     * always keeps at least --text-min
      */
     .stage {
-      --visual-width: min(80vh * 5 / 7, 44vw);
-      --text-width: min(30rem, 30vw);
-      --text-gap: 3rem;
-      --visual-left: calc(
-        50% - (var(--text-gap) + var(--text-width) - var(--visual-width) * 0.38) / 2
+      --text-gap: 2.5rem;
+      --text-min: 16rem;
+      --edge: 1.5rem;
+      --visual-width: min(
+        80vh * 5 / 7,
+        44vw,
+        100vw - 2 * (var(--text-min) + var(--text-gap) + var(--edge))
       );
+      --text-width: min(30rem, 50vw - var(--visual-width) / 2 - var(--text-gap) - var(--edge));
+      --visual-left: 50%;
 
       display: flex;
       flex-direction: column;
     }
 
     .list {
-      --unit: calc(100% / (var(--n) * 34 - 2));
+      --unit: calc(100% / (var(--n) * 34 - 2 + var(--lead, 0)));
       --next: translate(74%, 36%) scale(0.28);
       --prev: translate(-74%, -36%) scale(0.28);
       --centre: translate(0, 0) scale(1);
@@ -67,6 +82,20 @@
       --text-before: 1;
     }
 
+    /*
+     * With an intro the scene opens on the intro alone (D-72): the lead-in (36 units, --lead) holds
+     * it for 12 units, then the first text comes in over 18 (filter, so it adds to the opacity of its
+     * leaving later) and the intro goes over 30 – three times as long as a text change – before the
+     * first change. The first backdrop is there from the start
+     */
+    .stage:has(.intro) .item:nth-child(1) .text {
+      animation-name: pass-text, first-text-in;
+      animation-range:
+        contain calc(var(--unit) * (var(--lead, 0) - 46)) contain
+          calc(var(--unit) * (var(--lead, 0) + 80)),
+        contain calc(var(--unit) * 12) contain calc(var(--unit) * 30);
+    }
+
     .item:nth-child(2) {
       --slot-1: var(--next);
     }
@@ -82,13 +111,59 @@
     }
 
     .visual,
-    .text {
+    .text,
+    .backdrop {
       position: absolute;
       animation-timing-function: linear;
       animation-fill-mode: both;
       animation-timeline: --pinned;
-      animation-range: contain calc(var(--unit) * (var(--i) * 34 - 46)) contain
-        calc(var(--unit) * (var(--i) * 34 + 80));
+      animation-range: contain calc(var(--unit) * (var(--lead, 0) + var(--i) * 34 - 46)) contain
+        calc(var(--unit) * (var(--lead, 0) + var(--i) * 34 + 80));
+    }
+
+    /* Above every backdrop */
+    .visual,
+    .text {
+      z-index: 1;
+    }
+
+    /*
+     * Backdrop (prototype, docs/decyzje.md D-65): the item's photo, blurred, over the whole screen –
+     * from its top edge (the list starts --scene-space below it, PinnedScene) to the bottom and across
+     * the full width. A later item's backdrop comes in over the earlier one while its visual arrives;
+     * the earlier one goes once it is covered. A light veil keeps the text readable
+     */
+    .backdrop {
+      display: block;
+      z-index: 0;
+      top: calc(-1 * var(--scene-space));
+      bottom: calc(-1 * var(--scene-space));
+      left: 50%;
+      width: 100vw;
+      overflow: hidden;
+      translate: -50% 0;
+      animation-name: pass-backdrop;
+    }
+
+    .backdrop > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(12px) saturate(1.2);
+      /* The blur fades the edges – a little larger, so they are off the screen */
+      scale: 1.15;
+    }
+
+    .backdrop::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: color-mix(in srgb, var(--color-pd-white) 40%, transparent);
+    }
+
+    /* A small visual that is not a link brings its item to the centre on click (ThumbnailJump) */
+    .visual:not(:has(a)) {
+      cursor: pointer;
     }
 
     .visual {
@@ -112,6 +187,67 @@
     }
 
     /*
+     * On a backdrop the text stands on a white sheet, so its colours keep their contrast on any
+     * photo (docs/design-system.md#kontrast). Flat, lightly rounded (D-73); its padding comes out of
+     * --text-width
+     */
+    .item:has(.backdrop) .text,
+    .intro {
+      padding: 1.5rem;
+      border-radius: var(--radius-box);
+      background-color: var(--color-pd-white);
+    }
+
+    /*
+     * The sheets always take the full height, whatever their text: from the visual's top edge (0.7
+     * of its width above the centre) down to just above the next visual (0.308 below) – 1.008 of the
+     * visual's width, less the 2rem of air
+     */
+    .item:has(.backdrop) .text {
+      top: calc(50% - var(--visual-width) * 0.7);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /*
+     * Intro (prototype, docs/decyzje.md D-66): the mirror of the text – left of the first visual,
+     * level with its top edge, as wide as the text. Against the stage, whose content is the list:
+     * the list's middle is half the header's place above the stage's. It fades out at the end of the
+     * lead-in (units 28–58), before the first change
+     */
+    .intro {
+      --unit: calc(100% / (var(--n) * 34 - 2 + var(--lead, 0)));
+
+      position: absolute;
+      z-index: 1;
+      top: calc(50% - var(--header-pinned) / 2 - var(--visual-width) * 0.7);
+      right: calc(50% + var(--visual-width) / 2 + var(--text-gap));
+      width: var(--text-width);
+      height: calc(var(--visual-width) * 1.008 - 2rem);
+      margin-bottom: 0;
+      animation: intro-out linear both;
+      animation-timeline: --pinned;
+      animation-range: contain calc(var(--unit) * 28) contain calc(var(--unit) * 58);
+    }
+
+    /* The sheet is as narrow as the text – the section title a size smaller until there is room */
+    @media (width < 90rem) {
+      .intro h2 {
+        font-size: var(--text-h2);
+      }
+    }
+
+    /*
+     * With an intro the scene fills its section, edge to edge: it starts at the top – the sheet is
+     * its heading – and the backdrop ends at the section's bottom edge, without the white space
+     * below (the stage sticks that much longer, past the end of its timeline)
+     */
+    .stage:has(.intro) {
+      margin-block: calc(-1 * var(--section-space));
+    }
+
+    /*
      * Keyboard focus: only that item is shown, in the centre, wherever the scroll is (beats the
      * animation). Not after a mouse click – it would stay there after coming back to the tab.
      */
@@ -119,11 +255,11 @@
       transform: none !important;
     }
 
-    .item:has(:focus-visible) .text {
+    .item:has(:focus-visible) :is(.text, .backdrop) {
       opacity: 1 !important;
     }
 
-    .list:has(:focus-visible) .item:not(:has(:focus-visible)) :is(.visual, .text) {
+    .list:has(:focus-visible) .item:not(:has(:focus-visible)) :is(.visual, .text, .backdrop) {
       opacity: 0 !important;
     }
   }
@@ -174,5 +310,36 @@
   55.556%,
   100% {
     opacity: var(--text-after);
+  }
+}
+
+/* A backdrop: in while its visual arrives (34–58), stays until the next one has covered it (92) */
+@keyframes pass-backdrop {
+  0%,
+  26.984% {
+    opacity: var(--backdrop-before, var(--text-before));
+  }
+
+  46.032%,
+  73.016% {
+    opacity: 1;
+  }
+
+  73.1%,
+  100% {
+    opacity: var(--text-after);
+  }
+}
+
+@keyframes first-text-in {
+  from {
+    filter: opacity(0);
+  }
+}
+
+@keyframes intro-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
   }
 }

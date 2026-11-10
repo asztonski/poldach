@@ -83,12 +83,13 @@ export function AboutSection() {
             </SectionHeading>
 
             {/* A photo stands on a field in the opposite colour, caption as an eyebrow (docs/design-system.md#zdjęcia) */}
-            <figure className={cn(styles.right, 'bg-pd-yellow-500 p-3 sm:p-4')}>
+            <figure className={cn(styles.right, 'rounded-box bg-pd-yellow-500 p-3 sm:p-4')}>
               <Image
                 src={headquarters}
                 sizes="(width >= 64rem) 30rem, calc(100vw - 4rem)"
                 alt="Siedziba POLDACH w Kokoszkowych – budynek z łukowym dachem i szyldem POLDACH"
-                className="h-auto w-full"
+                // Inner corners follow the field: its radius less the padding, at least a hint
+                className="h-auto w-full rounded-[calc(var(--radius-box)/2)]"
               />
               <figcaption className="mt-3 text-eyebrow text-pd-navy-900 uppercase">
                 Siedziba · {street}, {city}

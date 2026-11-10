@@ -64,7 +64,18 @@ export function OneWayScene(props: ComponentPropsWithoutRef<'div'>) {
       root.style.overflowAnchor = 'none';
       element.dataset.released = '';
       moveBy(stage.getBoundingClientRect().top - before);
-      requestAnimationFrame(() => root.style.removeProperty('overflow-anchor'));
+      /*
+       * Chrome may keep painting the page's other scroll-driven animations (CenterStage) as they
+       * were before this change, until the next scroll – a 1 px nudge there and back, one frame
+       * each, makes it repaint them. Native, not through Lenis, so a glide is not stopped; too
+       * small for the header and for this scene to count as a move
+       */
+      const nudge = (top: number) => window.scrollBy({ top, behavior: 'instant' });
+      requestAnimationFrame(() => {
+        root.style.removeProperty('overflow-anchor');
+        nudge(1);
+        requestAnimationFrame(() => nudge(-1));
+      });
     };
 
     /*

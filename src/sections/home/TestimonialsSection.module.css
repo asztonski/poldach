@@ -1,0 +1,44 @@
+/*
+ * The tape of opinions (docs/decyzje.md D-76), like metriccivil.ca: across the whole screen, the
+ * cards glide from right to left without end. The list is there twice in a row, and the track
+ * moves by exactly one copy (–50%), then starts over – the second copy stands where the first
+ * began, so there is no seam. Its pace is per card, so more opinions do not make it faster.
+ * Stops while the mouse is over it or the keyboard focus is inside. Reduced motion: no tape – a row
+ * to swipe, without the copy.
+ */
+
+.tape {
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: tape calc(var(--count) * 10s) linear infinite;
+}
+
+.tape:hover .track,
+.tape:focus-within .track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tape {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .track {
+    animation: none;
+  }
+
+  .copy {
+    display: none;
+  }
+}
+
+@keyframes tape {
+  to {
+    transform: translateX(-50%);
+  }
+}
