@@ -1,16 +1,3 @@
-import type { NavItem } from '@/types';
-
-// `trailingSlash: true` can make pathname end with "/" – compare without it
-export const normalizePath = (path: string) => (path.length > 1 ? path.replace(/\/$/, '') : path);
-
-/** True on the item's own page and on any page of its groups. */
-export function isItemActive(item: NavItem, path: string) {
-  return (
-    path === item.href ||
-    Boolean(item.groups?.some((group) => group.links.some((link) => link.href === path)))
-  );
-}
-
 /**
  * Header content moves down by half of the header's slide-up, so it stays centred in the shorter
  * bar. Applied per element, as the header's other parts are.

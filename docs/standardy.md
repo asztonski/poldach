@@ -45,8 +45,8 @@ Dotyczy Google i wyszukiwarek AI.
 
 ## Prywatność
 
-- Analityka bez ciasteczek (Plausible lub Umami), wyłączona w trybie deweloperskim.
-- Mapa Google ładowana dopiero po kliknięciu „Pokaż mapę”.
+- Analityka: Google Analytics 4 – tylko po zgodzie w banerze cookies, wyłączona w trybie deweloperskim; po wycofaniu zgody od razu się wyłącza i usuwa swoje pliki cookie ([decyzje.md](decyzje.md) D-94).
+- Zasoby innych, które zapisują pliki cookie (Google Analytics i mapa Google), wczytujemy wyłącznie po zgodzie: baner z równorzędnymi „Odrzucam” i „Zgadzam się”, zmiana zdania – „Ustawienia plików cookie” w stopce; bez zgody strona nie łączy się z Google ([decyzje.md](decyzje.md) D-93).
 - Żadnych zasobów z zewnętrznych CDN (fonty, skrypty) poza wybranymi usługami formularza i analityki.
 - Formularz z krótką klauzulą RODO i linkiem do polityki prywatności.
 

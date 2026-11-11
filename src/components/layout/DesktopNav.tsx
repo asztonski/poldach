@@ -4,15 +4,16 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { MAIN_NAV } from '@/config/navigation';
 import { cn } from '@/lib/cn';
-import { SHIFT_WITH_HEADER, isItemActive, navItemClasses, normalizePath } from './nav-utils';
+import { normalizePath } from '@/lib/path';
+import { SHIFT_WITH_HEADER, navItemClasses } from './nav-utils';
 
 type DesktopNavProps = {
   className?: string;
 };
 
 /**
- * Plain links, no panels (docs/decyzje.md D-60): a pillar links to its overview page and is
- * underlined there and on every page of its groups. The full list of pages is in the footer.
+ * Plain links (docs/decyzje.md D-60, D-84). Only a page link can match the path – the sections of
+ * the home page are anchors, so no item is underlined there.
  */
 export function DesktopNav({ className }: DesktopNavProps) {
   const path = normalizePath(usePathname());
@@ -25,11 +26,7 @@ export function DesktopNav({ className }: DesktopNavProps) {
             <Link
               href={item.href}
               aria-current={path === item.href ? 'page' : undefined}
-              className={cn(
-                navItemClasses,
-                SHIFT_WITH_HEADER,
-                isItemActive(item, path) && 'underline',
-              )}
+              className={cn(navItemClasses, SHIFT_WITH_HEADER, path === item.href && 'underline')}
             >
               {item.label}
             </Link>

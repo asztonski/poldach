@@ -41,6 +41,7 @@ export function HeroSection() {
     <Section
       theme="yellow"
       aria-labelledby="hero-title"
+      data-analytics-area="hero"
       // Pulled up under the header; the usual space above the content starts below it
       className={cn(
         'under-header -mt-(--header-h) pt-[calc(var(--header-h)+var(--section-space))]',

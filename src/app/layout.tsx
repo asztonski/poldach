@@ -1,9 +1,12 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import { Roboto_Condensed } from 'next/font/google';
+import { Analytics } from '@/components/common/Analytics';
+import { CookieBanner } from '@/components/common/CookieBanner';
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
 import { MobileCallBar } from '@/components/layout/MobileCallBar';
+import { AnchorGlide } from '@/components/motion/AnchorGlide';
 import { SmoothScroll } from '@/components/motion/SmoothScroll';
 import { SITE } from '@/config/site';
 import '@/styles/globals.css';
@@ -54,7 +57,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </main>
         <Footer />
         <MobileCallBar />
+        <CookieBanner />
+        <Analytics />
         <SmoothScroll />
+        <AnchorGlide />
       </body>
     </html>
   );

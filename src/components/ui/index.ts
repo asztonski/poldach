@@ -1,5 +1,6 @@
 export { ButtonLink } from './ButtonLink';
-export { buttonClasses } from './button-variants';
+export { buttonClasses, outlineButtonClasses } from './button-variants';
+export { quietLinkClasses, textLinkClasses } from './link-variants';
 export { CheckList } from './CheckList';
 export { Container } from './Container';
 export { Eyebrow } from './Eyebrow';

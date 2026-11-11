@@ -3,17 +3,17 @@
 import { useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Logo } from '@/brand/Logo';
 import { ButtonLink, Container, PhoneButton } from '@/components/ui';
 import { MAIN_NAV } from '@/config/navigation';
 import { ROUTES } from '@/config/routes';
 import { SITE, emailHref } from '@/config/site';
 import { cn } from '@/lib/cn';
-import { normalizePath } from './nav-utils';
+import { normalizePath } from '@/lib/path';
 
 const topLinkClasses =
-  'flex min-h-14 w-full items-center justify-between text-h3 decoration-2 underline-offset-8 hover:underline aria-[current=page]:underline';
+  'flex min-h-14 w-full items-center text-h3 decoration-2 underline-offset-8 hover:underline aria-[current=page]:underline';
 
 type MobileMenuProps = {
   className?: string;
@@ -46,6 +46,7 @@ export function MobileMenu({ className }: MobileMenuProps) {
       <dialog
         ref={dialogRef}
         aria-label="Menu"
+        data-analytics-area="mobile_menu"
         // The menu scrolls by itself – smooth scrolling (SmoothScroll) stays out of it
         data-lenis-prevent
         className="m-0 h-dvh max-h-none w-full max-w-none overflow-y-auto blueprint theme-yellow blueprint-flat"
@@ -69,59 +70,14 @@ export function MobileMenu({ className }: MobileMenuProps) {
               <ul className="divide-y divide-pd-navy-900/20">
                 {MAIN_NAV.map((item) => (
                   <li key={item.href}>
-                    {item.groups ? (
-                      <details className="group">
-                        <summary
-                          className={cn(
-                            topLinkClasses,
-                            'cursor-pointer list-none [&::-webkit-details-marker]:hidden',
-                          )}
-                        >
-                          {item.label}
-                          <ChevronDown
-                            aria-hidden="true"
-                            className="size-6 transition-transform group-open:rotate-180 motion-reduce:transition-none"
-                          />
-                        </summary>
-                        <div className="space-y-5 pb-6">
-                          {item.groups.map((group) => (
-                            <div key={group.label}>
-                              <p className="text-eyebrow uppercase">{group.label}</p>
-                              <ul className="mt-1">
-                                {group.links.map((link) => (
-                                  <li key={link.href}>
-                                    <Link
-                                      href={link.href}
-                                      onClick={close}
-                                      aria-current={path === link.href ? 'page' : undefined}
-                                      className="flex min-h-11 items-center text-lg font-medium decoration-2 underline-offset-4 hover:underline aria-[current=page]:underline"
-                                    >
-                                      {link.label}
-                                    </Link>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          ))}
-                          <Link
-                            href={item.href}
-                            onClick={close}
-                            className="inline-flex min-h-11 items-center text-lg font-bold underline decoration-2 underline-offset-4"
-                          >
-                            {item.allLabel ?? item.label}
-                          </Link>
-                        </div>
-                      </details>
-                    ) : (
-                      <Link
-                        href={item.href}
-                        onClick={close}
-                        aria-current={path === item.href ? 'page' : undefined}
-                        className={topLinkClasses}
-                      >
-                        {item.label}
-                      </Link>
-                    )}
+                    <Link
+                      href={item.href}
+                      onClick={close}
+                      aria-current={path === item.href ? 'page' : undefined}
+                      className={topLinkClasses}
+                    >
+                      {item.label}
+                    </Link>
                   </li>
                 ))}
               </ul>

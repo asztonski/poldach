@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, type ComponentPropsWithoutRef } from 'react';
-import { isSmoothScrolling, moveScrollBy } from './SmoothScroll';
+import { GLIDE_TARGET_EVENT, isSmoothScrolling, moveScrollBy } from './SmoothScroll';
 
 // Keys that scroll the page up
 const UP_KEYS = new Set(['ArrowUp', 'PageUp', 'Home']);
@@ -137,16 +137,30 @@ export function OneWayScene(props: ComponentPropsWithoutRef<'div'>) {
       if (UP_KEYS.has(event.key) || (event.key === ' ' && event.shiftKey)) moveUp();
     };
 
+    /*
+     * A glide to a section past the scene (a menu link, D-97): the scene completes where it is and
+     * lets go before the glide starts – pinned, it would hold the glide, and its release would stop
+     * it halfway. The same as a jump far past
+     */
+    const onGlideTarget = (event: Event) => {
+      const target = (event as CustomEvent<Element>).detail;
+      if (!(element.compareDocumentPosition(target) & Node.DOCUMENT_POSITION_FOLLOWING)) return;
+      if (state === 'pinned') unpin();
+      finish();
+    };
+
     function stopListening() {
       window.removeEventListener('scroll', update);
       window.removeEventListener('wheel', onWheel);
       window.removeEventListener('keydown', onKey);
+      window.removeEventListener(GLIDE_TARGET_EVENT, onGlideTarget);
     }
 
     update();
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('wheel', onWheel, { passive: true });
     window.addEventListener('keydown', onKey);
+    window.addEventListener(GLIDE_TARGET_EVENT, onGlideTarget);
     return stopListening;
   }, []);
 

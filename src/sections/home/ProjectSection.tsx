@@ -8,13 +8,14 @@ import styles from './ProjectSection.module.css';
  * One project up close (docs/mapa-strony.md#strona-główna, docs/decyzje.md D-19, D-20, D-50, D-81):
  * the photo from the old site, edge to edge, and its technical drawing comes out from under it while
  * scrolling. No heading band: the photo speaks for itself; the caption and the notes name what it
- * shows. The projects – projects.tsx.
+ * shows. The projects – projects.tsx. `id` – the anchor of the menu's "Realizacje" (D-84).
  */
-export function ProjectSection({ project }: { project: Project }) {
+export function ProjectSection({ project, id }: { project: Project; id?: string }) {
   const { caption, alt, photo, ratio, drawing, notes } = project;
 
   return (
     <Section
+      id={id}
       theme="white"
       contained={false}
       aria-label={`Realizacja z bliska – ${caption}`}

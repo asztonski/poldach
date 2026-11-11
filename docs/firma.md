@@ -103,14 +103,14 @@ strukturalnych i w Wizytówce Google – patrz [standardy.md](standardy.md#seo).
 
 ## Dowody wiarygodności
 
-| Dowód                                    | Stan                                                                                                                     |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Na rynku od 1992                         | potwierdzone                                                                                                             |
-| Członek Polskiego Stowarzyszenia Dekarzy | deklarowane, logo PSD na starej stronie; certyfikat PSD wygasł w 2007 – ⚠ P-19                                           |
-| Rzetelna Firma                           | wizytowka.rzetelnafirma.pl/46RFTG2N/1 – ⚠ P-06: czy aktywna                                                              |
-| Opinie Google                            | 4,4 / 5 z 33 opinii – dane wtórne, sprawdzić w Google Maps przed publikacją                                              |
-| Certyfikaty i referencje                 | 23 skany z lat 1999–2006: 2 autoryzacje, 1 PSD, 1 nagroda, 2 referencje, 17 szkoleń – `src/data/certificates.ts`, ⚠ P-05 |
-| Gwarancja, OC podwykonawcy               | ⚠ P-13                                                                                                                   |
+| Dowód                                    | Stan                                                                                                                                               |
+| ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Na rynku od 1992                         | potwierdzone                                                                                                                                       |
+| Członek Polskiego Stowarzyszenia Dekarzy | deklarowane, logo PSD na starej stronie; certyfikat PSD wygasł w 2007 – ⚠ P-19                                                                     |
+| Rzetelna Firma                           | wizytowka.rzetelnafirma.pl/46RFTG2N/1 – ⚠ P-06: czy aktywna                                                                                        |
+| Opinie Google                            | 4,3 / 5 z 35 opinii – wizytówka w mapie Google osadzonej na stronie, 10.11.2026 (wcześniej 4,4 / 33 z danych wtórnych); sprawdzić przed publikacją |
+| Certyfikaty i referencje                 | 23 skany z lat 1999–2006: 2 autoryzacje, 1 PSD, 1 nagroda, 2 referencje, 17 szkoleń – `src/data/certificates.ts`, ⚠ P-05                           |
+| Gwarancja, OC podwykonawcy               | ⚠ P-13                                                                                                                                             |
 
 ## Nie mylić
 

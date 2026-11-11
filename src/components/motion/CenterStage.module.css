@@ -72,6 +72,9 @@
       --slot-5: translate(-98%, -50%) scale(0);
       --text-before: 0;
       --text-after: 0;
+      /* A hidden text lets clicks through – all texts lie on one spot, the top one would take them */
+      --text-before-hit: none;
+      --text-after-hit: none;
 
       position: static;
     }
@@ -80,6 +83,7 @@
       --slot-1: var(--centre);
       --slot-2: var(--centre);
       --text-before: 1;
+      --text-before-hit: auto;
     }
 
     /*
@@ -108,6 +112,7 @@
       --slot-4: var(--centre);
       --slot-5: var(--centre);
       --text-after: 1;
+      --text-after-hit: auto;
     }
 
     .visual,
@@ -257,10 +262,12 @@
 
     .item:has(:focus-visible) :is(.text, .backdrop) {
       opacity: 1 !important;
+      pointer-events: auto !important;
     }
 
     .list:has(:focus-visible) .item:not(:has(:focus-visible)) :is(.visual, .text, .backdrop) {
       opacity: 0 !important;
+      pointer-events: none !important;
     }
   }
 }
@@ -300,16 +307,19 @@
   0%,
   41.27% {
     opacity: var(--text-before);
+    pointer-events: var(--text-before-hit);
   }
 
   46.032%,
   53.175% {
     opacity: 1;
+    pointer-events: auto;
   }
 
   55.556%,
   100% {
     opacity: var(--text-after);
+    pointer-events: var(--text-after-hit);
   }
 }
 

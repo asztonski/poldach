@@ -27,9 +27,22 @@ export const SITE = {
 
 /**
  * The year the site was built – counted at build time (static export), so the site has to be
- * rebuilt at least once a year ("34 lata" in "O nas", the footer's revision).
+ * rebuilt at least once a year ("34 lata" in "O nas", the footer's ©).
  */
 export const BUILD_YEAR = new Date().getFullYear();
 
 export const phoneHref = `tel:+48${SITE.contact.phone.replace(/\s/g, '')}`;
 export const emailHref = `mailto:${SITE.contact.email}`;
+
+const { street, postalCode, city } = SITE.contact.address;
+
+/** The address on one line – "ul. Gdańska 1B, 83-207 Kokoszkowy" */
+export const addressLine = `${street}, ${postalCode} ${city}`;
+
+const mapsQuery = encodeURIComponent(`${SITE.name}, ${addressLine}`);
+
+/** The shop in Google Maps – a plain link, works without JS and without loading anything here */
+export const mapsHref = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+
+/** The embedded map – loaded only with consent to Google's cookies (MapCard, D-93) */
+export const mapsEmbedSrc = `https://www.google.com/maps?q=${mapsQuery}&hl=pl&output=embed`;

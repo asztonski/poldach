@@ -251,11 +251,11 @@ html:has(.under-header) header:not([data-scrolled]) {
     }
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    html {
-      scroll-behavior: smooth;
-    }
-  }
+  /*
+   * No `scroll-behavior: smooth`: the browser's glide would be stopped halfway by the one-way scene
+   * ("O nas") giving its length back. Links to a section glide through AnchorGlide, which lets the
+   * scene go first (docs/decyzje.md D-97)
+   */
 
   /* Page behind the open mobile menu does not scroll */
   html:has(dialog:modal) {
@@ -288,5 +288,17 @@ html:has(.under-header) header:not([data-scrolled]) {
   :focus-visible {
     outline: 3px solid var(--focus, var(--color-pd-navy-900));
     outline-offset: 3px;
+  }
+
+  /* A section a link glided to takes focus only to carry the keyboard on (AnchorGlide) – no frame */
+  section[tabindex='-1']:focus-visible,
+  main[tabindex='-1']:focus-visible {
+    outline: none;
+  }
+
+  /* Tailwind 4 leaves buttons with the arrow – every button that can be pressed gets the hand */
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']) {
+    cursor: pointer;
   }
 }
