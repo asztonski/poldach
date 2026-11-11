@@ -1,4 +1,4 @@
-import type { Certificate } from '@/types';
+import type { Certificate, CertificateKind } from '@/types';
 import bauderPiotr from '@/assets/images/certyfikaty/bauder-seminarium-piotr-supinski-2004.jpg';
 import bauderJacek from '@/assets/images/certyfikaty/bauder-seminarium-jacek-supinski-2004.jpg';
 import eternitHeidelberg from '@/assets/images/certyfikaty/eternit-szkolenie-heidelberg-2004.jpg';
@@ -236,3 +236,32 @@ export const CERTIFICATES: Certificate[] = [
     image: galecoPiotr,
   },
 ];
+
+/** What a document is, above its title on the certificates page */
+export const CERTIFICATE_KIND_LABEL: Record<CertificateKind, string> = {
+  authorization: 'Autoryzacja',
+  qualification: 'Kwalifikacje',
+  award: 'Nagroda',
+  reference: 'Referencje',
+  training: 'Szkolenie',
+};
+
+/** A document on the certificates page, with everyone who holds it */
+export type CertificateSheet = Omit<Certificate, 'holder'> & { holders: string[] };
+
+/**
+ * The certificates page's sheets (docs/decyzje.md D-113): a training both brothers attended is one
+ * sheet with both names – their scans differ only in the name, so the first one stands for both.
+ * No reference letters (D-115) – they are quoted among the testimonials (src/data/testimonials.ts)
+ */
+export const CERTIFICATE_SHEETS: CertificateSheet[] = (() => {
+  const byDocument = new Map<string, CertificateSheet>();
+  const certificates = CERTIFICATES.filter(({ kind }) => kind !== 'reference');
+  for (const { holder, ...document } of certificates) {
+    const key = `${document.issuer} · ${document.title} · ${document.year}`;
+    const sheet = byDocument.get(key);
+    if (sheet) sheet.holders.push(holder);
+    else byDocument.set(key, { ...document, holders: [holder] });
+  }
+  return [...byDocument.values()];
+})();

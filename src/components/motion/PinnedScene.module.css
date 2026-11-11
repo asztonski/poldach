@@ -1,7 +1,7 @@
 /*
  * Pinned scene (docs/design-system.md#ruch). The timeline --pinned has two phases for the scene's
  * animations: `entry` – the stage slides up to its place, `contain` – it stands there and the
- * scroll plays the scene. Inset by the header, so `contain` starts exactly when the stage pins.
+ * scroll plays the scene. The stage pins at the top of the screen, so `contain` starts exactly then.
  *
  * This media condition is the one definition of "a pin fits": a scene that lays itself out for the
  * pin (the modules of AboutSection and CenterStage) repeats it word for word, because CSS has no way
@@ -11,7 +11,6 @@
   @media (prefers-reduced-motion: no-preference) and (width >= 64rem) and (height >= 46rem) {
     .track {
       view-timeline: --pinned block;
-      view-timeline-inset: var(--header-pinned) 0;
     }
 
     /* Scroll distance – content, not padding: sticky moves only in the content box */
@@ -27,17 +26,18 @@
     }
 
     /*
-     * The same space above and below the scene, measured from the edges of the screen: the part of
-     * it under the header is the place kept free for the header. A low screen gets less of it, to
-     * leave the scene room.
+     * A full screen with the same space above and below the scene – before it pins (it rides with
+     * the page, the space reads against the section before) and after (D-104). The header's place
+     * lies inside the space above (--scene-space ≥ --header-pinned on any screen a pin fits), so a
+     * header coming back covers nothing. A low screen gets less space, to leave the scene room.
      */
     .stage {
       --scene-space: min(var(--section-space), 10vh);
 
       position: sticky;
-      top: var(--header-pinned);
-      height: calc(100vh - var(--header-pinned));
-      padding-block: calc(var(--scene-space) - var(--header-pinned)) var(--scene-space);
+      top: 0;
+      height: 100vh;
+      padding-block: var(--scene-space);
     }
   }
 }

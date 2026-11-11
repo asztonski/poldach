@@ -1,0 +1,112 @@
+/*
+ * A photo over its own tracing (docs/decyzje.md D-108) – like the projects up close on the home page
+ * (TracingReveal), but on the photo stage: away from the centre an item is its drawing, on its way
+ * to the centre the photo comes down over it, on its way out it goes on down and the drawing is back.
+ * The photo's window moves and the photo inside it the other way, so the photo itself stands still
+ * and only its edge travels. Transforms only (docs/architektura.md, rule 5). Without the pinned
+ * stage – the photo alone.
+ */
+.drawing {
+  display: none;
+}
+
+/* The condition of PinnedScene */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (width >= 64rem) and (height >= 46rem) {
+    /*
+     * A link to the stage ("Zobacz realizacje", D-116) brings its top to the top of the screen, not
+     * under the header: the stage pins there, with its own space above (PinnedScene, D-104)
+     */
+    .section {
+      scroll-margin-top: calc(-1 * var(--header-pinned));
+    }
+
+    .frame {
+      position: relative;
+      /* The last item stays a photo once it is there */
+      --photo-leave: 100%;
+    }
+
+    li:last-child .frame {
+      --photo-leave: 0%;
+    }
+
+    .drawing {
+      --drawing-line: var(--color-pd-navy-900);
+
+      display: block;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      /*
+       * A sheet of the drawing: white with the page's grid (globals.css, grid-lines), the same lines
+       * and step – but on the sheet, so it moves and shrinks with the drawing (D-112)
+       */
+      background-color: var(--color-pd-white);
+      background-image:
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+      background-size: var(--grid-step) var(--grid-step);
+    }
+
+    /* The life of the item on the stage – the range of its visual (CenterStage.module.css) */
+    .window,
+    .photo {
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: --pinned;
+      animation-range: contain calc(var(--unit) * (var(--lead, 0) + var(--i) * 34 - 46)) contain
+        calc(var(--unit) * (var(--lead, 0) + var(--i) * 34 + 80));
+    }
+
+    .window {
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      animation-name: window-pass;
+    }
+
+    .photo {
+      animation-name: photo-pass;
+    }
+  }
+}
+
+/*
+ * The visual's own stops (126 units): the next slot 24–34, the centre 58–68, the previous slot 92.
+ * The photo comes down while the visual moves to the centre (40–58) and goes while it leaves (68–88)
+ */
+@keyframes window-pass {
+  0%,
+  31.746% {
+    transform: translateY(-100%);
+  }
+
+  46.032%,
+  53.968% {
+    transform: translateY(0);
+  }
+
+  69.841%,
+  100% {
+    transform: translateY(var(--photo-leave));
+  }
+}
+
+@keyframes photo-pass {
+  0%,
+  31.746% {
+    transform: translateY(100%);
+  }
+
+  46.032%,
+  53.968% {
+    transform: translateY(0);
+  }
+
+  69.841%,
+  100% {
+    transform: translateY(calc(-1 * var(--photo-leave)));
+  }
+}

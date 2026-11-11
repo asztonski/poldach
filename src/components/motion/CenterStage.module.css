@@ -218,15 +218,15 @@
     /*
      * Intro (prototype, docs/decyzje.md D-66): the mirror of the text – left of the first visual,
      * level with its top edge, as wide as the text. Against the stage, whose content is the list:
-     * the list's middle is half the header's place above the stage's. It fades out at the end of the
-     * lead-in (units 28–58), before the first change
+     * the stage's space above and below is the same, so their middles meet. It fades out at the end
+     * of the lead-in (units 28–58), before the first change
      */
     .intro {
       --unit: calc(100% / (var(--n) * 34 - 2 + var(--lead, 0)));
 
       position: absolute;
       z-index: 1;
-      top: calc(50% - var(--header-pinned) / 2 - var(--visual-width) * 0.7);
+      top: calc(50% - var(--visual-width) * 0.7);
       right: calc(50% + var(--visual-width) / 2 + var(--text-gap));
       width: var(--text-width);
       height: calc(var(--visual-width) * 1.008 - 2rem);

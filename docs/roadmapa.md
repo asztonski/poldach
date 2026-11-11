@@ -17,12 +17,17 @@ certyfikatów z opisem (`src/data/certificates.ts`). Tymczasowe podstrony i stop
 **10.11.2026 – struktura czterech adresów (D-84):** menu z kotwicami sekcji, stopka z tymi samymi
 linkami, sekcja „Kontakt” na stronie głównej i podstronach (jak zacząć, formularz Web3Forms – D-85,
 mapa – D-86, D-91), podstrony `/wykrywanie-nieszczelnosci/`, `/sprzedaz/`
-i `/polityka-prywatnosci/`, przekierowania 301 w `public/_redirects`, skok do sekcji bez płynnego
+i `/polityka-prywatnosci/`, przekierowania 301 (dziś w `vercel.json`, D-102), skok do sekcji bez płynnego
 przewijania (D-87). Karty „Dom / Firma” usunięte.
 
 **11.11.2026:** wideo kampanii na podstronie diagnostyki (D-88), uporządkowana stopka (D-89), krótszy
 adres i link „Nieszczelności” w menu (D-90), polityka prywatności jako dokument (D-92), baner
 cookies (D-93), Google Analytics 4 ze zdarzeniami kontaktu (D-94–D-96).
+
+**11.11.2026 – strony tematów (D-103):** menu prowadzi na `/uslugi/`, `/sprzedaz/`,
+`/nasze-realizacje/` i `/kontakt/` (stare adresy WordPressa zachowane), scena oferty z wyborem
+filaru, hosting – Vercel (D-102). Strona `/certyfikaty-i-referencje/` – skany na scenie zdjęć, bez
+kalek (D-113).
 
 ### Do dokończenia
 
@@ -50,9 +55,46 @@ Google Analytics (P-26, D-94–D-96):
       przy `generate_lead` – po pierwszym zapytaniu z formularza.
 - [ ] Po wdrożeniu: poldach.eu → „Zgadzam się” → w GA „Czas rzeczywisty” widać wizytę.
 
+### Przeprowadzka na poldach.eu
+
+Nowa strona zastępuje WordPressa pod tą samą domeną – historia domeny w Google zostaje, chronimy
+adresy podstron (D-101).
+
+Przed zmianą:
+
+- [ ] Google Search Console – usługa typu „Domena” `poldach.eu`, weryfikacja wpisem TXT w DNS (wymaga
+      dostępu do panelu domeny). Na 11.11.2026 strona nie ma śladu GSC ani statystyk.
+- [ ] W GSC (Skuteczność, Strony) – które stare adresy i hasła dają wejścia; czy każdy ma swoje
+      przekierowanie w [`vercel.json`](../vercel.json). Adres z ruchem, którego treść nowa
+      strona pokrywa słabo, to kandydat na powrót podstrony (decyzja – D-84).
+- [x] Hosting – Vercel (D-102); przekierowania w [`vercel.json`](../vercel.json).
+- [ ] Vercel: nowy projekt z repozytorium (framework Next.js, ustawienia domyślne); pierwsze wdrożenie
+      pod adresem `*.vercel.app` – sprawdzić stronę, formularz, baner cookies i przekierowania, zanim
+      domena trafi na Vercel.
+
+W dniu zmiany:
+
+- [ ] Vercel → Settings → Domains: dodać `poldach.eu` i `www.poldach.eu` (to drugie z przekierowaniem
+      na `poldach.eu`); w panelu, w którym jest domena, ustawić wpisy DNS, które pokaże Vercel. Wpisów
+      poczty (MX, SPF) nie ruszać – poczta poldachpk@wp.pl ma działać dalej.
+- [ ] HTTPS działa (Vercel – automatycznie), `http://` i `www.` przekierowują na
+      `https://poldach.eu` (stara strona odpowiada pod nimi bez przekierowania – duplikaty).
+- [ ] Każdy stary adres z listy odpowiada 301 na właściwy cel, z ukośnikiem i bez (np.
+      `curl -sI https://poldach.eu/drzwi/` i `…/drzwi`), strony ze starym adresem (kolumna „Stary
+      adres” w [mapie strony](mapa-strony.md#strony)) – 200, bez przekierowania;
+      nieistniejący adres – strona 404.
+
+Po zmianie:
+
+- [ ] GSC → Mapy witryn → zgłosić `https://poldach.eu/sitemap.xml`.
+- [ ] GSC → Sprawdzenie adresu URL dla stron głównej i trzech podstron → „Poproś o zindeksowanie”.
+- [ ] Przez 2–6 tygodni: GSC (Strony, Skuteczność) – przekierowania przyjęte, nowe strony w indeksie;
+      lekkie wahania pozycji są normalne.
+- [ ] Wizytówka Google: adres strony, telefon (P-01) i godziny (P-02) zgodne ze stroną.
+
 **Do uzupełnienia przed publikacją:**
 
-- hosting (P-15), zatwierdzona polityka prywatności (P-24), godziny
+- zatwierdzona polityka prywatności (P-24), godziny
   otwarcia salonu (P-02),
 - wartości oznaczone `TODO` w hero i w danych firmy (P-01, P-07, P-19, ocena Google),
 - podstrona diagnostyki: przypięta scena z metodami (wideo – D-88)
@@ -79,7 +121,7 @@ Google Analytics (P-26, D-94–D-96):
       (zegar aparatu błędny – data wtopiona w zdjęcie), Panasonic 2008–2009, Samsung 2015–2016.
       Najlepsze: `02_P1010796`, `09_P1000142`, `01_P1010803`, `07_P1000151`,
       `23_20150508_123833`, `10_P1000137` – do każdego potrzebne miejscowość, zakres prac i zgoda na
-      publikację. `02_P1010796` jest już w sekcji „Realizacje” (D-19, ⚠ P-21).
+      publikację. Na stronie realizacji (D-107, D-109): `02_P1010796`, `04_P1000169`, `07_P1000151`, `23_20150508_123833`, `34_100_2005`, `20_20160218_092954`.
 - [ ] Certyfikaty: oryginały lub skany z opisem (wystawca, czego dotyczy, rok, ważność).
 - [ ] Projekt reklamy Remotion (`poldach-reklama.zip` – brak w przekazanych materiałach): tokeny do
       porównania i ilustracje do eksportu jako SVG.

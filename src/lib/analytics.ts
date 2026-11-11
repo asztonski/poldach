@@ -1,4 +1,5 @@
-import { SECTION_IDS } from '@/config/routes';
+import { CONTACT_SECTION_HREF, ROUTES } from '@/config/routes';
+import { normalizePath } from '@/lib/path';
 
 /*
  * The site's own GA4 events (docs/decyzje.md D-96) – the one list of their names. GA's enhanced
@@ -14,7 +15,7 @@ export type AnalyticsEvent =
   | 'click_phone'
   /** The e-mail address clicked (`mailto:`) – a key event */
   | 'click_email'
-  /** A link to the contact form: "Bezpłatna wycena", "zapytaj o wycenę", "Kontakt" */
+  /** A link to the contact form: "Bezpłatna wycena" (the section) or the menu's "Kontakt" (the page) */
   | 'click_quote'
   /** The campaign video: sound on, full screen, watched to the end (once per page) */
   | 'video_unmute'
@@ -54,6 +55,7 @@ export function trackContactClick(event: MouseEvent) {
   const where = { link_location: areaOf(link) };
   if (href.startsWith('tel:')) track('click_phone', where);
   else if (href.startsWith('mailto:')) track('click_email', where);
-  else if (href.endsWith(`#${SECTION_IDS.contact}`))
+  // The contact section of the page ("Bezpłatna wycena") or the contact page (the menu's "Kontakt")
+  else if (href === CONTACT_SECTION_HREF || normalizePath(href) === ROUTES.contact)
     track('click_quote', { ...where, link_text: link.textContent?.trim().slice(0, 100) ?? '' });
 }

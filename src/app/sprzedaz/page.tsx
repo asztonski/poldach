@@ -3,8 +3,7 @@ import headquarters from '@/assets/images/firma/siedziba-kokoszkowy.webp';
 import { ROUTES } from '@/config/routes';
 import { addressLine } from '@/config/site';
 import { pageMetadata } from '@/lib/metadata';
-import { ContactSection, PageHero } from '@/sections/common';
-import { AssortmentSection } from '@/sections/shop/AssortmentSection';
+import { ContactSection, OfferSection, PageHero } from '@/sections/common';
 
 export const metadata = pageMetadata({
   title: 'Sprzedaż – salon w Kokoszkowych',
@@ -14,8 +13,8 @@ export const metadata = pageMetadata({
 });
 
 /**
- * The second pillar – sales in the shop (docs/mapa-strony.md, D-58, D-84): what it sells, then the
- * contact with the map. Opening hours – TODO(P-02).
+ * The second pillar – sales in the shop (docs/mapa-strony.md, D-58, D-84, D-103): what it sells –
+ * the scene of the offer with the shop's items only – then the contact with the map. Opening hours – TODO(P-02).
  */
 export default function ShopPage() {
   return (
@@ -35,7 +34,12 @@ export default function ShopPage() {
           </div>
         }
       />
-      <AssortmentSection />
+      <OfferSection
+        pillar="shop"
+        here={ROUTES.shop}
+        title="Co znajdziesz w salonie"
+        lead="Drzwi i podłogi przede wszystkim – a także okna, parapety, blaty, deski tarasowe i materiały dachowe. Doradzimy, dostarczymy i zamontujemy."
+      />
       <ContactSection
         source="Sprzedaż"
         title="Przyjedź do salonu albo napisz"

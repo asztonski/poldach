@@ -10,6 +10,11 @@ export type SectionHeadingProps = {
   lead?: ReactNode;
   /** Title above the description, one column on every screen (the "O nas" stage, D-53). */
   stacked?: boolean;
+  /**
+   * false – there from the start, no fade: a heading on its own sheet that may be on the first
+   * screen already (the photo stage's intro, D-111)
+   */
+  fade?: boolean;
   /** More text under the description, e.g. a second paragraph; it sets its own spacing. */
   children?: ReactNode;
 };
@@ -24,10 +29,13 @@ export function SectionHeading({
   title,
   lead,
   stacked = false,
+  fade = true,
   children,
 }: SectionHeadingProps) {
+  const Wrapper = fade ? FadeInOnce : 'div';
+
   return (
-    <FadeInOnce className={cn('grid gap-6', !stacked && 'lg:grid-cols-2 lg:items-end lg:gap-16')}>
+    <Wrapper className={cn('grid gap-6', !stacked && 'lg:grid-cols-2 lg:items-end lg:gap-16')}>
       <h2 id={id} className="text-h1 text-(--title)">
         {title}
       </h2>
@@ -37,6 +45,6 @@ export function SectionHeading({
           {children}
         </div>
       ) : null}
-    </FadeInOnce>
+    </Wrapper>
   );
 }

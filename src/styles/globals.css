@@ -231,11 +231,13 @@ html:has(.under-header) header:not([data-scrolled]) {
     /* Header: its height and how far it slides up after scrolling (Header.tsx) */
     --header-h: 4rem;
     --header-shift: 0.75rem;
-    /* What is left of the header after scrolling – pinned scenes keep this place free for it, also
-       while it is hidden, so it never covers them when it comes back */
+    /* What is left of the header after scrolling – the space above a pinned scene is at least this,
+       so a header coming back never covers it (PinnedScene, D-104) */
     --header-pinned: calc(var(--header-h) - var(--header-shift));
     color-scheme: light;
-    scroll-padding-top: var(--header-h);
+    /* A section reached by a link starts right under what is left of the header – no strip of the
+       section above between them (D-116) */
+    scroll-padding-top: var(--header-pinned);
   }
 
   @media (width >= 48rem) {

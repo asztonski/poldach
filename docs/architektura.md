@@ -8,7 +8,7 @@ Jak budujemy stronę. Co ma powstać – [mapa-strony.md](mapa-strony.md), jakie
 **Zainstalowane** (wersje – `package.json`): Next.js (App Router, statyczny eksport), React,
 TypeScript (strict), Tailwind CSS 4, lucide-react, clsx + tailwind-merge, ESLint (konfiguracja Next) +
 Prettier z sortowaniem klas Tailwind. Font Roboto Condensed (zmienny) przez `next/font/google` w
-`src/app/layout.tsx`; Kalam 700 (notatki pisakiem) w `src/sections/home/HeroSection.tsx`. Formularz
+`src/app/layout.tsx`; Kalam 700 (notatki pisakiem) w `src/sections/common/HeroSection.tsx`. Formularz
 kontaktowy – usługa Web3Forms, bez biblioteki, walidacja przeglądarki
 ([`ContactForm`](../src/components/common/ContactForm.tsx), [decyzje.md](decyzje.md) D-85); mapa –
 osadzenie Google po zgodzie na cookies ([`MapCard`](../src/components/common/MapCard.tsx), wybór – `src/lib/consent.ts`, D-86, D-93); statystyki – Google Analytics 4 przez `next/script`, tylko w buildzie produkcyjnym i po zgodzie ([`Analytics`](../src/components/common/Analytics.tsx), D-94); własne zdarzenia – `track()` z [`src/lib/analytics.ts`](../src/lib/analytics.ts), nowe zdarzenie dopisujemy do typu `AnalyticsEvent` (D-96).
@@ -58,7 +58,7 @@ src/
 ├── data/                 # treści jako typowane dane (oferta, opinie, certyfikaty)
 ├── hooks/                # własne hooki React (useHeaderScroll, useHydrated)
 ├── lib/                  # funkcje pomocnicze (cn, sheetNumber, pageMetadata, normalizePath); zgoda na cookies (consent), zdarzenia GA (analytics); (planowane) gsap
-├── sections/             # sekcje stron według podstron (home, leak-detection, shop); common – kontakt i otwarcie podstrony
+├── sections/             # sekcje stron według podstron (home, leak-detection); common – wspólne: otwarcie podstrony, scena zdjęć (PhotoStage – oferta, realizacje), realizacja z bliska, kontakt
 ├── styles/globals.css    # tokeny Tailwind (@theme) i style bazowe
 └── types/                # wspólne typy TS
 ```
@@ -107,14 +107,14 @@ deweloperskie uruchamiane `node scripts/<nazwa>.mjs` (rysunki techniczne, patrz 
 **Podstronę**
 
 1. Dopisz ją w [mapa-strony.md](mapa-strony.md) (adres, cel).
-2. Dodaj ścieżkę do `ROUTES` w `src/config/routes.ts` i do `LIVE_ROUTES` – w `ROUTES` są tylko
-   istniejące strony i kotwice sekcji strony głównej (`SECTION_IDS`), więc żaden link nie prowadzi
-   donikąd ([decyzje.md](decyzje.md) D-84).
+2. Dodaj ścieżkę do `ROUTES` w `src/config/routes.ts` – są tam tylko istniejące strony, więc żaden
+   link nie prowadzi donikąd ([decyzje.md](decyzje.md) D-84, D-103); kotwice sekcji – `SECTION_IDS`.
 3. Utwórz `src/app/<adres>/page.tsx` z `export const metadata = pageMetadata({...})`; otwarcie –
-   `PageHero`, na końcu `ContactSection` (`src/sections/common/`).
+   `PageHero` (albo `HeroSection` – to samo otwarcie z logo z postacią i notatkami pisakiem, D-116),
+   na końcu `ContactSection` (`src/sections/common/`).
 4. Jeśli ma być w menu – dodaj pozycję w `src/config/navigation.ts`.
 
-Mapa witryny aktualizuje się sama na podstawie `LIVE_ROUTES`.
+Mapa witryny aktualizuje się sama – bierze każdą ścieżkę z `ROUTES`.
 
 **Sekcję** – komponent w `src/sections/<podstrona>/`, zbudowany na `Section` i `SectionHeading`,
 eksportowany w `index.ts`.
@@ -127,8 +127,8 @@ w locie). Zdjęcie w kilku szerokościach (np. realizacje: WebP 960 i 1920 px, w
 zależność deweloperska) – zwykły `<img>` z `srcSet` i `sizes`, bo `next/image` przy
 `images.unoptimized` nie tworzy `srcset`.
 
-**Realizację z rysunkiem technicznym** ([decyzje.md](decyzje.md) D-50, D-81, D-83) – wpis w
-`src/sections/home/projects.tsx` i rysunek w `src/components/illustrations/`, zbudowany na
+**Realizację z rysunkiem technicznym** ([decyzje.md](decyzje.md) D-50, D-81, D-83) – nazwa, opis i zdjęcie w
+`src/data/projects.ts` (lista realizacji, także scena strony realizacji – z krawędziami `edges` jest tam kalką, D-108), wpis w `src/sections/common/projects.tsx` i rysunek w `src/components/illustrations/`, zbudowany na
 `technical-drawing.tsx`. Linie rysunku to krawędzie samego zdjęcia, więc pasują do niego 1:1:
 
 1. `node scripts/photo-edges.mjs <zdjęcie> src/components/illustrations/edges/<nazwa>.ts` – detekcja
@@ -146,9 +146,12 @@ wys [krok] [powiększenie]`.
 
 - `npm run build` tworzy w `out/` gotową stronę: każda podstrona to osobny `index.html`, więc wystarczy
   dowolny hosting plików.
-- Przekierowania 301 ([mapa-strony.md](mapa-strony.md#przekierowania-301-ze-starej-strony)) –
-  [`public/_redirects`](../public/_redirects), format Netlify i Cloudflare Pages; przy Vercel trzeba
-  je przepisać do `vercel.json`. Hosting – ⚠ P-15.
+- Przekierowania 301 ([mapa-strony.md](mapa-strony.md#przekierowania-301-ze-starej-strony)) – jedna
+  lista w [`vercel.json`](../vercel.json) (`redirects`, kod 301).
+- Hosting – Vercel ([decyzje.md](decyzje.md) D-102): projekt z repozytorium, framework Next.js, budowa
+  `npm run build` (statyczny eksport do `out/`); wartości z `.env.production` wchodzą same, w
+  panelu Vercela nic nie trzeba ustawiać. HTTPS – automatycznie; `www.poldach.eu` → `poldach.eu` –
+  w ustawieniach domen projektu (Settings → Domains), nie w pliku.
 - Klucze usług, jawne z założenia i te same dla każdej budowy – identyfikator GA i klucz Web3Forms –
   w [`.env.production`](../.env.production), w repozytorium (D-95, D-98). Zmiana na czas testu – w
   `.env.local` (poza repozytorium), wzór w [`.env.example`](../.env.example). Wchodzą do strony przy budowie –

@@ -71,16 +71,20 @@ export function glideTo(top: number, duration = 0.6) {
 const nextFrame = () => new Promise((resolve) => requestAnimationFrame(resolve));
 
 /**
- * Glides to a section, its top under the header's place (scroll-padding-top) – the links to the
- * home page's sections (AnchorGlide, docs/decyzje.md D-97). The time grows with the distance, 0.6
- * to 1.6 s; with reduced motion – a jump.
+ * Glides to a section, its top under the header's place (scroll-padding-top) – a link to a section
+ * of the same page, e.g. the contact or a gallery (AnchorGlide, docs/decyzje.md D-97). Like the
+ * browser, it counts the section's scroll-margin-top too: a pinned scene cancels the header's place
+ * with it, as it keeps its own space above (PhotoStage, D-116). The time grows with the distance,
+ * 0.6 to 1.6 s; with reduced motion – a jump.
  */
 export async function glideToElement(target: Element) {
   window.dispatchEvent(new CustomEvent(GLIDE_TARGET_EVENT, { detail: target }));
   // A scene let go nudges the page for two frames (OneWayScene) – that would stop a native glide
   await nextFrame();
   await nextFrame();
-  const offset = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+  const offset =
+    (parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0) +
+    (parseFloat(getComputedStyle(target).scrollMarginTop) || 0);
   const top = target.getBoundingClientRect().top + window.scrollY - offset;
   const jump = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const duration = jump ? 0 : Math.min(1.6, Math.max(0.6, Math.abs(top - window.scrollY) / 5000));

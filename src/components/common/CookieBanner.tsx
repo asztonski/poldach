@@ -23,7 +23,8 @@ export function CookieBanner() {
     >
       <Panel
         theme="blue"
-        className="mx-auto flex max-w-3xl flex-col gap-4 p-5 sm:p-6 md:flex-row md:items-center md:gap-6"
+        // The frame keeps it apart from the blue bands of the sections it may lie over
+        className="mx-auto flex max-w-3xl flex-col gap-4 border border-pd-white/50 p-5 sm:p-6 md:flex-row md:items-center md:gap-6"
       >
         <div className="text-small sm:text-body">
           <h2 id="cookie-title" className="font-bold">

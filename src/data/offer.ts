@@ -18,8 +18,8 @@ export type OfferItem = {
   title: string;
   /** A few sentences – facts from docs/firma.md#oferta and the old site only, no brands */
   details: string;
-  /** The page that tells more (D-84); without one the item asks for an estimate */
-  href?: RoutePath;
+  /** The page that tells more about it (D-103, D-106) – the services page, its own page, the shop */
+  href: RoutePath;
   photo: StaticImageData;
 };
 
@@ -39,6 +39,7 @@ export const OFFER: OfferItem[] = [
     title: 'Pokrycia i remonty dachów',
     details:
       'Nowe pokrycia – dachówka ceramiczna i betonowa, blachodachówka, blacha trapezowa i na rąbek stojący, papa, membrany, gonty – oraz remonty, obróbki blacharskie, rynny i docieplenia poddaszy i dachów płaskich.',
+    href: ROUTES.services,
     photo: standingSeamRoof,
   },
   {
@@ -56,6 +57,7 @@ export const OFFER: OfferItem[] = [
     title: 'Usuwanie eternitu',
     details:
       'Legalny demontaż i utylizacja eternitu – mamy uprawnienia do odpadów niebezpiecznych. Gminne programy i NFOŚiGW dofinansowują do 100% demontażu, transportu i utylizacji. Po demontażu położymy też nowe pokrycie.',
+    href: ROUTES.services,
     photo: asbestosRemoval,
   },
   {
@@ -64,6 +66,7 @@ export const OFFER: OfferItem[] = [
     title: 'Montaż w domu',
     details:
       'Montujemy okna dachowe i elewacyjne, drzwi wewnętrzne i zewnętrzne, bramy garażowe, podłogi laminowane i drewniane oraz parapety – z materiału naszego albo powierzonego.',
+    href: ROUTES.services,
     photo: windows,
   },
   {

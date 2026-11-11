@@ -1,0 +1,17 @@
+/*
+ * The weight of the lines (docs/decyzje.md D-105, docs/design-system.md#ilustracje: lines 1.5–2 px),
+ * for every drawing – the projects up close (TracingReveal) and the tracings of the photo stage
+ * (PhotoStage). The lines keep their width at any size (non-scaling-stroke), so on a phone, where the
+ * drawing is a fifth of a screen-wide one, 1 px reads as a firm outline. On a wide screen the same
+ * 1 px is a hair and shows every kink of the tracing – 2 px gives it the phone's weight; the notes'
+ * leaders a little less
+ */
+@media (width >= 64rem) {
+  .drawing [data-layer='edges'] {
+    stroke-width: 2px;
+  }
+
+  .drawing [data-layer='notes'] {
+    stroke-width: 1.5px;
+  }
+}
