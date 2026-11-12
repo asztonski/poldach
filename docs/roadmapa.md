@@ -60,59 +60,52 @@ Google Analytics (P-26, D-94–D-96):
 Nowa strona zastępuje WordPressa pod tą samą domeną – historia domeny w Google zostaje, chronimy
 adresy podstron (D-101).
 
-Stan na 12.11.2026 (D-122):
+Stan na 12.11.2026 – nowa strona działa pod poldach.eu (D-122, D-123):
 
-| Co                | Stan                                                                                                                                      |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| Domena poldach.eu | abonent – P.H.U. „POLDACH” s.c., rejestrator – Digital Media Technology (bez dostępu do panelu), DNS – SmartHost; **ważna do 28.11.2026** |
-| Transfer domeny   | zamówienie w uti.pl z 28.10.2026: transfer i odnowienie do 28.11.2028 (158,67 zł brutto); kod AuthInfo – „Moje .eu” na eurid.eu           |
-| Stara strona      | WordPress w SmartHost (`poldach.smarthost.pl`), opłacony do 04.06.2027 – nie odnawiać                                                     |
-| nazwa.pl          | rozliczona, bez usług                                                                                                                     |
-| Poczta            | tylko poldachpk@wp.pl – skrzynek @poldach.eu nie ma, wpisy MX i SPF nie są potrzebne                                                      |
-| Konta usług       | domena, SmartHost, Web3Forms, EURid – na poldachpk@wp.pl; Cloudflare – do założenia, z logowaniem dwuetapowym                             |
+| Co                | Stan                                                                                                                                                       |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Domena poldach.eu | abonent – P.H.U. „POLDACH” s.c.; w uti.pl (panel.uti.pl, login – ID klienta z maila uti.pl; rejestr .eu pokazuje ich partnera Digital Media Technology)    |
+| Ważność domeny    | **do 28.11.2028**, automatyczne odnawianie w uti.pl wyłączone                                                                                              |
+| DNS i hosting     | Cloudflare, plan Free: strefa `poldach.eu` (serwery `april` i `vicky.ns.cloudflare.com`), projekt Pages `poldach`                                          |
+| Stara strona      | WordPress w SmartHost (`poldach.smarthost.pl`), opłacony do 04.06.2027 – nie odnawiać; kopia z 12.11.2026 (Softaculous, pliki i baza) leży na tym serwerze |
+| nazwa.pl          | rozliczona, bez usług                                                                                                                                      |
+| Poczta            | tylko poldachpk@wp.pl – skrzynek @poldach.eu nie ma; SPF i DMARC odrzucają pocztę z domeny (D-123)                                                         |
+| Konta usług       | domena (uti.pl), SmartHost, Web3Forms, EURid – na poldachpk@wp.pl; Cloudflare – konto opiekuna strony, z logowaniem dwuetapowym                            |
 
-Przed zmianą:
+Zrobione 12.11.2026:
 
-- [ ] Transfer domeny do uti.pl przed 28.11.2026 (zamówienie z 28.10.2026, z odnowieniem do
-      28.11.2028): kod AuthInfo z „Moje .eu” na eurid.eu (przychodzi na poldachpk@wp.pl), przy
-      transferze zachować obecne serwery nazw – stara strona działa dalej.
-- [ ] Google Search Console – usługa typu „Domena” `poldach.eu`, weryfikacja wpisem TXT w DNS. Na
-      11.11.2026 strona nie ma śladu GSC ani statystyk.
-- [ ] W GSC (Skuteczność, Strony) – które stare adresy i hasła dają wejścia; czy każdy ma swoje
-      przekierowanie w [`public/_redirects`](../public/_redirects). Adres z ruchem, którego treść nowa
-      strona pokrywa słabo, to kandydat na powrót podstrony (decyzja – D-84).
-- [x] Hosting – Cloudflare Pages (D-122); przekierowania w [`public/_redirects`](../public/_redirects).
-- [ ] Cloudflare → Workers & Pages → Pages → połączyć repozytorium GitHub (gałąź `main`, budowa
-      `npm run build`, katalog `out`); pierwsze wdrożenie pod adresem `*.pages.dev` – sprawdzić stronę,
-      formularz, baner cookies i przekierowania, zanim domena trafi na Cloudflare.
-- [ ] Cloudflare → dodać witrynę `poldach.eu` (plan Free); sprawdzić, czy przejęła wpisy z obecnej
-      strefy; zapisać dwa serwery nazw, które poda Cloudflare.
-- [ ] Backup starej strony: cPanel w SmartHost → Kopia zapasowa (pełna).
-
-W dniu zmiany (po zakończonym transferze):
-
-- [ ] Pages → Custom domains: dodać `poldach.eu` i `www.poldach.eu`.
-- [ ] Panel uti.pl → serwery nazw domeny: dwa serwery Cloudflare zamiast `dns*.smarthost.pl`.
-- [ ] Cloudflare → Rules → Redirect Rules: `www.poldach.eu` → `https://poldach.eu` (301, z
-      zachowaniem ścieżki).
-- [ ] HTTPS działa (Cloudflare – automatycznie), `http://` i `www.` przekierowują na
-      `https://poldach.eu` (stara strona odpowiada pod nimi bez przekierowania – duplikaty).
-- [ ] Każdy stary adres z listy odpowiada 301 na właściwy cel, z ukośnikiem i bez (np.
-      `curl -sI https://poldach.eu/drzwi/` i `…/drzwi`), strony ze starym adresem (kolumna „Stary
-      adres” w [mapie strony](mapa-strony.md#strony)) – 200, bez przekierowania;
-      nieistniejący adres – strona 404.
+- [x] Transfer domeny do uti.pl z odnowieniem do 28.11.2028.
+- [x] Hosting – Cloudflare Pages (D-122): repozytorium GitHub, gałąź `main`, test na
+      `poldach.pages.dev` (strony, formularz, baner cookies, przekierowania).
+- [x] Kopia starej strony – Softaculous w SmartHost (pliki i baza, na serwerze).
+- [x] Strefa `poldach.eu` w Cloudflare – tylko rekordy strony, SPF i DMARC (D-123); serwery nazw
+      Cloudflare w panelu uti.pl.
+- [x] Pages → Custom domains: `poldach.eu` i `www.poldach.eu`; reguła `www` → bez `www` (301).
+- [x] Sprawdzone: HTTPS; `http://` i `www.` → `https://poldach.eu` (ze ścieżką i parametrami);
+      każdy stary adres z [`public/_redirects`](../public/_redirects) – 301, z ukośnikiem i bez;
+      strony – 200; nieistniejący adres (też `/wp-login.php`) – 404.
 
 Po zmianie:
 
+- [ ] Google Search Console – usługa typu „Domena” `poldach.eu`, weryfikacja wpisem TXT w DNS
+      Cloudflare. Na 11.11.2026 strona nie miała śladu GSC ani statystyk.
 - [ ] GSC → Mapy witryn → zgłosić `https://poldach.eu/sitemap.xml`.
 - [ ] GSC → Sprawdzenie adresu URL dla stron głównej i trzech podstron → „Poproś o zindeksowanie”.
 - [ ] Przez 2–6 tygodni: GSC (Strony, Skuteczność) – przekierowania przyjęte, nowe strony w indeksie;
       lekkie wahania pozycji są normalne.
 - [ ] Wizytówka Google: adres strony, telefon (P-01) i godziny (P-02) zgodne ze stroną.
+- [ ] W GSC (Skuteczność, Strony) – które stare adresy i hasła dają wejścia; czy każdy ma swoje
+      przekierowanie w [`public/_redirects`](../public/_redirects). Adres z ruchem, którego treść nowa
+      strona pokrywa słabo, to kandydat na powrót podstrony (decyzja – D-84).
 - [ ] SmartHost: wyłączyć automatyczną płatność (Autopay), żeby hosting nie odnowił się 04.06.2027;
       zmienić hasła do nazwa.pl, SmartHost i starego hostingu webd.pl (krążyły w mailach).
+- [ ] Cloudflare → Manage account → Members: dodać poldachpk@wp.pl – firma ma dostęp także bez
+      opiekuna strony.
+- [ ] Do 04.06.2027 – jeśli stara strona ma zostać na dłużej: pobrać jej kopię (Softaculous →
+      Kopie zapasowe); po tej dacie znika razem z hostingiem.
+- [ ] Do 28.11.2028 – odnowić domenę w uti.pl (automatyczne odnawianie wyłączone).
 
-**Do uzupełnienia przed publikacją:**
+**Do uzupełnienia – strona jest publiczna od 12.11.2026:**
 
 - zatwierdzona polityka prywatności (P-24), godziny
   otwarcia salonu (P-02),

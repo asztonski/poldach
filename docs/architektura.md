@@ -153,8 +153,12 @@ wys [krok] [powiększenie]`.
   produkcyjna `main`, budowa `npm run build`, katalog wyjściowy `out`; wersja Node z
   [`.nvmrc`](../.nvmrc), wartości z `.env.production` wchodzą same – w panelu nic więcej nie trzeba
   ustawiać. Domena bez `www` na Pages wymaga strefy DNS w Cloudflare (serwery nazw Cloudflare u
-  rejestratora). HTTPS – automatycznie; `www.poldach.eu` → `poldach.eu` – reguła przekierowania w
-  strefie (Rules → Redirect Rules), nie w pliku.
+  rejestratora). HTTPS i `http://` → `https://` – automatycznie (Pages); `www.poldach.eu` →
+  `poldach.eu` – reguła w strefie, nie w pliku (Rules → Redirect Rules: `https://www.poldach.eu/*` →
+  `https://poldach.eu/${1}`, 301, z parametrami). W strefie tylko rekordy domen z Pages → Custom
+  domains oraz SPF i DMARC odrzucające pocztę z domeny; boty wyszukiwarek i AI – dozwolone,
+  „Bot Preference Sync” wyłączony, więc `robots.txt` pochodzi tylko z
+  [`src/app/robots.ts`](../src/app/robots.ts) (D-123).
 - Rok w stopce i „lat na rynku” liczą się przy budowie (`BUILD_YEAR` w
   [`src/config/site.ts`](../src/config/site.ts)) – stronę trzeba wdrożyć ponownie co najmniej raz w
   roku (w Cloudflare: Deployments → Retry deployment).
