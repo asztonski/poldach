@@ -145,6 +145,6 @@ wracają – piszemy własne krótkie teksty ([komunikacja.md](komunikacja.md#za
 Stara strona to WordPress (10 podstron i kilka adresów samego WordPressa). Przekierowania chronią
 to, co Google już zaindeksował: produkty salonu → `/sprzedaz/`, `/dachy/` → `/uslugi/`, pozostałe →
 `/` (D-84, D-101, D-103). Strony ze starym adresem zostają bez przekierowania – kolumna „Stary
-adres” w [tabeli stron](#strony). Jedna lista przekierowań – [`vercel.json`](../vercel.json) (hosting – Vercel,
-D-102, [architektura.md](architektura.md#wdrożenie)); przeprowadzka krok po kroku –
+adres” w [tabeli stron](#strony). Jedna lista przekierowań – [`public/_redirects`](../public/_redirects) (hosting – Cloudflare Pages,
+D-122, [architektura.md](architektura.md#wdrożenie)); przeprowadzka krok po kroku –
 [roadmapa.md](roadmapa.md#przeprowadzka-na-poldacheu).

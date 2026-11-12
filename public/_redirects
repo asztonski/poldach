@@ -1,0 +1,28 @@
+# Redirects 301 from the old WordPress site (docs/mapa-strony.md#przekierowania-301-ze-starej-strony).
+# Cloudflare Pages format: source, destination, code. Each address with and without the slash.
+# www -> poldach.eu is a Redirect Rule in the Cloudflare zone, not here (docs/architektura.md#wdrożenie).
+
+/drzwi/ /sprzedaz/ 301
+/drzwi /sprzedaz/ 301
+/podlogi/ /sprzedaz/ 301
+/podlogi /sprzedaz/ 301
+/okna/ /sprzedaz/ 301
+/okna /sprzedaz/ 301
+/parapety-i-blaty/ /sprzedaz/ 301
+/parapety-i-blaty /sprzedaz/ 301
+/tarasy-balkony-eleawacje/ /sprzedaz/ 301
+/tarasy-balkony-eleawacje /sprzedaz/ 301
+/dachy/ /uslugi/ 301
+/dachy /uslugi/ 301
+/home/ / 301
+/home / 301
+/witaj-swiecie/ / 301
+/witaj-swiecie / 301
+/feed/ / 301
+/feed / 301
+/comments/feed/ / 301
+/comments/feed / 301
+/home/feed/ / 301
+/home/feed / 301
+/wykrywanie-nieszczelnosci-dachow-plaskich/ /wykrywanie-nieszczelnosci/ 301
+/wykrywanie-nieszczelnosci-dachow-plaskich /wykrywanie-nieszczelnosci/ 301

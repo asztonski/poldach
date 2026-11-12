@@ -17,7 +17,7 @@ certyfikatów z opisem (`src/data/certificates.ts`). Tymczasowe podstrony i stop
 **10.11.2026 – struktura czterech adresów (D-84):** menu z kotwicami sekcji, stopka z tymi samymi
 linkami, sekcja „Kontakt” na stronie głównej i podstronach (jak zacząć, formularz Web3Forms – D-85,
 mapa – D-86, D-91), podstrony `/wykrywanie-nieszczelnosci/`, `/sprzedaz/`
-i `/polityka-prywatnosci/`, przekierowania 301 (dziś w `vercel.json`, D-102), skok do sekcji bez płynnego
+i `/polityka-prywatnosci/`, przekierowania 301 (dziś w `public/_redirects`, D-122), skok do sekcji bez płynnego
 przewijania (D-87). Karty „Dom / Firma” usunięte.
 
 **11.11.2026:** wideo kampanii na podstronie diagnostyki (D-88), uporządkowana stopka (D-89), krótszy
@@ -26,7 +26,7 @@ cookies (D-93), Google Analytics 4 ze zdarzeniami kontaktu (D-94–D-96).
 
 **11.11.2026 – strony tematów (D-103):** menu prowadzi na `/uslugi/`, `/sprzedaz/`,
 `/nasze-realizacje/` i `/kontakt/` (stare adresy WordPressa zachowane), scena oferty z wyborem
-filaru, hosting – Vercel (D-102). Strona `/certyfikaty-i-referencje/` – skany na scenie zdjęć, bez
+filaru, hosting – Cloudflare Pages (D-122, wcześniej Vercel – D-102). Strona `/certyfikaty-i-referencje/` – skany na scenie zdjęć, bez
 kalek (D-113).
 
 ### Do dokończenia
@@ -60,24 +60,42 @@ Google Analytics (P-26, D-94–D-96):
 Nowa strona zastępuje WordPressa pod tą samą domeną – historia domeny w Google zostaje, chronimy
 adresy podstron (D-101).
 
+Stan na 12.11.2026 (D-122):
+
+| Co                | Stan                                                                                                                                      |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Domena poldach.eu | abonent – P.H.U. „POLDACH” s.c., rejestrator – Digital Media Technology (bez dostępu do panelu), DNS – SmartHost; **ważna do 28.11.2026** |
+| Transfer domeny   | zamówienie w uti.pl z 28.10.2026: transfer i odnowienie do 28.11.2028 (158,67 zł brutto); kod AuthInfo – „Moje .eu” na eurid.eu           |
+| Stara strona      | WordPress w SmartHost (`poldach.smarthost.pl`), opłacony do 04.06.2027 – nie odnawiać                                                     |
+| nazwa.pl          | rozliczona, bez usług                                                                                                                     |
+| Poczta            | tylko poldachpk@wp.pl – skrzynek @poldach.eu nie ma, wpisy MX i SPF nie są potrzebne                                                      |
+| Konta usług       | domena, SmartHost, Web3Forms, EURid – na poldachpk@wp.pl; Cloudflare – do założenia, z logowaniem dwuetapowym                             |
+
 Przed zmianą:
 
-- [ ] Google Search Console – usługa typu „Domena” `poldach.eu`, weryfikacja wpisem TXT w DNS (wymaga
-      dostępu do panelu domeny). Na 11.11.2026 strona nie ma śladu GSC ani statystyk.
+- [ ] Transfer domeny do uti.pl przed 28.11.2026 (zamówienie z 28.10.2026, z odnowieniem do
+      28.11.2028): kod AuthInfo z „Moje .eu” na eurid.eu (przychodzi na poldachpk@wp.pl), przy
+      transferze zachować obecne serwery nazw – stara strona działa dalej.
+- [ ] Google Search Console – usługa typu „Domena” `poldach.eu`, weryfikacja wpisem TXT w DNS. Na
+      11.11.2026 strona nie ma śladu GSC ani statystyk.
 - [ ] W GSC (Skuteczność, Strony) – które stare adresy i hasła dają wejścia; czy każdy ma swoje
-      przekierowanie w [`vercel.json`](../vercel.json). Adres z ruchem, którego treść nowa
+      przekierowanie w [`public/_redirects`](../public/_redirects). Adres z ruchem, którego treść nowa
       strona pokrywa słabo, to kandydat na powrót podstrony (decyzja – D-84).
-- [x] Hosting – Vercel (D-102); przekierowania w [`vercel.json`](../vercel.json).
-- [ ] Vercel: nowy projekt z repozytorium (framework Next.js, ustawienia domyślne); pierwsze wdrożenie
-      pod adresem `*.vercel.app` – sprawdzić stronę, formularz, baner cookies i przekierowania, zanim
-      domena trafi na Vercel.
+- [x] Hosting – Cloudflare Pages (D-122); przekierowania w [`public/_redirects`](../public/_redirects).
+- [ ] Cloudflare → Workers & Pages → Pages → połączyć repozytorium GitHub (gałąź `main`, budowa
+      `npm run build`, katalog `out`); pierwsze wdrożenie pod adresem `*.pages.dev` – sprawdzić stronę,
+      formularz, baner cookies i przekierowania, zanim domena trafi na Cloudflare.
+- [ ] Cloudflare → dodać witrynę `poldach.eu` (plan Free); sprawdzić, czy przejęła wpisy z obecnej
+      strefy; zapisać dwa serwery nazw, które poda Cloudflare.
+- [ ] Backup starej strony: cPanel w SmartHost → Kopia zapasowa (pełna).
 
-W dniu zmiany:
+W dniu zmiany (po zakończonym transferze):
 
-- [ ] Vercel → Settings → Domains: dodać `poldach.eu` i `www.poldach.eu` (to drugie z przekierowaniem
-      na `poldach.eu`); w panelu, w którym jest domena, ustawić wpisy DNS, które pokaże Vercel. Wpisów
-      poczty (MX, SPF) nie ruszać – poczta poldachpk@wp.pl ma działać dalej.
-- [ ] HTTPS działa (Vercel – automatycznie), `http://` i `www.` przekierowują na
+- [ ] Pages → Custom domains: dodać `poldach.eu` i `www.poldach.eu`.
+- [ ] Panel uti.pl → serwery nazw domeny: dwa serwery Cloudflare zamiast `dns*.smarthost.pl`.
+- [ ] Cloudflare → Rules → Redirect Rules: `www.poldach.eu` → `https://poldach.eu` (301, z
+      zachowaniem ścieżki).
+- [ ] HTTPS działa (Cloudflare – automatycznie), `http://` i `www.` przekierowują na
       `https://poldach.eu` (stara strona odpowiada pod nimi bez przekierowania – duplikaty).
 - [ ] Każdy stary adres z listy odpowiada 301 na właściwy cel, z ukośnikiem i bez (np.
       `curl -sI https://poldach.eu/drzwi/` i `…/drzwi`), strony ze starym adresem (kolumna „Stary
@@ -91,6 +109,8 @@ Po zmianie:
 - [ ] Przez 2–6 tygodni: GSC (Strony, Skuteczność) – przekierowania przyjęte, nowe strony w indeksie;
       lekkie wahania pozycji są normalne.
 - [ ] Wizytówka Google: adres strony, telefon (P-01) i godziny (P-02) zgodne ze stroną.
+- [ ] SmartHost: wyłączyć automatyczną płatność (Autopay), żeby hosting nie odnowił się 04.06.2027;
+      zmienić hasła do nazwa.pl, SmartHost i starego hostingu webd.pl (krążyły w mailach).
 
 **Do uzupełnienia przed publikacją:**
 

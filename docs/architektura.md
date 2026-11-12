@@ -147,11 +147,18 @@ wys [krok] [powiększenie]`.
 - `npm run build` tworzy w `out/` gotową stronę: każda podstrona to osobny `index.html`, więc wystarczy
   dowolny hosting plików.
 - Przekierowania 301 ([mapa-strony.md](mapa-strony.md#przekierowania-301-ze-starej-strony)) – jedna
-  lista w [`vercel.json`](../vercel.json) (`redirects`, kod 301).
-- Hosting – Vercel ([decyzje.md](decyzje.md) D-102): projekt z repozytorium, framework Next.js, budowa
-  `npm run build` (statyczny eksport do `out/`); wartości z `.env.production` wchodzą same, w
-  panelu Vercela nic nie trzeba ustawiać. HTTPS – automatycznie; `www.poldach.eu` → `poldach.eu` –
-  w ustawieniach domen projektu (Settings → Domains), nie w pliku.
+  lista w [`public/_redirects`](../public/_redirects) (format Cloudflare Pages, każdy adres z
+  ukośnikiem i bez); `next build` kopiuje plik do `out/`.
+- Hosting – Cloudflare Pages ([decyzje.md](decyzje.md) D-122): projekt z repozytorium GitHub, gałąź
+  produkcyjna `main`, budowa `npm run build`, katalog wyjściowy `out`; wersja Node z
+  [`.nvmrc`](../.nvmrc), wartości z `.env.production` wchodzą same – w panelu nic więcej nie trzeba
+  ustawiać. Domena bez `www` na Pages wymaga strefy DNS w Cloudflare (serwery nazw Cloudflare u
+  rejestratora). HTTPS – automatycznie; `www.poldach.eu` → `poldach.eu` – reguła przekierowania w
+  strefie (Rules → Redirect Rules), nie w pliku.
+- Rok w stopce i „lat na rynku” liczą się przy budowie (`BUILD_YEAR` w
+  [`src/config/site.ts`](../src/config/site.ts)) – stronę trzeba wdrożyć ponownie co najmniej raz w
+  roku (w Cloudflare: Deployments → Retry deployment).
+- Opis projektu dla osoby nietechnicznej – [przewodnik.md](przewodnik.md).
 - Klucze usług, jawne z założenia i te same dla każdej budowy – identyfikator GA i klucz Web3Forms –
   w [`.env.production`](../.env.production), w repozytorium (D-95, D-98). Zmiana na czas testu – w
   `.env.local` (poza repozytorium), wzór w [`.env.example`](../.env.example). Wchodzą do strony przy budowie –

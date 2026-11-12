@@ -13,6 +13,7 @@ dokumentu to należy.
 | [architektura.md](architektura.md)   | Jak to budujemy? Stos, struktura katalogów, zasady kodu, biblioteki, wdrożenie                        |
 | [decyzje.md](decyzje.md)             | Co ustalono i dlaczego? Otwarte pytania do klienta                                                    |
 | [roadmapa.md](roadmapa.md)           | Co robimy, w jakiej kolejności i co jest już zrobione?                                                |
+| [przewodnik.md](przewodnik.md)       | Jak działa projekt, bez programowania? Technologie, mapa folderów, jak wprowadzić zmianę              |
 
 ## Zasady prowadzenia dokumentacji
 
