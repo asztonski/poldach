@@ -29,12 +29,13 @@ const MILESTONES = [
 ];
 
 /**
- * Dimension line of a technical drawing: arrowheads and extension lines at both ends. The bar
- * grows from the left and the right end rides on its tip (AboutSection.module.css).
+ * Dimension line of a technical drawing: arrowheads and extension lines at both ends. From 1024 px
+ * it lies above the milestones; the bar grows from the left and the right end rides on its tip
+ * (AboutSection.module.css).
  */
 function DimensionLine() {
   return (
-    <div aria-hidden="true" className="relative h-6 overflow-hidden">
+    <div aria-hidden="true" className="relative hidden h-6 overflow-hidden lg:block">
       <span className="absolute top-0 left-0 h-6 w-0.5 bg-current" />
       <span className="absolute top-1/2 left-0.5 size-3 -translate-y-1/2 bg-current [clip-path:polygon(0_50%,100%_0,100%_100%)]" />
       <span
@@ -52,10 +53,34 @@ function DimensionLine() {
 }
 
 /**
+ * The same line standing up, on the right of the milestones (below 1024 px, docs/decyzje.md D-124):
+ * it grows down from the top and the bottom end rides on its tip.
+ */
+function DimensionLineVertical() {
+  return (
+    <div aria-hidden="true" className="relative mt-6 w-6 overflow-hidden lg:hidden">
+      <span className="absolute top-0 left-0 h-0.5 w-6 bg-current" />
+      <span className="absolute top-0.5 left-1/2 size-3 -translate-x-1/2 bg-current [clip-path:polygon(50%_0,100%_100%,0_100%)]" />
+      <span
+        className={cn(
+          styles.barDown,
+          'absolute inset-y-0 left-1/2 w-0.5 origin-top -translate-x-1/2 bg-current',
+        )}
+      />
+      <span className={cn(styles.endDown, 'absolute inset-0')}>
+        <span className="absolute bottom-0 left-0 h-0.5 w-6 bg-current" />
+        <span className="absolute bottom-0.5 left-1/2 size-3 -translate-x-1/2 bg-current [clip-path:polygon(0_0,100%_0,50%_100%)]" />
+      </span>
+    </div>
+  );
+}
+
+/**
  * Section 3 – the company (docs/mapa-strony.md#strona-główna, docs/decyzje.md D-23, D-29, D-53):
  * how long it has been around, who runs it and the head office; the documents follow (D-28). All
- * blue, no separate band: the heading fades in once (D-36), on desktop the stage is pinned (D-25) and
- * scrolling down plays the rest; scrolling up never rewinds it, and once complete it unpins (D-63).
+ * blue, no separate band: the heading fades in once (D-36), the stage is pinned (D-25; on a phone
+ * by the timeline, D-124) and scrolling down plays the rest; scrolling up never rewinds it, and once
+ * complete it unpins (D-63).
  */
 export function AboutSection() {
   const { street, city } = SITE.contact.address;
@@ -66,7 +91,8 @@ export function AboutSection() {
       {/* Title, description and photo in one block (D-53) */}
       {/* Slowed down twice on request: 150vh + 30 % = 195vh, then × 2. One way: D-63 */}
       <OneWayScene>
-        <PinnedScene length="390vh" className={styles.stage}>
+        {/* On a phone a shorter swipe – five milestones one under another (D-124) */}
+        <PinnedScene length="390vh" smallLength="260vh" className={styles.stage}>
           <div className="grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-end lg:gap-16">
             {/* From the old site's "O nas" (design/stara-strona/tresci.md), in our own words */}
             <SectionHeading
@@ -97,9 +123,15 @@ export function AboutSection() {
             </figure>
           </div>
 
-          {/* 1992 ↔ today as a dimension line; the number of years is its dimension */}
-          <div className={cn(styles.timeline, 'mt-12')}>
-            <p className="flex items-baseline justify-center gap-3 text-(--title)">
+          {/* 1992 ↔ today as a dimension line; the number of years is its dimension. Below 1024 px
+              the line stands on the right and the milestones go one under another (D-124) */}
+          <div
+            className={cn(
+              styles.timeline,
+              'mt-12 grid grid-cols-[minmax(0,1fr)_auto] gap-x-6 lg:block',
+            )}
+          >
+            <p className="col-span-2 flex items-baseline justify-end gap-3 text-(--title) lg:justify-center">
               <span
                 className={cn(styles.years, 'text-display tabular-nums')}
                 style={{ '--to': YEARS } as CSSProperties}
@@ -109,7 +141,7 @@ export function AboutSection() {
               <span className={cn(styles.yearsWord, 'text-h3')}>{yearsWord(YEARS)}</span>
             </p>
             <DimensionLine />
-            <ol className={cn(styles.milestones, 'mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-5')}>
+            <ol className={cn(styles.milestones, 'mt-6 grid gap-5 lg:grid-cols-5 lg:gap-6')}>
               {MILESTONES.map((milestone) => (
                 <li key={milestone.year} className="border-l-2 border-current pl-4">
                   <p className="text-eyebrow uppercase">{milestone.year}</p>
@@ -117,6 +149,7 @@ export function AboutSection() {
                 </li>
               ))}
             </ol>
+            <DimensionLineVertical />
           </div>
         </PinnedScene>
       </OneWayScene>

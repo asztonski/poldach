@@ -5,6 +5,11 @@ import styles from './PinnedScene.module.css';
 type PinnedSceneProps = {
   /** How much scrolling plays the scene, e.g. "360vh". */
   length: string;
+  /**
+   * The same on small screens – given, the scene pins there too, by the bottom edge of its stage
+   * (PinnedScene.module.css). Without it, small screens get two plain boxes.
+   */
+  smallLength?: string;
   /** Class of the stage – the part that stands still. */
   className?: string;
   children: ReactNode;
@@ -15,9 +20,12 @@ type PinnedSceneProps = {
  * it. The mechanics only – the scene animates its own elements on the timeline `--pinned`
  * (PinnedScene.module.css). Where a pin does not fit, it is two plain boxes.
  */
-export function PinnedScene({ length, className, children }: PinnedSceneProps) {
+export function PinnedScene({ length, smallLength, className, children }: PinnedSceneProps) {
   return (
-    <div className={styles.track} style={{ '--scene-length': length } as CSSProperties}>
+    <div
+      className={cn(styles.track, smallLength && styles.trackSmall)}
+      style={{ '--scene-length': length, '--scene-length-small': smallLength } as CSSProperties}
+    >
       {/* data-pin: while it is stuck, a move up does not bring the header back (useHeaderScroll) */}
       <div data-pin className={cn(styles.stage, className)}>
         {children}

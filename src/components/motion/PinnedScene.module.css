@@ -5,19 +5,30 @@
  *
  * This media condition is the one definition of "a pin fits": a scene that lays itself out for the
  * pin (the modules of AboutSection and CenterStage) repeats it word for word, because CSS has no way
- * to share a media query.
+ * to share a media query. The same goes for the small-screen condition below (AboutSection).
  */
+
+/* The stage pinned by its bottom edge: how far above the bottom of the screen (pin.ts reads it) */
+@property --pin-bottom {
+  syntax: '<length> | none';
+  inherits: false;
+  initial-value: none;
+}
+
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) and (width >= 64rem) and (height >= 46rem) {
     .track {
       view-timeline: --pinned block;
     }
 
-    /* Scroll distance – content, not padding: sticky moves only in the content box */
+    /*
+     * Scroll distance – content, not padding: sticky moves only in the content box. A one-way scene
+     * pinned again gets only the part still to play (--scene-left, OneWayScene)
+     */
     .track::after {
       content: '';
       display: block;
-      height: var(--scene-length);
+      height: calc(var(--scene-length) * var(--scene-left, 1));
     }
 
     /* A one-way scene let go gives its scroll distance back (OneWayScene, docs/decyzje.md D-63) */
@@ -38,6 +49,38 @@
       top: 0;
       height: 100vh;
       padding-block: var(--scene-space);
+    }
+  }
+
+  /*
+   * Small screens, only for a scene that asks (`smallLength`, docs/decyzje.md D-124). Its stage is
+   * taller than the screen, so it pins by its bottom edge, just above the call bar: the top of the
+   * stage scrolls by as usual, then the page stops and the scroll plays the bottom of the stage.
+   * The scroll distance goes before the stage – sticky `bottom` pulls the stage up from the end of
+   * its track to the track's top.
+   */
+  @media (prefers-reduced-motion: no-preference) and (width < 64rem) and (height >= 36rem) {
+    .trackSmall {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .trackSmall::after {
+      content: '';
+      flex: none;
+      order: -1;
+      height: calc(var(--scene-length-small) * var(--scene-left, 1));
+    }
+
+    [data-released] .trackSmall::after {
+      display: none;
+    }
+
+    .trackSmall > .stage {
+      --pin-bottom: calc(var(--call-bar-h) + env(safe-area-inset-bottom) + 1.5rem);
+
+      position: sticky;
+      bottom: var(--pin-bottom);
     }
   }
 }

@@ -1,14 +1,16 @@
 /*
- * Company section choreography (docs/design-system.md#ruch – O firmie, docs/decyzje.md D-25, D-63).
- * Desktop (wide and tall enough for the pin): the stage is pinned below the header and scrolling down
- * plays it – one way: OneWayScene keeps the furthest progress in `--p` (0–1), so scrolling up never
- * rewinds it, and once complete the scene unpins. Each animation is paused and drawn from `--p`: its
- * delay is how far `--p` is from the start of its range, its length the length of the range.
- * Elsewhere, without JS and with reduced motion the markup – the final state – stands.
+ * Company section choreography (docs/design-system.md#ruch – O firmie, docs/decyzje.md D-25, D-63,
+ * D-124). Where the stage pins (PinnedScene: on a computer by its top, below 1024 px by its bottom,
+ * above the call bar), scrolling down plays it – one way: OneWayScene keeps the furthest progress in
+ * `--p` (0–1) and marks the scene `[data-scrub]` only where the stage is pinned, so scrolling up
+ * never rewinds it, and once complete the scene unpins. Each animation is paused and drawn from
+ * `--p`: its delay is how far `--p` is from the start of its range, its length the length of the
+ * range. Elsewhere, without JS and with reduced motion the markup – the final state – stands.
  *
- * The heading fades in by itself (D-36). The photo slides in from the right, the years count up
- * while the dimension line grows to the right, milestones appear as the line reaches them, "lata"
- * comes with the final number. Transforms, opacity and one counter only.
+ * The heading fades in by itself (D-36). On a computer the photo slides in from the right; the
+ * years count up while the dimension line grows – to the right, or below 1024 px down the right
+ * side – milestones appear as the line reaches them, "lata" comes with the final number.
+ * Transforms, opacity and one counter only.
  */
 
 @property --years {
@@ -17,8 +19,8 @@
   initial-value: 0;
 }
 
-/* The condition of PinnedScene, repeated (CSS cannot share a media query) */
 @supports (animation-timeline: view()) {
+  /* The condition of PinnedScene, repeated (CSS cannot share a media query) */
   @media (prefers-reduced-motion: no-preference) and (width >= 64rem) and (height >= 46rem) {
     .stage {
       display: flex;
@@ -34,45 +36,11 @@
       }
     }
 
-    [data-scrub] :is(.right, .years, .yearsWord, .bar, .end, .milestones > li) {
-      animation-duration: calc((var(--end) - var(--start)) * 1s);
-      animation-delay: calc((var(--start) - var(--p, 0)) * 1s);
-      animation-timing-function: linear;
-      animation-fill-mode: both;
-      animation-play-state: paused;
-    }
-
-    /* Ranges as parts of the pin (0–1) */
+    /* The photo only on a computer – on a phone it is above the screen while the stage is pinned */
     [data-scrub] .right {
       --start: 0.02;
       --end: 0.12;
       animation-name: from-right;
-    }
-
-    /* Line and years together; at the start only the first milestone is there */
-    [data-scrub] :is(.years, .bar, .end) {
-      --start: 0.16;
-      --end: 0.85;
-    }
-
-    /* The number is drawn by ::before from the animated counter; the real one is kept for screen readers */
-    [data-scrub] .years {
-      counter-reset: years var(--years);
-      animation-name: years-up;
-    }
-
-    [data-scrub] .years::before {
-      content: counter(years);
-      content: counter(years) / '';
-    }
-
-    [data-scrub] .yearsValue {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip-path: inset(50%);
-      white-space: nowrap;
     }
 
     [data-scrub] .bar {
@@ -82,44 +50,91 @@
     [data-scrub] .end {
       animation-name: end-move;
     }
+  }
 
-    /* "lata" agrees only with the final number – it appears when the count ends */
-    [data-scrub] .yearsWord {
-      --start: 0.84;
-      --end: 0.9;
-      animation-name: word-in;
+  /* The small-screen condition of PinnedScene, repeated */
+  @media (prefers-reduced-motion: no-preference) and (width < 64rem) and (height >= 36rem) {
+    [data-scrub] .barDown {
+      animation-name: bar-down;
     }
 
-    /* Each milestone when the line reaches its column (columns at 10, 30, 50, 70, 90 %); the first
-       one comes with the short line */
-    [data-scrub] .milestones > li {
-      animation-name: rise;
+    [data-scrub] .endDown {
+      animation-name: end-down;
     }
+  }
 
-    [data-scrub] .milestones > li:nth-child(1) {
-      --start: 0.14;
-      --end: 0.2;
-    }
+  /* From here the same on every screen: [data-scrub] stands only where the stage is pinned */
+  [data-scrub] :is(.right, .years, .yearsWord, .bar, .end, .barDown, .endDown, .milestones > li) {
+    animation-duration: calc((var(--end) - var(--start)) * 1s);
+    animation-delay: calc((var(--start) - var(--p, 0)) * 1s);
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-play-state: paused;
+  }
 
-    [data-scrub] .milestones > li:nth-child(2) {
-      --start: 0.31;
-      --end: 0.38;
-    }
+  /* Line and years together, ranges as parts of the pin (0–1); at the start only the first
+     milestone is there */
+  [data-scrub] :is(.years, .bar, .end, .barDown, .endDown) {
+    --start: 0.16;
+    --end: 0.85;
+  }
 
-    [data-scrub] .milestones > li:nth-child(3) {
-      --start: 0.46;
-      --end: 0.53;
-    }
+  /* The number is drawn by ::before from the animated counter; the real one is kept for screen readers */
+  [data-scrub] .years {
+    counter-reset: years var(--years);
+    animation-name: years-up;
+  }
 
-    [data-scrub] .milestones > li:nth-child(4) {
-      --start: 0.61;
-      --end: 0.68;
-    }
+  [data-scrub] .years::before {
+    content: counter(years);
+    content: counter(years) / '';
+  }
 
-    [data-scrub] .milestones > li:nth-child(5) {
-      --start: 0.76;
-      --end: 0.83;
-    }
+  [data-scrub] .yearsValue {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* "lata" agrees only with the final number – it appears when the count ends */
+  [data-scrub] .yearsWord {
+    --start: 0.84;
+    --end: 0.9;
+    animation-name: word-in;
+  }
+
+  /* Each milestone when the line reaches it – its column on a computer, its row on a phone (at
+     about 10, 30, 50, 70, 90 % of the line); the first one comes with the short line */
+  [data-scrub] .milestones > li {
+    animation-name: rise;
+  }
+
+  [data-scrub] .milestones > li:nth-child(1) {
+    --start: 0.14;
+    --end: 0.2;
+  }
+
+  [data-scrub] .milestones > li:nth-child(2) {
+    --start: 0.31;
+    --end: 0.38;
+  }
+
+  [data-scrub] .milestones > li:nth-child(3) {
+    --start: 0.46;
+    --end: 0.53;
+  }
+
+  [data-scrub] .milestones > li:nth-child(4) {
+    --start: 0.61;
+    --end: 0.68;
+  }
+
+  [data-scrub] .milestones > li:nth-child(5) {
+    --start: 0.76;
+    --end: 0.83;
   }
 }
 
@@ -156,6 +171,25 @@
   }
   to {
     transform: translateX(0);
+  }
+}
+
+/* The same standing up: the line grows down, the bottom end rides on its tip */
+@keyframes bar-down {
+  from {
+    transform: scaleY(0.08);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes end-down {
+  from {
+    transform: translateY(-92%);
+  }
+  to {
+    transform: translateY(0);
   }
 }
 

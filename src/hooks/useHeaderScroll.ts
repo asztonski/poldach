@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { pinnedTop } from '@/components/motion/pin';
 import {
   REVEAL_HEADER_EVENT,
   SCROLL_JUMP_EVENT,
@@ -24,7 +25,7 @@ function stuckPin() {
   return Array.from(document.querySelectorAll<HTMLElement>('[data-pin]')).find((el) => {
     const style = getComputedStyle(el);
     if (style.position !== 'sticky' || !el.parentElement) return false;
-    const top = parseFloat(style.top) || 0;
+    const top = pinnedTop(el, style);
     const track = el.parentElement.getBoundingClientRect();
     if (track.top > top + 1 || track.bottom < top + el.offsetHeight - 1) return false;
     /*

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, type ComponentPropsWithoutRef } from 'react';
+import { pinnedTop } from './pin';
 import { GLIDE_TARGET_EVENT, isSmoothScrolling, moveScrollBy } from './SmoothScroll';
 
 // Keys that scroll the page up
@@ -23,7 +24,7 @@ const isTyping = (target: EventTarget | null) =>
  * How: `--p` is the furthest progress so far (0–1); the scene's CSS draws every animation from it
  * under `[data-scrub]`. Unpinned = the pin gives its scroll length back (`data-released`,
  * PinnedScene.module.css) and the page moves by as much in the same frame, so nothing on the screen
- * moves. Pinned again = only the part still to play gets its length back. A move up: the wheel and
+ * moves. Pinned again = only the part still to play gets its length back (`--scene-left`). A move up: the wheel and
  * keys while the wheel is smoothed (Lenis also steps back by fractions of a pixel), otherwise the
  * scroll position. Only where the stage is pinned (sticky); elsewhere the final state stands.
  */
@@ -39,8 +40,9 @@ export function OneWayScene(props: ComponentPropsWithoutRef<'div'>) {
     // Not pinned here (small screen, reduced motion, no support): nothing to play, nothing to watch
     if (style.position !== 'sticky') return;
     element.dataset.scrub = '';
-    const pinnedAt = parseFloat(style.top) || 0;
-    const fullLength = track.style.getPropertyValue('--scene-length');
+    // Where the stage stands while pinned – read each time: a stage pinned by its bottom edge moves
+    // with its own height and the screen's (pin.ts)
+    const pinnedAt = () => pinnedTop(stage, style);
     let state: 'pinned' | 'free' | 'done' = 'pinned';
     // Progress when the current pin began, the furthest progress so far, the last scroll position
     let base = 0;
@@ -84,10 +86,10 @@ export function OneWayScene(props: ComponentPropsWithoutRef<'div'>) {
      * does not snap down into its pin
      */
     const repin = (top: number) => {
-      moveBy(top - pinnedAt);
+      moveBy(top - pinnedAt());
       state = 'pinned';
       base = furthest;
-      track.style.setProperty('--scene-length', `calc(${fullLength} * ${1 - base})`);
+      track.style.setProperty('--scene-left', String(1 - base));
       delete element.dataset.released;
     };
 
@@ -113,7 +115,7 @@ export function OneWayScene(props: ComponentPropsWithoutRef<'div'>) {
         const length = track.offsetHeight - stage.offsetHeight;
         if (length <= 0) return;
         const progress =
-          base + ((1 - base) * (pinnedAt - track.getBoundingClientRect().top)) / length;
+          base + ((1 - base) * (pinnedAt() - track.getBoundingClientRect().top)) / length;
         if (progress > furthest) setProgress(Math.min(progress, 1));
         if (furthest >= 1) {
           unpin();
@@ -123,8 +125,9 @@ export function OneWayScene(props: ComponentPropsWithoutRef<'div'>) {
       }
       // Free: wait until the stage comes back up to its pinned place
       const top = stage.getBoundingClientRect().top;
-      if (top >= pinnedAt - 1) return;
-      if (pinnedAt - top > window.innerHeight / 2) finish();
+      const at = pinnedAt();
+      if (top >= at - 1) return;
+      if (at - top > window.innerHeight / 2) finish();
       else repin(top);
     };
 
