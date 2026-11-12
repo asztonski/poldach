@@ -1,4 +1,4 @@
-import { ROUTES, SECTION_IDS } from '@/config/routes';
+import { CONTACT_SECTION_HREF, ROUTES, SECTION_IDS } from '@/config/routes';
 import { SITE } from '@/config/site';
 import { PROJECT_LIST } from '@/data/projects';
 import { sheetNumber } from '@/lib/format';
@@ -25,7 +25,10 @@ export default function ProjectsPage() {
         eyebrow="Realizacje"
         title="Nasze dachy z bliska"
         lead="Kilka dachów, które przeszły przez nasze ręce – od kamienic z lukarnami po dachy płaskie."
-        action={{ href: `#${SECTION_IDS.projects}`, label: 'Zobacz realizacje' }}
+        actions={[
+          { label: 'Zobacz realizacje', href: `#${SECTION_IDS.projects}` },
+          { label: 'Zapytaj o podobny dach', href: CONTACT_SECTION_HREF },
+        ]}
       />
       <PhotoStage
         id={SECTION_IDS.projects}

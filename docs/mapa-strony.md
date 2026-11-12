@@ -77,10 +77,21 @@ Realizacje z kartami – po odpowiedzi na P-21.
 
 ## Podstrony
 
-Strony tematów zaczynają się żółtym otwarciem jak hero (`PageHero`: nadtytuł, h1, lead, telefon,
-„Bezpłatna wycena” do własnej sekcji kontaktu) i kończą sekcją kontaktu. Realizacje i certyfikaty
-otwiera hero strony głównej (`HeroSection`) z własnym nadtytułem, h1 i leadem – zamiast telefonu przycisk „Zobacz realizacje” /
-„Zobacz certyfikaty”, który przewozi do galerii (D-116, D-117). Polityka prywatności – bez otwarcia: tytuł i tekst na białym arkuszu nad siatką (D-92).
+Strony tematów zaczynają się żółtym otwarciem jak hero (`PageHero`: nadtytuł, h1, lead i przyciski
+tej strony) i kończą sekcją kontaktu. Realizacje i certyfikaty otwiera hero strony głównej
+(`HeroSection`) z własnym nadtytułem, h1 i leadem (D-116, D-117). Telefon i „Bezpłatna wycena” są
+w otwarciu tylko na stronie głównej – każda podstrona ma przyciski od swojego tematu (D-121):
+
+| Strona                    | Przyciski w otwarciu (pierwszy – główny)                                 |
+| ------------------------- | ------------------------------------------------------------------------ |
+| Usługi                    | „Zamów wycenę” (kontakt) · „Zobacz, co robimy” (oferta)     |
+| Wykrywanie nieszczelności | „Umów lokalizację przecieku” (kontakt) · „Zobacz trzy metody” (metody)   |
+| Sprzedaż                  | „Zobacz, co sprzedajemy” (oferta) · „Dojazd do salonu” (Mapy Google)     |
+| Kontakt                   | telefon · „Napisz do nas” (formularz) · „Dojazd do salonu” (Mapy Google) |
+| Realizacje                | „Zobacz realizacje” (galeria) · „Zapytaj o podobny dach” (kontakt)       |
+| Certyfikaty               | „Zobacz certyfikaty” (galeria) · „Bezpłatna wycena” (kontakt)            |
+
+Polityka prywatności – bez otwarcia: tytuł i tekst na białym arkuszu nad siatką (D-92).
 
 | Podstrona                 | Teraz                                                                                                                                                                                                                                                                                                                                       | Później                                                                                                                                           |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |

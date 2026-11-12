@@ -61,7 +61,8 @@ zależności od motywu. Wdrożone jako klasy `theme-yellow`, `theme-blue`, `them
 
 - **Stopka (`theme-blue`, D-80):** ten sam niebieski co reszta strony; małe etykiety białe (żółty na `blue-600` – tylko duży tekst), hasło i duży napis POLDACH żółte.
 - **Tylko tryb jasny** (`color-scheme: light`), bez osobnego trybu ciemnego.
-- **Rytm:** hero żółte (D-15) → sekcje białe z siatką, każda z pasem nagłówka (D-47): niebieskim,
+- **Rytm:** hero żółte (D-15), na każdej stronie co najmniej na cały ekran, treść na środku
+  (D-120) → sekcje białe z siatką, każda z pasem nagłówka (D-47): niebieskim,
   w Ofercie żółtym; „O nas” w całości niebieskie (D-53) → stopka niebieska
   ([mapa-strony.md](mapa-strony.md#strona-główna)). Kolor marki niosą hero, pasy, „O nas” i stopka.
 - **Panel** (`Panel`) – arkusz w innym motywie wewnątrz sekcji, np. żółta i niebieska karta na
@@ -91,7 +92,7 @@ pogrubione.
 | white na blue-400      | 3,0      | ⚠️ tylko bardzo duży tekst                       |
 | blue-500 na yellow-500 | 2,5      | ❌ tylko logo i tytuły od 40 px jako grafika     |
 | yellow-500 na blue-500 | 2,5      | ❌ tylko tytuły od 40 px                         |
-| red-nav na yellow-500  | 3,5      | ⚠️ tylko duży tekst – menu 18 px to wyjątek D-22 |
+| red-nav na yellow-500  | 3,5      | ⚠️ tylko duży tekst – menu: wyjątki D-22 i D-119 |
 
 W praktyce:
 
@@ -232,7 +233,7 @@ na niebieskim. Teraz w hero; rola poza hero – ⚠ P-20.
 | Karta mapy       | szary arkusz 4 : 3, zaokrąglenie `--radius-box`. Ze zgodą na cookies – mapa Google od razu; bez niej – pinezka `--title`, adres, przycisk „Pokaż mapę” (wczytuje ją tylko na tej stronie, nie jest zgodą na statystyki) i zdanie o plikach cookie Google (D-93). Pod kartą link „Otwórz w Mapach Google” (D-86). [`MapCard`](../src/components/common/MapCard.tsx)                                                                        |
 | Baner cookies    | niebieski arkusz (`Panel` `blue`) przy dolnej krawędzi ekranu, na telefonie nad paskiem z telefonem, do 768 px szerokości: tytuł „Pliki cookie”, jedno zdanie o statystykach Google Analytics i mapie Google, link do polityki prywatności; dwa przyciski tej samej wielkości – „Odrzucam” (obrys) i „Zgadzam się” (pigułka). Nie blokuje strony i nie zabiera fokusu (D-93). [`CookieBanner`](../src/components/common/CookieBanner.tsx) |
 | Wideo            | ramka `rounded-box` na granacie, plakat – pierwsza klatka; w lewym dolnym rogu okrągłe przyciski 44 px, biała ikona na granacie 80%: odtwórz / wstrzymaj, dźwięk, pełny ekran. Na pełnym ekranie wideo wyśrodkowane na granacie (D-88). [`VideoPlayer`](../src/components/common/VideoPlayer.tsx)                                                                                                                                         |
-| Nagłówek         | żółty pasek z siatką: logo `blue-500` po lewej, nawigacja `pd-red-nav` 500 (D-22), przycisk-telefon po prawej. Po przewinięciu jednolity (bez winiety), bez linii u dołu. Przy przewijaniu w dół chowa się, przy ruchu w górę wraca (D-41). Nad hero strony głównej do pierwszego przewinięcia bez własnego tła (`under-header`), więc siatka przechodzi bez szwu                                                                         |
+| Nagłówek         | żółty pasek z siatką: logo `blue-500` po lewej, nawigacja `pd-red-nav` 500 wersalikami, 16 px, od 1280 px 18 px (D-22, D-119; menu mobilne też), przycisk-telefon po prawej. Po przewinięciu jednolity (bez winiety), bez linii u dołu. Przy przewijaniu w dół chowa się, przy ruchu w górę wraca (D-41). Nad hero strony głównej do pierwszego przewinięcia bez własnego tła (`under-header`), więc siatka przechodzi bez szwu           |
 | Stopka           | hasło, opis, przycisk-telefon i e-mail; linki w dwóch grupach „Oferta” i „Firma” (`FOOTER_NAV`); „tabliczka rysunkowa” jak w rogu rysunku technicznego: Wykonawca · Siedziba i salon · Na rynku · NIP · REGON · Członek ze znakiem PSD (D-89); duży napis POLDACH, pod nim © z pełną nazwą. Dane – [firma.md](firma.md)                                                                                                                   |
 
 ## Ilustracje

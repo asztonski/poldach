@@ -1,4 +1,4 @@
-import { ROUTES, SECTION_IDS } from '@/config/routes';
+import { CONTACT_SECTION_HREF, ROUTES, SECTION_IDS } from '@/config/routes';
 import { SITE } from '@/config/site';
 import { CERTIFICATE_KIND_LABEL, CERTIFICATE_SHEETS } from '@/data/certificates';
 import { sheetNumber } from '@/lib/format';
@@ -24,7 +24,10 @@ export default function CertificatesPage() {
         eyebrow="Certyfikaty"
         title="Fach potwierdzony na piśmie"
         lead="Autoryzacje Prefa i Euronit, certyfikat kwalifikacji Polskiego Stowarzyszenia Dekarzy, nagroda w konkursie i szkolenia u&nbsp;producentów pokryć, okien i rynien."
-        action={{ href: `#${SECTION_IDS.certificates}`, label: 'Zobacz certyfikaty' }}
+        actions={[
+          { label: 'Zobacz certyfikaty', href: `#${SECTION_IDS.certificates}` },
+          { label: 'Bezpłatna wycena', href: CONTACT_SECTION_HREF },
+        ]}
       />
       <PhotoStage
         id={SECTION_IDS.certificates}

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import headquarters from '@/assets/images/firma/siedziba-kokoszkowy.webp';
-import { ROUTES } from '@/config/routes';
-import { addressLine } from '@/config/site';
+import { ROUTES, SECTION_IDS } from '@/config/routes';
+import { addressLine, mapsHref } from '@/config/site';
 import { pageMetadata } from '@/lib/metadata';
 import { ContactSection, OfferSection, PageHero } from '@/sections/common';
 
@@ -23,6 +23,11 @@ export default function ShopPage() {
         eyebrow="Sprzedaż · salon w Kokoszkowych"
         title="Drzwi, podłogi i materiały – w naszym salonie"
         lead={`Sprzedaż detaliczna w naszej siedzibie: ${addressLine}. Wybierzesz na miejscu, a my doradzimy, dostarczymy i zamontujemy.`}
+        // D-121: a shop – what it sells, and the way there
+        actions={[
+          { label: 'Zobacz, co sprzedajemy', href: `#${SECTION_IDS.offer}` },
+          { label: 'Dojazd do salonu', href: mapsHref },
+        ]}
         visual={
           <div className="overflow-hidden rounded-box">
             <Image

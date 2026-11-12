@@ -1,4 +1,5 @@
 import { CheckList, Panel, Section } from '@/components/ui';
+import { SECTION_IDS } from '@/config/routes';
 import { sheetNumber } from '@/lib/format';
 
 // docs/firma.md#wykrywanie-nieszczelności-dachów-płaskich – the client's own document
@@ -28,6 +29,7 @@ const METHODS = [
 export function MethodsSection() {
   return (
     <Section
+      id={SECTION_IDS.methods}
       theme="white"
       heading={{
         id: 'methods-title',

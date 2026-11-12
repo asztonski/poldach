@@ -13,7 +13,7 @@ import { cn } from '@/lib/cn';
 import { normalizePath } from '@/lib/path';
 
 const topLinkClasses =
-  'flex min-h-14 w-full items-center text-h3 decoration-2 underline-offset-8 hover:underline aria-[current=page]:underline';
+  'flex min-h-14 w-full items-center text-h3 uppercase decoration-2 underline-offset-8 hover:underline aria-[current=page]:underline';
 
 type MobileMenuProps = {
   className?: string;

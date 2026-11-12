@@ -1,6 +1,6 @@
 import videoPoster from '@/assets/images/wideo/wykrywanie-nieszczelnosci-plakat.webp';
 import { VideoPlayer } from '@/components/common/VideoPlayer';
-import { ROUTES } from '@/config/routes';
+import { CONTACT_SECTION_HREF, ROUTES, SECTION_IDS } from '@/config/routes';
 import { pageMetadata } from '@/lib/metadata';
 import { ContactSection, PageHero } from '@/sections/common';
 import { MethodsSection } from '@/sections/leak-detection/MethodsSection';
@@ -27,6 +27,11 @@ export default function LeakDetectionPage() {
         eyebrow="Wykrywanie nieszczelności dachów płaskich"
         title="Przeciek na dachu płaskim? Tylko skąd kapie?"
         lead="Lokalizujemy nieszczelność bez naruszania pokrycia – trzema metodami. Potem wskazujemy miejsce i sposób naprawy, a naprawę wykonujemy sami."
+        // D-121: the campaign ends with booking the diagnosis; the three methods right below
+        actions={[
+          { label: 'Umów lokalizację przecieku', href: CONTACT_SECTION_HREF },
+          { label: 'Zobacz trzy metody', href: `#${SECTION_IDS.methods}` },
+        ]}
         visual={
           // The campaign's own ad (4:5, 30 s) in place of a photo (D-88)
           <VideoPlayer

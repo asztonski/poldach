@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { ROUTES } from '@/config/routes';
+import { CONTACT_SECTION_HREF, ROUTES, SECTION_IDS } from '@/config/routes';
 import { PROJECT_INFO } from '@/data/projects';
 import { pageMetadata } from '@/lib/metadata';
 import { ContactSection, OfferSection, PageHero } from '@/sections/common';
@@ -22,6 +22,11 @@ export default function ServicesPage() {
         eyebrow="Usługi · dach i montaż w domu"
         title="Dach od pokrycia po rynny – i montaż w domu"
         lead="Nowe pokrycia i remonty, wykrywanie nieszczelności dachów płaskich, usuwanie eternitu, a w domu – okna, drzwi, bramy i podłogi. Doradzamy bezpłatnie i przygotowujemy kosztorys."
+        // D-121: the estimate the lead promises; the list of work right below
+        actions={[
+          { label: 'Zamów wycenę', href: CONTACT_SECTION_HREF },
+          { label: 'Zobacz, co robimy', href: `#${SECTION_IDS.offer}` },
+        ]}
         visual={
           <div className="overflow-hidden rounded-box">
             {/* One of the projects (src/data/projects.ts) – the photo and its alt from there */}

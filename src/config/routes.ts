@@ -14,6 +14,7 @@ export const SECTION_IDS = {
   offer: 'oferta',
   projects: 'realizacje',
   certificates: 'dokumenty',
+  methods: 'metody',
   contact: 'kontakt',
 } as const;
 

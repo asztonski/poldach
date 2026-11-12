@@ -1,5 +1,5 @@
-import { ROUTES } from '@/config/routes';
-import { SITE, addressLine } from '@/config/site';
+import { CONTACT_SECTION_HREF, ROUTES } from '@/config/routes';
+import { SITE, addressLine, mapsHref } from '@/config/site';
 import { pageMetadata } from '@/lib/metadata';
 import { ContactSection, PageHero } from '@/sections/common';
 
@@ -20,6 +20,12 @@ export default function ContactPage() {
         eyebrow="Kontakt"
         title="Zadzwoń, napisz albo przyjedź"
         lead={`Salon i biuro: ${addressLine}. Doradztwo i wycena są bezpłatne.`}
+        // D-121: the title's three ways – call, write, come over
+        actions={[
+          'phone',
+          { label: 'Napisz do nas', href: CONTACT_SECTION_HREF },
+          { label: 'Dojazd do salonu', href: mapsHref },
+        ]}
       />
       <ContactSection
         source="Kontakt"
