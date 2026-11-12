@@ -84,7 +84,7 @@ w otwarciu tylko na stronie głównej – każda podstrona ma przyciski od swoje
 
 | Strona                    | Przyciski w otwarciu (pierwszy – główny)                                 |
 | ------------------------- | ------------------------------------------------------------------------ |
-| Usługi                    | „Zamów wycenę” (kontakt) · „Zobacz, co robimy” (oferta)     |
+| Usługi                    | „Zamów wycenę” (kontakt) · „Zobacz, co robimy” (oferta)                  |
 | Wykrywanie nieszczelności | „Umów lokalizację przecieku” (kontakt) · „Zobacz trzy metody” (metody)   |
 | Sprzedaż                  | „Zobacz, co sprzedajemy” (oferta) · „Dojazd do salonu” (Mapy Google)     |
 | Kontakt                   | telefon · „Napisz do nas” (formularz) · „Dojazd do salonu” (Mapy Google) |
