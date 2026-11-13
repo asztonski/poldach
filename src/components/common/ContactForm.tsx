@@ -58,19 +58,24 @@ let sentThisVisit = false;
  *   if wanted; spaces, dashes and brackets anywhere between the digits: "503 005 234",
  *   "+48 503-005-234", "(58) 562 56 05". The operator's prefixes are not checked – they change
  * - E-mail: on top of type="email" (which takes "jan@wp") – a domain with a dot and a 2+ letter ending
- * - Name: at least one letter, any alphabet, and no digits (D-132); names are too varied for more
+ * - Name: only what names are made of (D-136) – letters of any alphabet (with accents as separate
+ *   marks too), spaces, hyphens, apostrophes and dots, starting with a letter: "Jan Kowalski",
+ *   "Anna Nowak-Kowalska", "D'Arcy", "Jan K."; no digits, "!", "@", "_" or commas
  */
 const PATTERN = {
   phone: String.raw`\s*(?:(?:\+|00)\s*48)?[\s\-]*\(?[1-9](?:[\s\-\(\)]*\d){8}\s*`,
   email: String.raw`[^@\s]+@[^@\s]+\.[^@\s]{2,}`,
-  name: String.raw`[^\p{N}]*\p{L}[^\p{N}]*`,
+  name: String.raw`\s*\p{L}[\p{L}\p{M}\s'’.\-]*`,
 };
 
 type Field = HTMLInputElement | HTMLTextAreaElement;
 
 // The browser's bubble in Polish whatever its language, saying how to put it right
 const HINT: Record<string, { missing?: string; wrong?: string }> = {
-  [FIELD.name]: { missing: 'Wpisz swoje imię', wrong: 'Wpisz imię literami, bez cyfr' },
+  [FIELD.name]: {
+    missing: 'Wpisz swoje imię',
+    wrong: 'Wpisz imię samymi literami – bez cyfr i znaków specjalnych',
+  },
   [FIELD.phone]: {
     missing: 'Wpisz numer telefonu – oddzwonimy',
     wrong: 'Wpisz polski numer: 9 cyfr, z +48 lub bez',
