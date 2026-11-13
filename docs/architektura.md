@@ -47,6 +47,7 @@ src/
 │   ├── <podstrona>/page.tsx
 │   └── not-found.tsx, sitemap.ts, robots.ts, icon.svg, icon.png, apple-icon.png
 ├── assets/images/        # zdjęcia importowane w kodzie; logotypy/ – znaki innych (PSD); realizacje/
+├── assets/fonts/         # pliki fontów do obrazów Open Graph (src/lib/og-image.tsx, D-129)
 ├── brand/                # elementy marki: Logo.tsx, LogoWithFigure.tsx; (planowane) tokens.ts, icons.tsx
 ├── components/
 │   ├── common/           # komponenty współdzielone (LogoLink, ContactForm, MapCard, VideoPlayer, CookieBanner, CookieSettingsButton, Analytics)
