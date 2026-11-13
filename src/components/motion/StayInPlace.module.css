@@ -3,11 +3,13 @@
  * section slides over it (docs/decyzje.md D-21). Scroll-driven: in the "exit" range the section
  * moves down exactly as fast as the page scrolls up. The range is one screen for a section taller
  * than the screen and the section's own height for a shorter one – min(100%, 100vh) covers both.
- * The next section must paint over it (later in the DOM, opaque background).
+ * The next section must paint over it (later in the DOM, opaque background). From 1024 px only: on
+ * a phone the screen's height changes with the address bar and the hero jumped – it scrolls as usual
+ * there (docs/decyzje.md D-128).
  */
 
 @supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
+  @media (prefers-reduced-motion: no-preference) and (width >= 64rem) {
     .root {
       animation: stay-in-place linear both;
       /* Inset 0: the default (auto) takes scroll-padding-top and would start that much too early */

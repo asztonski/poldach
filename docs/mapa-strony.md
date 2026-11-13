@@ -58,7 +58,8 @@ Realizacje z kartami – po odpowiedzi na P-21.
   POLDACH pojawiają się po kolei, na końcu hasło na biurku – około 5,2 s. Parametry –
   [design-system.md](design-system.md#ruch).
 - **Hero zostaje w miejscu (D-21):** przy przewijaniu hero stoi, a sekcja 2 nasuwa się na nie
-  skośną krawędzią jak arkusz kładziony na arkusz.
+  skośną krawędzią jak arkusz kładziony na arkusz. Tylko od 1024 px – na telefonie i tablecie
+  hero przewija się zwykle (D-128).
 - **Oferta (sekcja 2, D-29, D-37, D-45):** duży wyśrodkowany nagłówek odjeżdża przy przewijaniu, a
   potem osiem kategorii (jak na starej stronie, D-46) przechodzi po kolei przez środek całego ekranu,
   każda jako pionowe zdjęcie na 80% jego wysokości, na białym tle (D-44, D-47; zdjęcia ze starej
