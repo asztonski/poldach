@@ -34,7 +34,7 @@ osadzenie Google po zgodzie na cookies ([`MapCard`](../src/components/common/Map
 | Swiper, Slick i inne karuzele             | przewijany rząd robimy CSS `scroll-snap`                         |
 | jQuery, fonty z zewnętrznych CDN          | wydajność i prywatność                                           |
 
-Proste interakcje na natywnych elementach: `<details>` (FAQ), `<dialog>` (menu mobilne). Radix UI –
+Proste interakcje na natywnych elementach: `<details>` (FAQ), `<dialog>` (menu mobilne – otwierany bez trybu modalnego, D-126). Radix UI –
 tylko gdy natywne nie wystarczą i po uzgodnieniu.
 
 ## Struktura katalogów

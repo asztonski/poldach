@@ -1,7 +1,7 @@
 import { CONTACT_SECTION_HREF, ROUTES } from '@/config/routes';
 import { SITE, addressLine, mapsHref } from '@/config/site';
 import { pageMetadata } from '@/lib/metadata';
-import { ContactSection, PageHero } from '@/sections/common';
+import { ContactSection, HeroSection } from '@/sections/common';
 
 export const metadata = pageMetadata({
   title: 'Kontakt',
@@ -10,13 +10,15 @@ export const metadata = pageMetadata({
 });
 
 /**
- * Contact (docs/mapa-strony.md, D-103), at the old site's address: the opening with the phone, then
- * the contact section – how to start, the form, the shop with the map. Opening hours – TODO(P-02).
+ * Contact (docs/mapa-strony.md, D-103), at the old site's address: the home page's hero with the
+ * phone, then the contact section – how to start, the form, the shop with the map. Opening hours –
+ * TODO(P-02).
  */
 export default function ContactPage() {
   return (
     <>
-      <PageHero
+      {/* The home page's hero in the page's words and with its three ways in (D-116, D-127) */}
+      <HeroSection
         eyebrow="Kontakt"
         title="Zadzwoń, napisz albo przyjedź"
         lead={`Salon i biuro: ${addressLine}. Doradztwo i wycena są bezpłatne.`}

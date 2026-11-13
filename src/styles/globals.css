@@ -259,8 +259,8 @@ html:has(.under-header) header:not([data-scrolled]) {
    * scene go first (docs/decyzje.md D-97)
    */
 
-  /* Page behind the open mobile menu does not scroll */
-  html:has(dialog:modal) {
+  /* Page behind the open mobile menu does not scroll – also while it closes (MobileMenu) */
+  html:has(dialog[open]) {
     overflow: hidden;
   }
 

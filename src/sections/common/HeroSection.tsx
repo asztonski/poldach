@@ -32,8 +32,8 @@ function MarkerTick() {
 /**
  * The home hero (docs/decyzje.md D-15, D-16): the page's opening (PageHero) with the logo with the
  * figure and the proof as marker notes. While scrolling it stays in place and section 2 slides over
- * it (`StayInPlace`, D-21). The projects and the certificates pages open with it too, in their own
- * words, the phone there swapped for a link down to the page's gallery (D-116, D-117). No wordmark
+ * it (`StayInPlace`, D-21). The projects, the certificates and the contact pages open with it too,
+ * in their own words and with their own buttons (D-116, D-117, D-127). No wordmark
  * in the eyebrow – the logo next to it already says POLDACH.
  */
 export function HeroSection(props: Omit<PageHeroProps, 'visual' | 'children' | 'className'>) {

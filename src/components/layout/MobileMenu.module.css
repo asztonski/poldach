@@ -1,0 +1,143 @@
+/*
+ * Mobile menu (docs/design-system.md#ruch, docs/decyzje.md D-126). Opening: the panel grows down
+ * from the header – only its bottom edge travels: its window moves down and the sheet inside it up
+ * by as much, so the sheet stands still (transforms only, docs/architektura.md rule 5) – then the
+ * items fade in one after another. Closing in reverse: the items go first, then the edge goes back
+ * up. The burger turns into an X and back. A transition is set by the state it leads to, so each
+ * direction plays in its own order. With reduced motion every change is immediate.
+ */
+
+/* The panel: from the bottom of the header to the bottom of the screen; its window is cut to it */
+.window {
+  transform: translateY(-100%);
+}
+
+.sheet {
+  transform: translateY(100%);
+}
+
+.item {
+  opacity: 0;
+}
+
+[data-open] .window,
+[data-open] .sheet {
+  transform: none;
+}
+
+[data-open] .item {
+  opacity: 1;
+}
+
+/*
+ * Burger: three bars, 2 px, in a 24 px icon. They stand by `top`, without a transform, 8 px apart:
+ * 8 px is a whole number of screen pixels at 100–200 % display scaling, so all three fall on the
+ * pixel grid alike and look the same (6 px at 125 % is 7.5 – the middle bar came out thinner). The
+ * X: the outer bars meet in the middle and cross, the middle one goes
+ */
+.burger {
+  position: relative;
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.bar {
+  position: absolute;
+  left: 3px;
+  width: 18px;
+  height: 2px;
+  border-radius: 1px;
+  background-color: currentColor;
+}
+
+.bar:nth-child(1) {
+  top: 3px;
+}
+
+.bar:nth-child(2) {
+  top: 11px;
+}
+
+.bar:nth-child(3) {
+  top: 19px;
+}
+
+[aria-expanded='true'] .bar:nth-child(1) {
+  translate: 0 8px;
+  rotate: 45deg;
+}
+
+[aria-expanded='true'] .bar:nth-child(2) {
+  opacity: 0;
+}
+
+[aria-expanded='true'] .bar:nth-child(3) {
+  translate: 0 -8px;
+  rotate: -45deg;
+}
+
+/* "Menu" and "Zamknij" in one place, aligned to the icon – the button keeps its width */
+.labels {
+  display: grid;
+  justify-items: end;
+}
+
+.labels > * {
+  grid-area: 1 / 1;
+}
+
+.labelClose,
+[aria-expanded='true'] .labelMenu {
+  visibility: hidden;
+  opacity: 0;
+}
+
+[aria-expanded='true'] .labelClose {
+  visibility: visible;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Closing: the items fade out first (150 ms), then the edge goes up */
+  .window,
+  .sheet {
+    transition: transform 300ms cubic-bezier(0.4, 0, 1, 1) 150ms;
+  }
+
+  .item {
+    transition: opacity 150ms ease-out;
+  }
+
+  /* Opening: the edge comes down, then the items fade in, each 40 ms after the one before */
+  [data-open] .window,
+  [data-open] .sheet {
+    transition: transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  [data-open] .item {
+    transition: opacity 250ms ease-out calc(250ms + var(--i, 0) * 40ms);
+  }
+
+  /* Closing the X: it unfolds first, then the bars move apart and the middle one is back */
+  .bar {
+    transition:
+      rotate 150ms ease-in-out,
+      translate 150ms ease-in-out 150ms,
+      opacity 0s linear 150ms;
+  }
+
+  /* Opening: the bars meet first, then cross */
+  [aria-expanded='true'] .bar {
+    transition:
+      translate 150ms ease-in-out,
+      rotate 150ms ease-in-out 150ms,
+      opacity 0s linear 150ms;
+  }
+
+  .labels > * {
+    transition:
+      opacity 150ms ease-out,
+      visibility 150ms;
+  }
+}

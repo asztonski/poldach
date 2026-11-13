@@ -78,8 +78,8 @@ Realizacje z kartami – po odpowiedzi na P-21.
 ## Podstrony
 
 Strony tematów zaczynają się żółtym otwarciem jak hero (`PageHero`: nadtytuł, h1, lead i przyciski
-tej strony) i kończą sekcją kontaktu. Realizacje i certyfikaty otwiera hero strony głównej
-(`HeroSection`) z własnym nadtytułem, h1 i leadem (D-116, D-117). Telefon i „Bezpłatna wycena” są
+tej strony) i kończą sekcją kontaktu. Realizacje, certyfikaty i kontakt otwiera hero strony głównej
+(`HeroSection`) z własnym nadtytułem, h1 i leadem (D-116, D-117, D-127). Telefon i „Bezpłatna wycena” są
 w otwarciu tylko na stronie głównej – każda podstrona ma przyciski od swojego tematu (D-121):
 
 | Strona                    | Przyciski w otwarciu (pierwszy – główny)                                 |

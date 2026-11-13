@@ -24,6 +24,8 @@ export function Header() {
       data-scrolled={scrolled || undefined}
       className={cn(
         'group sticky top-0 z-50 h-(--header-h) blueprint theme-yellow transition-transform duration-300 ease-out motion-reduce:transition-none',
+        // The open mobile menu (inside the header) covers the cookie banner as well
+        'has-[dialog[open]]:z-60',
         // After scrolling: flat yellow, without its own grid lines (docs/decyzje.md D-48)
         scrolled && '-translate-y-(--header-shift) bg-none!',
         // 1.5rem past its height: the phone button's shadow must not show at the top of the screen
