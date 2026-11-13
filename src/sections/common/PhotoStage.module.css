@@ -12,7 +12,7 @@
 
 /* The condition of PinnedScene */
 @supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) and (width >= 64rem) and (height >= 46rem) {
+  @media (prefers-reduced-motion: no-preference) and (width >= 64rem) and (height >= 36rem) {
     /*
      * A link to the stage ("Zobacz realizacje", D-116) brings its top to the top of the screen, not
      * under the header: the stage pins there, with its own space above (PinnedScene, D-104)
@@ -69,6 +69,15 @@
 
     .photo {
       animation-name: photo-pass;
+    }
+
+    /* A low screen (a zoomed-in browser, D-125): the sheet is as low as the photo – the
+       description a size smaller */
+    @media (height < 46rem) {
+      .details {
+        font-size: var(--text-small);
+        line-height: var(--text-small--line-height);
+      }
     }
   }
 }

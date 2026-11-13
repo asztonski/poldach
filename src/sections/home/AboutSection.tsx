@@ -91,9 +91,15 @@ export function AboutSection() {
       {/* Title, description and photo in one block (D-53) */}
       {/* Slowed down twice on request: 150vh + 30 % = 195vh, then × 2. One way: D-63 */}
       <OneWayScene>
-        {/* On a phone a shorter swipe – five milestones one under another (D-124) */}
-        <PinnedScene length="390vh" smallLength="260vh" className={styles.stage}>
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-end lg:gap-16">
+        {/* On a phone a shorter swipe – five milestones one under another (D-124). On a low
+            desktop screen the scene is taller than the screen and pins by the timeline (D-125) */}
+        <PinnedScene length="390vh" smallLength="260vh" tall className={styles.stage}>
+          <div
+            className={cn(
+              styles.head,
+              'grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-end lg:gap-16',
+            )}
+          >
             {/* From the old site's "O nas" (design/stara-strona/tresci.md), in our own words */}
             <SectionHeading
               id="about-title"

@@ -118,9 +118,10 @@ export function PhotoStage({ id, title, lead, items, vhPerItem = 67 }: PhotoStag
             <>
               <p className="text-eyebrow uppercase">[ {item.label} ]</p>
               {/* Title colour from lg (large text, docs/design-system.md#kontrast); h2 size only
-                  from 110rem – the sheet has a fixed height and holds the longer description too */}
+                  from 110rem – the sheet is as high as the photo and holds the longer description
+                  too (a text longer still grows it, CenterStage) */}
               <h3 className="mt-3 text-h3 lg:text-(--title) min-[110rem]:text-h2">{item.title}</h3>
-              <p className="mt-3 text-small xl:text-body">{item.details}</p>
+              <p className={cn('mt-3 text-small xl:text-body', styles.details)}>{item.details}</p>
               {/* At the bottom of the sheet (a column on the pinned stage), right after the text
                   elsewhere */}
               {item.href ? (

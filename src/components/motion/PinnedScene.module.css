@@ -4,8 +4,10 @@
  * scroll plays the scene. The stage pins at the top of the screen, so `contain` starts exactly then.
  *
  * This media condition is the one definition of "a pin fits": a scene that lays itself out for the
- * pin (the modules of AboutSection and CenterStage) repeats it word for word, because CSS has no way
- * to share a media query. The same goes for the small-screen condition below (AboutSection).
+ * pin (the modules of AboutSection, CenterStage and PhotoStage) repeats it word for word, because
+ * CSS has no way to share a media query. The same goes for the small-screen condition below
+ * (AboutSection). The height is low on purpose: a zoomed-in browser on a desktop screen (125–150 %)
+ * still gets the scenes (docs/decyzje.md D-125).
  */
 
 /* The stage pinned by its bottom edge: how far above the bottom of the screen (pin.ts reads it) */
@@ -16,7 +18,7 @@
 }
 
 @supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) and (width >= 64rem) and (height >= 46rem) {
+  @media (prefers-reduced-motion: no-preference) and (width >= 64rem) and (height >= 36rem) {
     .track {
       view-timeline: --pinned block;
     }
@@ -38,17 +40,52 @@
 
     /*
      * A full screen with the same space above and below the scene – before it pins (it rides with
-     * the page, the space reads against the section before) and after (D-104). The header's place
-     * lies inside the space above (--scene-space ≥ --header-pinned on any screen a pin fits), so a
-     * header coming back covers nothing. A low screen gets less space, to leave the scene room.
+     * the page, the space reads against the section before) and after (D-104). A low screen gets
+     * less space, to leave the scene room – but never less than the header's place, so a header
+     * coming back covers nothing.
      */
     .stage {
-      --scene-space: min(var(--section-space), 10vh);
+      --scene-space: max(var(--header-pinned), min(var(--section-space), 10vh));
 
       position: sticky;
       top: 0;
       height: 100vh;
       padding-block: var(--scene-space);
+    }
+
+    /*
+     * A stage its content sets the height of (`tall`, AboutSection). Where it fits, it stands exactly
+     * as above. Where it does not – a low screen – the space below gives way first, down to 1.5rem;
+     * past that the stage grows beyond the screen and pins by its bottom edge: its end, where the
+     * scene plays, stays on the screen and its top scrolls by first, as on small screens below. The
+     * scroll distance goes before the stage (D-125)
+     */
+    .trackTall {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .trackTall::after {
+      flex: none;
+      order: -1;
+    }
+
+    .trackTall > .stage {
+      --pin-bottom: 0px;
+
+      display: flex;
+      flex-direction: column;
+      top: auto;
+      bottom: 0;
+      min-height: min-content;
+      padding-bottom: 1.5rem;
+    }
+
+    /* The rest of the space below: all of it where the scene fits, less and less where it does not */
+    .trackTall > .stage::after {
+      content: '';
+      flex: 1 0 0;
+      max-height: calc(var(--scene-space) - 1.5rem);
     }
   }
 

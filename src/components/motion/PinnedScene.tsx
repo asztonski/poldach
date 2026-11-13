@@ -10,6 +10,11 @@ type PinnedSceneProps = {
    * (PinnedScene.module.css). Without it, small screens get two plain boxes.
    */
   smallLength?: string;
+  /**
+   * The content sets the stage's height, which on a low screen is more than the screen: it then
+   * pins by its bottom edge, so the end of the scene stays on the screen (PinnedScene.module.css).
+   */
+  tall?: boolean;
   /** Class of the stage – the part that stands still. */
   className?: string;
   children: ReactNode;
@@ -20,10 +25,10 @@ type PinnedSceneProps = {
  * it. The mechanics only – the scene animates its own elements on the timeline `--pinned`
  * (PinnedScene.module.css). Where a pin does not fit, it is two plain boxes.
  */
-export function PinnedScene({ length, smallLength, className, children }: PinnedSceneProps) {
+export function PinnedScene({ length, smallLength, tall, className, children }: PinnedSceneProps) {
   return (
     <div
-      className={cn(styles.track, smallLength && styles.trackSmall)}
+      className={cn(styles.track, smallLength && styles.trackSmall, tall && styles.trackTall)}
       style={{ '--scene-length': length, '--scene-length-small': smallLength } as CSSProperties}
     >
       {/* data-pin: while it is stuck, a move up does not bring the header back (useHeaderScroll) */}

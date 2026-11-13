@@ -21,18 +21,36 @@
 
 @supports (animation-timeline: view()) {
   /* The condition of PinnedScene, repeated (CSS cannot share a media query) */
-  @media (prefers-reduced-motion: no-preference) and (width >= 64rem) and (height >= 46rem) {
+  @media (prefers-reduced-motion: no-preference) and (width >= 64rem) and (height >= 36rem) {
     .stage {
       display: flex;
       flex-direction: column;
-      /* Centred, but a stage too tall for the screen still starts at its top */
+      /* Centred on a screen it fits; on a lower one it grows and pins by its bottom (PinnedScene) */
       justify-content: safe center;
     }
 
-    /* A low screen: less air above the timeline, so the whole scene keeps its space below */
+    /*
+     * A low screen: less air above the timeline, so more of the scene fits. Lower still (a zoomed-in
+     * browser, D-125) the heading and the number of years are a size smaller – the stage pins by its
+     * bottom there (PinnedScene `tall`), and so the heading and the photo stay on the screen
+     */
     @media (height < 50rem) {
       .timeline {
         margin-top: 1rem;
+      }
+    }
+
+    @media (height < 46rem) {
+      .head h2 {
+        font-size: var(--text-h2);
+      }
+
+      .head p {
+        font-size: var(--text-body);
+      }
+
+      .years {
+        font-size: var(--text-h1);
       }
     }
 
