@@ -15,19 +15,41 @@ import { useConsent } from '@/lib/consent';
 export function MapCard({ className }: { className?: string }) {
   const consent = useConsent();
   const [shownOnce, setShownOnce] = useState(false);
+  // The map takes the mouse (drag, Ctrl + wheel) – after a click on it, until the pointer leaves
+  const [active, setActive] = useState(false);
 
   return (
     <div className={className}>
       <Panel theme="grey" className="relative aspect-4/3">
         {consent === 'accepted' || shownOnce ? (
-          <iframe
-            src={mapsEmbedSrc}
-            title={`Mapa: ${SITE.name}, ${addressLine}`}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            allowFullScreen
-            className="absolute inset-0 size-full border-0"
-          />
+          <div className="group absolute inset-0" onMouseLeave={() => setActive(false)}>
+            <iframe
+              src={mapsEmbedSrc}
+              title={`Mapa: ${SITE.name}, ${addressLine}`}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+              className="size-full border-0"
+            />
+            {/*
+             * The wheel over the map goes to Google's frame, where smooth scrolling (SmoothScroll)
+             * does not hear it: Google does not zoom without Ctrl and the browser scrolls the page
+             * itself, in jumps, against Lenis. This layer keeps the wheel on the page – only where
+             * Lenis runs (a mouse, motion allowed). A click takes it off for moving the map; it comes
+             * back when the pointer leaves. Mouse only: the keyboard tabs into the map as before
+             */}
+            {!active && (
+              <div
+                aria-hidden="true"
+                onClick={() => setActive(true)}
+                className="absolute inset-0 hidden cursor-pointer pointer-fine:motion-safe:block"
+              >
+                <span className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-pd-navy-900 px-3 py-1 text-small whitespace-nowrap text-pd-white opacity-0 transition-opacity group-hover:opacity-100">
+                  Kliknij, żeby poruszać mapą
+                </span>
+              </div>
+            )}
+          </div>
         ) : (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-6 text-center">
             <MapPin aria-hidden="true" className="size-10 text-(--title)" strokeWidth={2.25} />
